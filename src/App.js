@@ -6,9 +6,6 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
-
-//add to rivka
-
 // import NavBar from "./components/navbar";
 // import CreateUser from "./components/create-user";
 // import About from "./components/about";
@@ -16,6 +13,8 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 // import Login from './components/Login/login';
 // import Empty_page from './components/Empty_page/empty_page';
 import Wrap from './components/Wrap/wrap';
+import NewTemplate from './components/create-new-template';
+
 
 library.add(fab, fas)
 
@@ -31,6 +30,7 @@ const App = function () {
         <Route path="/login" component={Login} />
         <Route path="/empty_page" component={Empty_page} /> */}
         <Route path="/" component={Wrap} />
+        <Route path="/add-template" component={NewTemplate} />
 
       </div>
 

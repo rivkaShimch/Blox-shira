@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import canvasDetails from './reducers/CanvasDetailsStore'
+import displayComponents from './reducers/CanvasDetailsStore'
 // import playerDetails from './reducers/PlayerDetailsStore';
 // import videosFromServer from './reducers/VideoDetailsStore';
 // import {createStore,}
@@ -7,8 +8,9 @@ import canvasDetails from './reducers/CanvasDetailsStore'
 const state = {
     Canvas:
     {
-        canvasDetails: canvasDetails.canvasDetails
-    
+        canvasDetails: canvasDetails.canvasDetails,
+        displayComponents:displayComponents.displayComponents
+
     }
 
 }

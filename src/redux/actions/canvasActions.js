@@ -5,3 +5,10 @@ export function setName(name) {
         payload: name
     };
 }
+export function setTitle(title) {
+
+    return {
+        type: 'NAME_CANVAS',
+        payload: title
+    };
+}

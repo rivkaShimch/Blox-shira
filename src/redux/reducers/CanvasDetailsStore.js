@@ -1,6 +1,5 @@
 
-// import { OPERATE } from '../actions/canvasActions';
-import { OPERATE } from '../actions/componentsActions';
+import { OPERATE } from '../actions/canvasActions';
 
 import produce from 'immer'
 

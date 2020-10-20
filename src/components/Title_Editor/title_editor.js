@@ -9,12 +9,13 @@ import Lion from "../img/lion.png";
 import Switch from "./Switch";
 
 
+import { connect } from 'react-redux';
 
-export default class Title_Editor extends Component {
+class Title_Editor extends Component {
     constructor(prop) {
         super(prop);
 
-        this.state = { checked: false};
+        this.state = { checked: false };
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -121,11 +122,11 @@ export default class Title_Editor extends Component {
                     size="large"
                     onToggle={isOn => console.log("changed to : ", isOn)}
                 /> */}
-            </div>
+            </div >
             </>
         );
     }
 
 }
 
-
+export default Title_Editor

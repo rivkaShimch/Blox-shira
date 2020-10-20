@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Scrollspy from 'react-scrollspy';
 import lines from '../img/lines.png';
 import Text from '../img/text.png';
+// import { Circle } from 'react-konva';
 import onOff from '../img/onOff.png';
 
 import { connect } from 'react-redux';
@@ -16,9 +17,6 @@ import { connect } from 'react-redux';
 import {
     setDisplayTitleEditor
 } from '../../redux/actions/componentsActions'
-
-
-//   export default connect(mapStateToProps)(Canvas)
 
 class Widget extends Component {
     constructor(props) {
@@ -37,9 +35,7 @@ class Widget extends Component {
         this.setState({ display_TitleEditor: true })
         this.props.dispatch(setDisplayTitleEditor(this.state.display_TitleEditor))
         console.log("open title editor " + this.props.displayComponents.display_title_editor)
-
     }
-
 
     render() {
         return (
@@ -88,16 +84,15 @@ class Widget extends Component {
 
 
             </div >
-
-
-
-
         );
     }
 }
-const mapStateToProps = (state) => {
+
+function mapStateToProps(state) {
+    console.log("state   " + state.displayComponents.displayComponents)
     return {
         displayComponents: state.displayComponents.displayComponents
     };
 }
 export default connect(mapStateToProps)(Widget)
+// export default (Widget)

@@ -5,8 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Arrow_down from "../img/arrow_down.png";
 
 import Lion from "../img/lion.png";
+import { connect } from 'react-redux';
 
-export default class Title_Editor extends Component {
+class Title_Editor extends Component {
     constructor(prop) {
         super(prop);
         const my_img = require("../img/arrow_down.png")
@@ -17,7 +18,7 @@ export default class Title_Editor extends Component {
     }
     render() {
         return (
-         <> <div className="col-12 d-flex flex-column justify-content-between">
+            <> <div className="col-12 d-flex flex-column justify-content-between">
 
                 {/* <div className="col-12 d-flex flex-row justify-content-between">
                     <div className="sideLittleDetail">images</div>
@@ -33,10 +34,10 @@ export default class Title_Editor extends Component {
                     <div className="sideLittleDetail">images<img src={Arrow_down} alt="icon" /></div>
 
                 </div>
-         </div>
+            </div>
             </>
         );
     }
 }
 
-
+export default Title_Editor

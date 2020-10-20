@@ -76,6 +76,12 @@ import Canvas from '../canvas';
 import Edit_choice from '../Edit_choice/edit_choice';
 import Title_Editor from '../Title_Editor/title_editor';
 
+import { connect } from 'react-redux';
+
+import {
+    setDisplayTitleEditor
+} from '../../redux/actions/componentsActions'
+
 const drawerWidth = '15%';
 const useStyles = theme => ({
     // root: {
@@ -290,7 +296,7 @@ class Wrap extends React.Component {
             background: '#3a405e 0% 0% no-repeat padding-box',
             fontColor: 'white',
             arrowColor: 'gray',
-            openSpeedDial: false,
+            openSpeedDial: false
         };
     }
 
@@ -302,8 +308,10 @@ class Wrap extends React.Component {
         const open = Boolean(this.state.anchorEl)
         const header_fashion_media = false
         const page_setting_button = true
-        const title_editor_option = true
-        const new_button = false
+        // const title_editor_option = this.props.displayComponents.display_title_editor
+        console.log("open title editor in wrap " + this.props.displayComponents.display_title_editor)
+
+        // const new_button = false
 
         return (
             <div className="d-flex ">
@@ -484,7 +492,7 @@ class Wrap extends React.Component {
                             {/* <Route path="/lastFiles" component={lastFiles} /> */}
                             {/* <div className={classes.toolbar} /> */}
                             {/* {this.showTips()} */}
-                            {new_button ? <Canvas /> : <span></span>}
+                            {this.props.displayComponents.new_canva ? <Canvas /> : <span></span>}
 
                             {/* פלוס אייקון שהורדנו*/}
                             {/* <div style={{ direction: 'rtl' }} onMouseLeave={this.closeFastAccses}> */}
@@ -531,7 +539,7 @@ class Wrap extends React.Component {
                     </div>
                     {page_setting_button ? <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Page Setting</Button>
                         : <span></span>}
-                    {title_editor_option ? <Title_Editor /> : <span></span>}
+                    {this.props.displayComponents.display_title_editor ? <Title_Editor /> : <span></span>}
                     {header_fashion_media ? <div>
 
 
@@ -765,6 +773,11 @@ class Wrap extends React.Component {
     // }
 }
 
-
-export default withStyles(useStyles)(Wrap)
+function mapStateToProps(state) {
+    console.log("state   " + state.displayComponents.displayComponents)
+    return {
+        displayComponents: state.displayComponents.displayComponents
+    };
+}
+export default connect(mapStateToProps)((withStyles(useStyles))(Wrap))
 //export default Wrap;

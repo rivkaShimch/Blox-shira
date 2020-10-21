@@ -98,10 +98,5 @@ function mapStateToProps(state) {
         canvasDetails: state.canvasDetails.canvasDetails
     };
 }
-<<<<<<< Updated upstream
 export default connect(mapStateToProps)(Widget)
 // export default (Widget)
-=======
-export default (Widget)
-// export default connect(mapStateToProps)(Widget)
->>>>>>> Stashed changes

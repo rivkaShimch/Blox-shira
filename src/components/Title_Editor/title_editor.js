@@ -16,6 +16,10 @@ import RangeSlider from 'react-bootstrap-range-slider';
 import { connect } from 'react-redux';
 
 
+import {
+    setTitlesCanvas
+} from '../../redux/actions/canvasActions'
+
 
 
 
@@ -32,10 +36,6 @@ class CustomPointer extends Component {
 
     }
 }
-
-import {
-    setTitlesCanvas
-} from '../../redux/actions/canvasActions'
 
 
 class Title_Editor extends Component {

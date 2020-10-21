@@ -7,10 +7,7 @@ const initialState = {
   canvasDetails: {
 
     name: "ll",
-    title: "title01"
-  },
-  displayComponents: {
-    display_title_editor: false
+    titles: ""
   }
 
 };
@@ -21,11 +18,8 @@ export default produce((state, action) => {
     case 'NAME_CANVAS':
       state.canvasDetails.name = action.payload;
       break;
-    case 'TITLE_CANVAS':
-      state.canvasDetails.title = action.payload;
-      break;
-    case 'DISPLAY_TITLE_EDITOR':
-      state.displayComponents.display_title_editor = action.payload;
+    case 'TITLES_CANVAS':
+      state.canvasDetails.titles = action.payload;
       break;
     default:
       return state;

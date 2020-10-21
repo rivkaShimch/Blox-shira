@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 
 import {
     setDisplayTitleEditor
-} from '../../redux/actions/componentsActions'
+} from '../../redux/actions/componentsActions';
 
 class Widget extends Component {
     constructor(props) {
@@ -94,5 +94,10 @@ function mapStateToProps(state) {
         displayComponents: state.displayComponents.displayComponents
     };
 }
+<<<<<<< Updated upstream
 export default connect(mapStateToProps)(Widget)
 // export default (Widget)
+=======
+export default (Widget)
+// export default connect(mapStateToProps)(Widget)
+>>>>>>> Stashed changes

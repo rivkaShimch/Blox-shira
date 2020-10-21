@@ -4,6 +4,9 @@ import { Stage, Layer, Image, Text, Transformer } from 'react-konva';
 import useImage from 'use-image';
 import Portal from './portal';
 
+import { connect } from 'react-redux';
+
+
 
 const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onChange }) => {
   const [img] = useImage(image.src);
@@ -85,12 +88,12 @@ var x = 50;
 var y = 50;
 var w = 100;
 var z = 100;
-const Canvas = () => {
+const Canvas = (props) => {
   const dragUrl = React.useRef();
   const stageRef = React.useRef();
   const [images, setImages] = React.useState([]);
   const [selectedId, selectImage] = React.useState(null);
-  const [title, setTitle] = React.useState(null)
+  // const [title, setTitle] = React.useState(null)
   const [title2, setTitle2] = React.useState(null)
   const [fontStyleTitle, setfontStyleTitle] = React.useState(null)
   const [fontSizeTitle, setfontSizeTitle] = React.useState(null)
@@ -366,11 +369,12 @@ const Canvas = () => {
 
               ></LionImage> */}
               <Text
-                text={title}
+                text={props.canvasDetails.titles}
                 fontStyle={fontStyleTitle}
                 fontSize={fontSizeTitle}
                 x={x}
                 y={y}
+                drawBorder={true}
                 draggable
                 fill={textColor ? textColor : 'black'}
                 onDragStart={() => {
@@ -445,4 +449,11 @@ const Canvas = () => {
     </div>
   );
 };
-export default Canvas
+
+function mapStateToProps(state) {
+  console.log("state canvas  " + state.canvasDetails.canvasDetails)
+  return {
+    canvasDetails: state.canvasDetails.canvasDetails
+  };
+}
+export default connect(mapStateToProps)(Canvas)

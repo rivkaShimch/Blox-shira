@@ -29,7 +29,7 @@ class Buttons_new extends Component {
             <>
                 <div className="col-12 d-flex flex-row justify-content-start" style={{ marginTop: "9vh", height: "31px", padding: "0px" }}>
                     <div className="col-10 d-flex flex-column align-items-center white_circleborder_background up_button pt-1 "
-                        onClick={this.onClickNewFunc} style={{ height: "35px" }} >
+                        onClick={this.onClickNewFunc} style={{ height: "35px", color: "#A66DFF" }} >
                         +New
                          </div>
                     <div className="col-2 d-flex flex-column justify-content-start " style={{ height: "37px" }}>

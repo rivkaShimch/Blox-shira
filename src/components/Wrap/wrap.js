@@ -489,6 +489,7 @@ class Wrap extends React.Component {
                     </div>
                     <div className="d-flex flex-column justify-content-around col-6">
                         <main className={classes.content} style={{ height: "200px", width: "400px" }}>
+                      
                             {/* <Route path="/lastFiles" component={lastFiles} /> */}
                             {/* <div className={classes.toolbar} /> */}
                             {/* {this.showTips()} */}

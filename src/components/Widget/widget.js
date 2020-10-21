@@ -18,22 +18,25 @@ import {
     setDisplayTitleEditor
 } from '../../redux/actions/componentsActions';
 
+import {
+    setTitlesCanvas
+} from '../../redux/actions/canvasActions'
+
 class Widget extends Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
         this.state = {
 
-            openTitleEditor: "none"
         };
         this.openTitleEditor = this.openTitleEditor.bind(this)
 
-
     }
     openTitleEditor() {
-        const title_editor_option = true;
-        this.setState({ display_TitleEditor: true })
-        this.props.dispatch(setDisplayTitleEditor(this.state.display_TitleEditor))
+        this.props.dispatch(setDisplayTitleEditor(true))
+        this.props.dispatch(setTitlesCanvas("TITLE 01"))
+
+
         console.log("open title editor " + this.props.displayComponents.display_title_editor)
     }
 
@@ -91,7 +94,8 @@ class Widget extends Component {
 function mapStateToProps(state) {
     console.log("state   " + state.displayComponents.displayComponents)
     return {
-        displayComponents: state.displayComponents.displayComponents
+        displayComponents: state.displayComponents.displayComponents,
+        canvasDetails: state.canvasDetails.canvasDetails
     };
 }
 <<<<<<< Updated upstream

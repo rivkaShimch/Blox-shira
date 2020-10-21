@@ -249,15 +249,17 @@ const useStyles = theme => ({
         padding: theme.spacing(5),
     },
     configuratorContent: {
+        padding: "1.5vh",
+        border: "1px solid  rgb(177, 177, 177)",
         marginBottom: theme.spacing(1),
         marginLeft: theme.spacing(2),
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(5),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
     },
     drawerPaper: {
-        top: '40px',
+        top: '6.8vh',
         height: 'calc(100% - 40px)',
         background: '#3a405e 0% 0% no-repeat padding-box !important',
         border: '1px solid #707070 !important',
@@ -289,13 +291,13 @@ class Wrap extends React.Component {
             openDrawer: false,
             valueTab: 0,
             openCollapse: false,
-            right: false,
+            right: true,
             visibility: 'hidden',
             anchorEl: null,
-            color: 'gray',
+            color: '#B1B1B1',
             background: '#3a405e 0% 0% no-repeat padding-box',
             fontColor: 'white',
-            arrowColor: 'gray',
+            arrowColor: '#B1B1B1',
             openSpeedDial: false
         };
     }
@@ -489,7 +491,7 @@ class Wrap extends React.Component {
                     </div>
                     <div className="d-flex flex-column justify-content-around col-6">
                         <main className={classes.content} style={{ height: "200px", width: "400px" }}>
-                      
+
                             {/* <Route path="/lastFiles" component={lastFiles} /> */}
                             {/* <div className={classes.toolbar} /> */}
                             {/* {this.showTips()} */}
@@ -526,7 +528,7 @@ class Wrap extends React.Component {
           </AppBar> */}
 
 
-                    <div className={classes.row} style={{ position: 'static', marginTop: '50px', marginBottom: '50px' }}>
+                    <div className={classes.row} style={{ position: 'static', marginTop: '5vh', marginBottom: '2vh' }}>
                         <IconButton edge="end" color="inherit" aria-label="setting" >
                             {/* component={Link} to="/lastFiles" */}
                             <SettingsIcon style={{ color: this.state.color }} />
@@ -538,12 +540,20 @@ class Wrap extends React.Component {
                             <InvertColorsIcon style={{ color: this.state.color }} />
                         </IconButton>
                     </div>
-                    {page_setting_button ? <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Page Setting</Button>
+                    {page_setting_button ? <Button variant="outlined"
+                        size="medium" className={classes.configuratorContent}
+                        endIcon={<svg style={{ fill: this.state.color }}
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="8.211"
+                            height="11.124"
+                            viewBox="0 0 8.211 11.124">
+                            <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
+                                transform="translate(-5.5 0)" /></svg>}
+                        style={{ color: this.state.color }}
+                        onClick={this.f}>Page Setting</Button>
                         : <span></span>}
                     {this.props.displayComponents.display_title_editor ? <Title_Editor /> : <span></span>}
                     {header_fashion_media ? <div>
-
-
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Blank Page</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Template</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Thank You Email</Button>

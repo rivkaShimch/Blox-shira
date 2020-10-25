@@ -44,6 +44,9 @@ border: none;
   
     text-decoration-color:#A66DFF ;
 }
+.ui.divider{
+    margin-top: 0;
+}
 .medAndSecImg{
     height: 9vh;
     width: 9vh;
@@ -69,15 +72,32 @@ align-items:center;
     margin-left: 7vh;
 }
 .widget_button{
+    /* display: block; */
     border: none;
     background-color: none;
     padding: 0.8vh;
 
 }
 .widget_button:hover{
+    display: block;
     background-color: #f6f7f8;
 
 }
+.widget_button:active{
+    background-color:red;
+}
+.wrap_flow {
+    
+    width: 250px;
+    height: 150px;
+ 
+    overflow-y: scroll; /* Add the ability to scroll */
+  }
+  .wrap_flow::-webkit-scrollbar {
+    display: none;
+}
+
+.widget_button:{  background-color:red;}
 .imgDetails{
     height: 5vh;
     width: 5vh;

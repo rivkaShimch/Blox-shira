@@ -5,6 +5,7 @@ export function setDisplayTitleEditor(title) {
     };
 }
 export function setNewCanva(title) {
+
     return {
         type: 'NEW_CANVA',
         payload: title

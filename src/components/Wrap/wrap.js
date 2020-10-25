@@ -116,6 +116,7 @@ const useStyles = theme => ({
         top: 64,
         flexShrink: 0,
         //zIndex:1305
+
     },
     configuratorOpen: {
         height: 'calc(100% - 64px)',
@@ -250,13 +251,16 @@ const useStyles = theme => ({
     },
     configuratorContent: {
         padding: "1.5vh",
-        border: "1px solid  rgb(177, 177, 177)",
+        border: " 1px solid #979797",
+        borderRadius: "7px",
         marginBottom: theme.spacing(1),
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(5),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+
+
     },
     drawerPaper: {
         top: '6.8vh',
@@ -316,7 +320,7 @@ class Wrap extends React.Component {
         // const new_button = false
 
         return (
-            <div className="d-flex ">
+            <div className="d-flex " style={{ backgroundColor: "#f1f1f1" }}>
                 {/* <Router> */}
                 {/* <CssBaseline /> */}
 
@@ -546,10 +550,11 @@ class Wrap extends React.Component {
                             xmlns="http://www.w3.org/2000/svg"
                             width="8.211"
                             height="11.124"
-                            viewBox="0 0 8.211 11.124">
+                        // viewBox="0 0 8.211 11.124"
+                        >
                             <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
                                 transform="translate(-5.5 0)" /></svg>}
-                        style={{ color: this.state.color }}
+                        style={{ color: this.state.color, textTransform: "inherit", height: "40px", paddingLeft: "20px", fontSize: "15px" }}
                         onClick={this.f}>Page Setting</Button>
                         : <span></span>}
                     {this.props.displayComponents.display_title_editor ? <Title_Editor /> : <span></span>}
@@ -590,10 +595,10 @@ class Wrap extends React.Component {
                                 className={classes.margin}
                             >
                                 <svg style={{ fill: "white", flexShrink: 0, margin: '5px' }}
-                                 xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" 
-                                 viewBox="0 0 8.211 11.124">
-                                     <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" 
-                                     transform="translate(-5.5 0)" /></svg>
+                                    xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124"
+                                    viewBox="0 0 8.211 11.124">
+                                    <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
+                                        transform="translate(-5.5 0)" /></svg>
                                                         Publish
                                            </Fab>
                         </Toolbar>

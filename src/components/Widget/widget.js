@@ -39,6 +39,11 @@ class Widget extends Component {
 
         console.log("open title editor " + this.props.displayComponents.display_title_editor)
     }
+    sectionFunc() {
+
+
+
+    }
 
     render() {
         return (

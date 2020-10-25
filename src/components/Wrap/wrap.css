@@ -1,17 +1,29 @@
 .MuiDrawer-paperAnchorRight {
     left: auto;
     right: 0;
-    /* background: #3a405e 0% 0% no-repeat padding-box !important; */
+     background: #3a405e 0% 0% no-repeat padding-box !important; 
     
-    border-radius: 68px 0px 0px 0px !important;
+    border-radius: 60px 0px 0px 0px !important;
     
     opacity: 1;
-    width: 18% !important;
+    width: 17% !important; 
+
+
+
+     background-color: #3A405E;
+    /* background-color:red;
+    color: rgb(235, 234, 234);
+    display: inline-block;
+    overflow-y: auto;
+    padding-bottom: 78px;
+    transition-duration: 0.3s;
+    transition-timing-function: linear;
+    border-radius: 60px 0px 0px; */
 }
 .MuiPaper {
     /* background: #3a405e 0% 0% no-repeat padding-box; */
     /* border: 1px solid #707070; */
-    border-radius: 68px 0px 0px 0px;
+    border-radius: 60px 0px 0px 0px;
     opacity: 1;
 }
 body{

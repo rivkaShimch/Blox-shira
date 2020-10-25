@@ -7,6 +7,7 @@ import Arrow_down from "../img/arrow_down.png";
 
 import Lion from "../img/lion.png";
 // import ToggleSwitch from 'toggle-switch-rn'
+
 import Switch from "../Switch/Switch";
 import { HuePicker, SketchPicker } from 'react-color';
 
@@ -41,6 +42,7 @@ class CustomPointer extends Component {
 class Title_Editor extends Component {
     constructor(prop) {
         super(prop);
+
 
         this.state = {
             checked: false,
@@ -165,10 +167,6 @@ class Title_Editor extends Component {
                         <input style={{ color: "white", backgroundColor: "#3A405E", width: "2vw" }} value={this.finalValueRange} />
 
                     </div>
-
-                </div>
-
-            </>
         );
     }
 }

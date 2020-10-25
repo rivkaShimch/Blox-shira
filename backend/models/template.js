@@ -2,19 +2,26 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const templateSchema = new Schema({
-    type: {
+    template_name: {
+        type: String
+    },
+    canvas_width: {
+        type: Number,
+    },
+    canvas_height: {
+        type: Number,
+    },
+    background_img_name: {
         type: String,
-        required: true
     },
-    background_img: {
-        data: Buffer,
-        contentType: String
+    background_img_path: {
+        type: String,
     },
-    title: {
+    titles: {
         type: String
     },
     title_size: {
-        type: String
+        type: Number
     },
     title_color: {
         type: String
@@ -22,16 +29,27 @@ const templateSchema = new Schema({
     title_type: {
         type: String
     },
-    title_position: {
-        type: String
+    title_position_x: {
+        type: Number
+    },
+    title_position_y: {
+        type: Number
     },
     element_img:
     {
-        data: Buffer,
-        contentType: String
-    },
-    element_position: {
         type: String
+    },
+    element_position_x: {
+        type: Number
+    },
+    element_position_y: {
+        type: Number
+    },
+    element_width: {
+        type: Number
+    },
+    element_height: {
+        type: Number
     },
 
 })

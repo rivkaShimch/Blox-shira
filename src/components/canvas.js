@@ -6,6 +6,12 @@ import Portal from './portal';
 
 import { connect } from 'react-redux';
 
+import {
+  setDataUrl,
+  setTitlePositionX,
+  setTitlePositionY
+
+} from '../redux/actions/canvasActions'
 
 
 const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onChange }) => {
@@ -86,8 +92,8 @@ const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onCha
 };
 var x = 50;
 var y = 50;
-var w = 100;
-var z = 100;
+// var w = 100;
+// var z = 100;
 const Canvas = (props) => {
   const dragUrl = React.useRef();
   const stageRef = React.useRef();
@@ -101,7 +107,7 @@ const Canvas = (props) => {
   const [background_color_stage, setBackground_color_stage] = React.useState(null)
   const [background_image, setBackground_image] = React.useState(null)
 
-
+  props.dispatch(setDataUrl(stageRef.current))
 
   const LionImage = (onSelect) => {
     const [image] = useImage(require('../background_images/green_b.png'));
@@ -168,7 +174,7 @@ const Canvas = (props) => {
     // let stage_to_download = document.getElementById('my_stage');
     console.log(stageRef.current)
     var dataURL = stageRef.current
-    downloadURI(dataURL.toDataURL(), 'my_banner.png');
+    downloadURI(dataURL.toDataURL(), 'my_template.png');
   }
   const onClickBold = (e) => {
     console.log("in onClickBold");
@@ -191,69 +197,6 @@ const Canvas = (props) => {
   }
   return (
     <div>
-      {/* <nav className="navbar navbar-expand-lg">
-        <div className="collpase navbar-collpase">
-          <ul className="navbar-nav mr-auto">
-            <li className="navbar-item">
-              <button variant="primary" onClick={onClickDownload} className="nav-link btn btn-primary">Download</button>
-            </li>
-          </ul>
-        </div>
-        <div className="collpase navbar-collpase">
-          <ul className="navbar-nav mr-auto">
-            <li className="navbar-item">
-              <input id="bold_input" style={{ display: "none" }}></input>
-              <button id="bold_button" className="btn btn-primary" onClick={onClickBold} style={{ display: "block" }}>bold</button>
-            </li>
-          </ul>
-        </div>
-        <div className="collpase navbar-collpase">
-          <ul className="navbar-nav mr-auto">
-            <li className="navbar-item">
-
-            </li>
-          </ul>
-        </div>
-        <div className="collpase navbar-collpase">
-          <ul className="navbar-nav mr-auto column">
-            <li className="navbar-item">
-              <label for="cars">Change font size: </label>
-              <select id="font_size_option" onChange={onChangeFontSize}>
-                <option value="12">12</option>
-                <option value="14">14</option>
-                <option value="24">24</option>
-                <option value="36">36</option>
-                <option value="72">72</option>
-              </select>
-              <br></br>
-            </li>
-          </ul>
-        </div>
-
-        <div className="collpase navbar-collpase">
-          <ul className="navbar-nav mr-auto">
-            <li className="navbar-item">
-              <input type="color" id="text_color_input" onChange={onChangeTextColor} name="favcolor" />
-            </li>
-          </ul>
-        </div>
-        {/* <div className="d-flex" style={{ display: "none" }} id="images_div">
-          <span>
-            <h5>Change Background Color: </h5>
-            <input type="color" id="background_color_input" onChange={onChangeBackgroundColor} name="favcolor" />
-          </span>
-        </div> }
-
-
-
-        <div className="d-flex" style={{ display: "none" }} id="images_div">
-          <span>
-            <h5 id="add_image_title" style={{ display: "none" }}>Upload your images</h5>
-            <input style={{ display: "none" }} type="file" className="btn" id="files" name="files[]" multiple />
-          </span>
-        </div>
-
-      </nav > */}
       <div>
 
         <br />
@@ -349,10 +292,17 @@ const Canvas = (props) => {
         >
           <Stage
             id="my_stage"
-            width={300}
-            height={300}
+            width={props.canvasDetails.canvas_width}
+            height={props.canvasDetails.canvas_height}
             style={{ border: '1px solid grey' }}
-            style={background_color_stage ? { background: background_color_stage, border: '1px solid grey' } : { background: "white", border: '1px solid grey' }}
+            style={background_color_stage ? {
+              background: background_color_stage,
+              borderStyle: 'dashed',
+              borderColor: '#D6CBE3', border: '1px solid grey'
+            } : {
+                background: "white", border: '1px solid grey', borderStyle: 'dashed',
+                borderColor: '#D6CBE3'
+              }}
             ref={stageRef}
             onMouseDown={checkDeselect}
             onTouchStart={checkDeselect}
@@ -360,42 +310,45 @@ const Canvas = (props) => {
           >
             {/* <Layer><LionImage /></Layer> */}
             <Layer>
-              {/* <LionImage
+              <LionImage
                 isSelected={0}
                 onSelect={() => {
                   selectImage(null);
                 }}
-
-
-              ></LionImage> */}
+              ></LionImage>
               <Text
                 text={props.canvasDetails.titles}
                 fontStyle={fontStyleTitle}
-                fontSize={fontSizeTitle}
-                x={x}
-                y={y}
+                fontSize={30}
+                // x={x}
+                // y={y}
+                x={props.canvasDetails.title_position_x}
+                y={props.canvasDetails.title_position_y}
                 drawBorder={true}
                 draggable
                 fill={textColor ? textColor : 'black'}
                 onDragStart={() => {
                 }}
                 onDragEnd={(e) => {
-                  x = e.target.x();
-                  y = e.target.y();
+                  // y = (e.target.x())
+                  props.dispatch(setTitlePositionX(e.target.x()))
+                  console.log("x " + e.target.x())
+                  // x = (e.target.x())
+                  props.dispatch(setTitlePositionY(e.target.y()))
                 }}
               />
               <Text
                 text={title2}
                 fontSize="30"
-                x={z}
-                y={w}
+                // x={z}
+                // y={w}
                 draggable
                 fill={'black'}
                 onDragStart={() => {
                 }}
                 onDragEnd={(e) => {
-                  z = e.target.x();
-                  w = e.target.y();
+                  // z = e.target.x();
+                  // w = e.target.y();
                 }}
               />
               {/* <Portal>

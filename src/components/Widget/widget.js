@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 
 import {
     setDisplayTitleEditor
-} from '../../redux/actions/componentsActions'
+} from '../../redux/actions/componentsActions';
 
 import {
     setTitlesCanvas
@@ -38,6 +38,11 @@ class Widget extends Component {
 
 
         console.log("open title editor " + this.props.displayComponents.display_title_editor)
+    }
+    sectionFunc() {
+
+
+
     }
 
     render() {

@@ -194,31 +194,30 @@ export default class CreateUser extends Component {
                 back_url = response.data.url;
                 alert("upload success");
             })
-        // .catch(function (err) {
-        //     alert("Error")
-        // })
+            .catch(function (err) {
+                alert("Error")
+            })
 
-        // const newTemplate = {
-        //     type: this.state.category,
-        //     background_img_name: this.state.background_img_name,
-        //     background_img_path: back_url,
-        //     title: this.state.title,
-        //     title_size: this.state.title_size,
-        //     title_color: this.state.title_color,
-        //     title_type: this.state.title_type,
-        //     title_position_x: this.state.title_position_x,
-        //     title_position_y: this.state.title_position_y,
-        //     element_img: this.state.element_img,
-        //     element_position_x: this.state.element_position_x,
-        //     element_position_y: this.state.element_position_y,
-        //     element_width: this.state.element_width,
-        //     element_height: this.state.element_height
-        // };
-
-        // console.log(newTemplate);
-        //save on mongodb
-        // axios.post('http://localhost:9000/templates/add', newTemplate)
-        //     .then(res => console.log(res.data));
+        const newTemplate = {
+            type: this.state.category,
+            background_img_name: this.state.background_img_name,
+            background_img_path: back_url,
+            title: this.state.title,
+            title_size: this.state.title_size,
+            title_color: this.state.title_color,
+            title_type: this.state.title_type,
+            title_position_x: this.state.title_position_x,
+            title_position_y: this.state.title_position_y,
+            element_img: this.state.element_img,
+            element_position_x: this.state.element_position_x,
+            element_position_y: this.state.element_position_y,
+            element_width: this.state.element_width,
+            element_height: this.state.element_height
+        };
+        console.log(newTemplate);
+        // save on mongodb
+        axios.post('http://localhost:9000/templates/add', newTemplate)
+            .then(res => console.log(res.data));
 
         // this.setState({
         //     category: '',

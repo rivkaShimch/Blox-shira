@@ -118,11 +118,11 @@ export default class CreateUser extends Component {
         let back_img_name = e.target.value;
         let back_img_name_arr = back_img_name.split("\\");
         console.log("img " + back_img_name_arr[2])
-        let file_input = document.getElementById("files")
-        alert(file_input.value)
+        let file_input = document.getElementById("background_img_input").files[0]
+        alert(file_input)
         // file_input = file_input[0].files[0]
         // [0].files[0]
-        let full_path = file_input.value
+        let full_path = file_input
         // let full_path = "../background_images/" + back_img_name_arr[2]
         // console.log(full_path)
         this.setState({
@@ -181,36 +181,22 @@ export default class CreateUser extends Component {
         myFile.append("file", fileToUpload);
         let back_url = '';
         let uId = 'uLKS7DPkWsdywmn1LaRv1gI3RYL2'
+
         fetch("https://files.leader.codes/api/" + uId + "/upload", {
             mode: 'no-cors',
             method: 'post',
             body: myFile,
         })
-            .then(function (data) {
-                back_url = JSON.parse(data).data.url;
+            .then(function (response) {
+                // console.log("data " + JSON.parse(data.data))
+                response = response.JSON;
+                console.log(response);
+                back_url = response.data.url;
                 alert("upload success");
             })
-            .catch(function (err) {
-                alert("Error")
-            })
-
-
-        // $.ajax({
-        //     type: "POST",
-        //     url: "https://files.leader.codes/api/" + uId + "/upload",
-        //     headers: { Authentication: jwtFromCookie },
-        //     data: myFile,
-        //     processData: false,
-        //     contentType: false,
-        //     success: function (data) {
-        //         back_url = JSON.parse(data).data.url;
-        //         alert("upload success");
-        //     },
-        //     error: function (err) {
-        //         alert(err);
-        //     },
-        // });
-
+        // .catch(function (err) {
+        //     alert("Error")
+        // })
 
         // const newTemplate = {
         //     type: this.state.category,
@@ -275,7 +261,7 @@ export default class CreateUser extends Component {
                         </div>
                         <div className="f orm-group">
                             <label>Background Img: </label>
-                            <input type="file" className="btn" id="background_img" onChange={this.onChangeBackgroundImg} id="files" />
+                            <input type="file" className="btn" id="background_img_input" onChange={this.onChangeBackgroundImg} name="files[]" />
                         </div>
 
                         <div className="f orm-group">
@@ -320,14 +306,12 @@ export default class CreateUser extends Component {
                             <div className="d-flex flex-row">
                                 <label className="col-2">X-axis</label>
                                 <input className="col-2" type="text"
-                                    required
                                     className="form-control"
                                     value={this.state.title_position_x}
                                     onChange={this.onChangeTitlePositionX}
                                 />
                                 <label className="col-2">Y-axis</label>
                                 <input className="col-2" type="text"
-                                    required
                                     className="form-control"
                                     value={this.state.title_position_y}
                                     onChange={this.onChangeTitlePositionY}
@@ -345,14 +329,12 @@ export default class CreateUser extends Component {
                             <div className="d-flex flex-row">
                                 <label className="col-2">X-axis</label>
                                 <input className="col-2" type="text"
-                                    required
                                     className="form-control"
                                     value={this.state.element_position_x}
                                     onChange={this.onChangeElementPositionX}
                                 />
                                 <label className="col-2">Y-axis</label>
                                 <input className="col-2" type="text"
-                                    required
                                     className="form-control"
                                     value={this.state.element_position_y}
                                     onChange={this.onChangeElementPositionY}
@@ -365,14 +347,12 @@ export default class CreateUser extends Component {
                             <div className="d-flex flex-row">
                                 <label className="col-2">Width</label>
                                 <input className="col-2" type="text"
-                                    required
                                     className="form-control"
                                     value={this.state.element_width}
                                     onChange={this.onChangeElementWidth}
                                 />
                                 <label className="col-2">Height</label>
                                 <input className="col-2" type="text"
-                                    required
                                     className="form-control"
                                     value={this.state.element_height}
                                     onChange={this.onChangeElementHeight}

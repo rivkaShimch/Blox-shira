@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Scrollspy from 'react-scrollspy';
 import lines from '../img/lines.png';
 import Text from '../img/text.png';
+// import { Circle } from 'react-konva';
 import onOff from '../img/onOff.png';
 
 import { connect } from 'react-redux';
@@ -15,10 +16,11 @@ import { connect } from 'react-redux';
 
 import {
     setDisplayTitleEditor
-} from '../../redux/actions/componentsActions'
+} from '../../redux/actions/componentsActions';
 
-
-//   export default connect(mapStateToProps)(Canvas)
+import {
+    setTitlesCanvas
+} from '../../redux/actions/canvasActions'
 
 class Widget extends Component {
     constructor(props) {
@@ -26,20 +28,22 @@ class Widget extends Component {
         this.myRef = React.createRef();
         this.state = {
 
-            openTitleEditor: "none"
         };
         this.openTitleEditor = this.openTitleEditor.bind(this)
 
-
     }
     openTitleEditor() {
-        const title_editor_option = true;
-        this.setState({ display_TitleEditor: true })
-        this.props.dispatch(setDisplayTitleEditor(this.state.display_TitleEditor))
+        this.props.dispatch(setDisplayTitleEditor(true))
+        this.props.dispatch(setTitlesCanvas("TITLE 01"))
+
+
         console.log("open title editor " + this.props.displayComponents.display_title_editor)
+    }
+    sectionFunc() {
+
+
 
     }
-
 
     render() {
         return (
@@ -88,16 +92,16 @@ class Widget extends Component {
 
 
             </div >
-
-
-
-
         );
     }
 }
-const mapStateToProps = (state) => {
+
+function mapStateToProps(state) {
+    console.log("state   " + state.displayComponents.displayComponents)
     return {
-        displayComponents: state.displayComponents.displayComponents
+        displayComponents: state.displayComponents.displayComponents,
+        canvasDetails: state.canvasDetails.canvasDetails
     };
 }
 export default connect(mapStateToProps)(Widget)
+// export default (Widget)

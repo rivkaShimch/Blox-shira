@@ -11,19 +11,87 @@ body{
  .slider.round:before {
      border-radius: 50%;
    }
-   .sideLittleTitle{
-    width: auto;
-    margin-left: 18px;
-    font-size: 14px;
-    color: #75798E;
-  
+.sideLittleTitles{
+  color: #EBEAEA;
+  font-size: 13px;
+  font-weight: 400;
+
+}
+  .sideTitles{
+    color: #EBEAEA;
+    font-size: 17px;
+    font-weight: 400;
   }
-  .sideLittleDetail{
-    /* overflow:visible; */
-    width: auto;
-    margin-left: 18px;
-    font-size: 18px;
-    color: #CDCDD2;
-    margin-bottom: 29px;
-  
+  ::placeholder {
+    color:white;
+    opacity: 1; /* Firefox */
   }
+  
+/* .custom_pointer{
+   height:1.6vh; 
+   width: 1.5vh;
+    background-color: blue;
+    border-style: solid;
+     border-color: #979797;
+     border-width: 2px;
+   border-radius: 2vh;
+}  */
+
+
+/* #form .form-control{ 
+  margin-top:0.3rem!important;
+  border-radius:0.25rem!important;
+   color:#495057!important;
+   background-color:transparent!important;
+   border-color:#ced4da !important;
+  
+  } */
+
+  .slider {
+    -webkit-appearance: none;
+    width: 15vw;
+    height: 3px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 0.9vw;
+    height: 0.9vw;
+    border-radius: 50%;
+    background: #3A405E;
+    cursor: pointer;
+    border:1px solid white;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+ 

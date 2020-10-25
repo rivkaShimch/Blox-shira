@@ -20,7 +20,7 @@ border: none;
     /* align-items:center; */
     align-content: center;
     font-weight: 500;
-    color:rgb(248, 245, 245);
+    /* color:rgb(248, 245, 245); */
    
 }
 .arow_img{
@@ -43,6 +43,9 @@ border: none;
     color :#A66DFF ;
   
     text-decoration-color:#A66DFF ;
+}
+.ui.divider{
+    margin-top: 0;
 }
 .medAndSecImg{
     height: 9vh;
@@ -69,19 +72,48 @@ align-items:center;
     margin-left: 7vh;
 }
 .widget_button{
+    /* display: block; */
     border: none;
     background-color: none;
     padding: 0.8vh;
 
 }
 .widget_button:hover{
+    display: block;
     background-color: #f6f7f8;
 
 }
+.widget_button:active{
+    background-color:red;
+}
+.wrap_flow {
+    
+    width: 250px;
+    height: 150px;
+ 
+    overflow-y: scroll; /* Add the ability to scroll */
+  }
+  .wrap_flow::-webkit-scrollbar {
+    display: none;
+}
+
+.widget_button:{  background-color:red;}
 .imgDetails{
     height: 5vh;
     width: 5vh;
 }
+    .ss{
+        vertical-align: text-bottom;
+        
+    } 
+    .styleOverFlow{
+     overflow: auto;
+      max-height: 17vh;
+      width: 200vh;
+      max-width: 45vh;
+      scrollbar-3dlight-color: lawngreen;
       
+     
+    } 
         
     

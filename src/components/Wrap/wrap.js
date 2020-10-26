@@ -503,7 +503,7 @@ class Wrap extends React.Component {
                 <div className="d-flex flex-row justify-content-between" style={{ maxWidth: "900px" }}>
 
                     <div className="d-flex flex-column justify-content-between col-5 ">
-                        <Edit_choice />
+                        {!this.props.displayComponents.display_setting_page ? <Edit_choice /> : <span></span>}
                     </div>
                     <div className="col-1">
 
@@ -516,21 +516,21 @@ class Wrap extends React.Component {
                         {!this.props.displayComponents.display_setting_page ? this.props.displayComponents.new_canva ? <div><Canvas /></div> : <img src={require('./assets/tellYourStory.jpg')} /> : <span></span>}
 
 
-                            {/* <Route path="/lastFiles" component={lastFiles} /> */}
-                            {/* <div className={classes.toolbar} /> */}
-                            {/* {this.showTips()} */}
-                            {this.props.displayComponents.new_canva ? <Canvas /> : <span></span>}
+                        {/* <Route path="/lastFiles" component={lastFiles} /> */}
+                        {/* <div className={classes.toolbar} /> */}
+                        {/* {this.showTips()} */}
+                        {this.props.displayComponents.new_canva ? <Canvas /> : <span></span>}
 
-                            {/* פלוס אייקון שהורדנו*/}
-                            {/* <div style={{ direction: 'rtl' }} onMouseLeave={this.closeFastAccses}> */}
-                            {/* {this.state.hidden===false ?( */}
-                            {/* {this.fastAccses()} */}
-                            {/* : null } */}
+                        {/* פלוס אייקון שהורדנו*/}
+                        {/* <div style={{ direction: 'rtl' }} onMouseLeave={this.closeFastAccses}> */}
+                        {/* {this.state.hidden===false ?( */}
+                        {/* {this.fastAccses()} */}
+                        {/* : null } */}
 
-                            {/* </div> */}
+                        {/* </div> */}
 
 
-                        </main>
+                        {/* </main> */}
                     </div>
                 </div>
                 <Drawer anchor={'right'} classes={{ paper: clsx(classes.drawerPaper, { [classes.drawerPaperLight]: this.state.color === 'black', }) }} className={clsx(classes.configurator, {
@@ -553,7 +553,7 @@ class Wrap extends React.Component {
 
 
                     <div className={classes.row} style={{ position: 'static', marginTop: '5vh', marginBottom: '2vh' }}>
-                        <IconButton edge="end" color="inherit" aria-label="setting" >
+                        <IconButton edge="end" color="inherit" aria-label="setting" onClick={this.onClickSetting} >
                             {/* component={Link} to="/lastFiles" */}
                             <SettingsIcon style={{ color: this.state.color }} />
                         </IconButton>
@@ -804,6 +804,9 @@ class Wrap extends React.Component {
             this.setState({ color: 'gray', fontColor: 'white', arrowColor: 'gray' });
     };
     onClickSetting = () => {
+        debugger
+        console.log("in onClickSetting")
+
         if (!this.state.bringDataFromDB) {
             this.setState({
                 bringDataFromDB: true

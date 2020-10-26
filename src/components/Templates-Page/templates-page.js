@@ -23,9 +23,7 @@ import {
     setElementImg
 } from '../../redux/actions/canvasActions'
 import {
-    setDisplayTitleEditor,
-    setDisplaySettingPage,
-    setNewCanva
+    setDisplayMainOption
 } from '../../redux/actions/componentsActions'
 
 class TemplateCards extends Component {
@@ -41,9 +39,7 @@ class TemplateCards extends Component {
     onClickNewProject() {
         this.props.dispatch(setTitlesCanvas(""))
         console.log("onClickNewProject setTitlesCanvas " + this.props.canvasDetails.titles)
-        this.props.dispatch(setDisplayTitleEditor(false))
-        this.props.dispatch(setDisplaySettingPage(false))
-        this.props.dispatch(setNewCanva(true))
+        this.props.dispatch(setDisplayMainOption('canva'))
     }
 
     onClickTemplateCard = (name) => {
@@ -53,6 +49,7 @@ class TemplateCards extends Component {
             .then(res => {
                 console.log(res.data)
                 let template_data = res.data[0]
+
                 //update all the variable of the canvas
                 this.props.dispatch(setTitlesCanvas(template_data.titles))
                 this.props.dispatch(setTitlePositionX(template_data.title_position_x))
@@ -70,29 +67,7 @@ class TemplateCards extends Component {
                 this.props.dispatch(setElementWidth(template_data.element_width))
                 this.props.dispatch(setElementHeight(template_data.element_height))
 
-
-
-                this.props.dispatch(setDisplayTitleEditor(true))
-                this.props.dispatch(setDisplaySettingPage(false))
-                this.props.dispatch(setNewCanva(true))
-                // template_name = req.body.template_name;
-                // canvas_width = req.body.canvas_width;
-                // const canvas_height = req.body.canvas_height;
-                // const background_img_name = req.body.background_img_name;
-                // const background_img_path = req.body.background_img_path;
-                // const titles = req.body.titles;
-                // const title_size = req.body.title_size;
-                // const title_color = req.body.title_color;
-                // const title_type = req.body.title_type;
-                // const title_position_x = req.body.title_position_x;
-                // const title_position_y = req.body.title_position_y;
-                // const element_img = req.body.element_img;
-                // const element_position_x = req.body.element_position_x;
-                // const element_position_y = req.body.element_position_y;
-                // const element_width = req.body.element_width;
-                // const element_height = req.body.element_height;
-
-
+                this.props.dispatch(setDisplayMainOption('canva'))
             });
 
 

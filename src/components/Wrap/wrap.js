@@ -67,6 +67,8 @@ import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { TextField, createMuiTheme } from '@material-ui/core';
+import axios from 'axios';
+
 import './wrap.css';
 import quote from './assets/quote.png';
 import profil from './assets/profil.png';
@@ -75,13 +77,20 @@ import logo from './assets/logo.png';
 import Canvas from '../canvas';
 import Edit_choice from '../Edit_choice/edit_choice';
 import Title_Editor from '../Title_Editor/title_editor';
-
+import Image_Editor from '../Image_Editor/image_editor';
+import TemplateCards from '../Templates-Page/templates-page'
+import 'semantic-ui-css/semantic.min.css'
 import { connect } from 'react-redux';
 
 import {
-    setDisplayTitleEditor
-} from '../../redux/actions/componentsActions'
+    setDisplayTitleEditor,
+    setDisplaySettingPage,
 
+} from '../../redux/actions/componentsActions'
+import {
+    addTemplateImage
+
+} from '../../redux/actions/canvasActions'
 const drawerWidth = '15%';
 const useStyles = theme => ({
     // root: {
@@ -106,12 +115,12 @@ const useStyles = theme => ({
     // },
     root: {
         display: 'flex',
-        position: 'relative',
+        position: 'relative'
     },
     configurator: {
         zIndex: theme.zIndex.drawer + 10,
         position: 'relative',
-        marginTop: '50px',
+        marginTop: '60px',
         height: 'calc(100% - 64px)',
         top: 64,
         flexShrink: 0,
@@ -550,20 +559,20 @@ class Wrap extends React.Component {
                             xmlns="http://www.w3.org/2000/svg"
                             width="8.211"
                             height="11.124"
-                        // viewBox="0 0 8.211 11.124"
-                        >
+                            viewBox="0 0 8.211 11.124">
                             <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
                                 transform="translate(-5.5 0)" /></svg>}
                         style={{ color: this.state.color, textTransform: "inherit", height: "40px", paddingLeft: "20px", fontSize: "15px" }}
                         onClick={this.f}>Page Setting</Button>
                         : <span></span>}
-                    {this.props.displayComponents.display_title_editor ? <Title_Editor /> : <span></span>}
+                    {this.props.displayComponents.display_editor == "title" ? <Title_Editor /> : <span></span>}
+                    {this.props.displayComponents.display_editor == "image" ? <Image_Editor /> : <span></span>}
                     {header_fashion_media ? <div>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Blank Page</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Template</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Thank You Email</Button>
                     </div> : <span></span>}
-                    <AppBar position="absolute" color="primary" className={classes.appBarBottom}>
+                    <AppBar position="absolute" color="primary" className={classes.appBarBottom} style={{ width: "17vw", position: "fixed" }}>
                         <Toolbar style={{ minHeight: '40px', paddingLeft: "10px", paddingRight: "0px" }}>
 
                             {/* <IconButton edge="start" color="inherit" aria-label="open drawer">
@@ -593,13 +602,16 @@ class Wrap extends React.Component {
                                 color="primary"
                                 aria-label="add"
                                 className={classes.margin}
+                                onClick={this.onClickSave}
+
+
                             >
                                 <svg style={{ fill: "white", flexShrink: 0, margin: '5px' }}
                                     xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124"
                                     viewBox="0 0 8.211 11.124">
                                     <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
                                         transform="translate(-5.5 0)" /></svg>
-                                                        Publish
+                                                        Save
                                            </Fab>
                         </Toolbar>
                     </AppBar>
@@ -778,7 +790,52 @@ class Wrap extends React.Component {
         else
             this.setState({ color: 'gray', fontColor: 'white', arrowColor: 'gray' });
     };
+    onClickSetting = () => {
+        this.props.dispatch(setDisplaySettingPage(true))
 
+    };
+
+    downloadURI = (uri, name) => {
+        var link = document.createElement('a');
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link.click;
+    }
+    OnClickSave = () => {
+        let dataURL = (this.props.canvasDetails.dataURL)
+        debugger
+        let image_base64 = (dataURL.toDataURL())
+        this.props.dispatch(addTemplateImage(image_base64))
+        console.log(this.props.canvasDetails.imageTemplates)
+        // this.downloadURI(dataURL.toDataURL(), 'my_template.png');
+        const newTemplate = {
+            template_name: this.props.canvasDetails.name,
+            canvas_width: this.props.canvasDetails.canvas_width,
+            canvas_height: this.props.canvasDetails.canvas_height,
+            background_img_name: this.props.canvasDetails.background_img_name,
+            background_img_path: this.props.canvasDetails.background_img_path,
+            titles: this.props.canvasDetails.titles,
+            title_size: this.props.canvasDetails.title_size,
+            title_color: this.props.canvasDetails.title_color,
+            title_type: this.props.canvasDetails.title_type,
+            title_position_x: this.props.canvasDetails.title_position_x,
+            title_position_y: this.props.canvasDetails.title_position_y,
+            element_img: this.props.canvasDetails.element_img,
+            element_position_x: this.props.canvasDetails.element_position_x,
+            element_position_y: this.props.canvasDetails.element_position_y,
+            element_width: this.props.canvasDetails.element_width,
+            element_height: this.props.canvasDetails.element_height
+        };
+        console.log(newTemplate);
+        // save on mongodb
+        // axios.post('http://localhost:9000/templates/add', newTemplate)
+        //     .then(res => console.log(res.data));
+
+
+    };
     handleClose = () => {
         this.setState({ openSpeedDial: false });
     };
@@ -796,7 +853,9 @@ class Wrap extends React.Component {
 function mapStateToProps(state) {
     console.log("state   " + state.displayComponents.displayComponents)
     return {
-        displayComponents: state.displayComponents.displayComponents
+        displayComponents: state.displayComponents.displayComponents,
+        canvasDetails: state.canvasDetails.canvasDetails
+
     };
 }
 export default connect(mapStateToProps)((withStyles(useStyles))(Wrap))

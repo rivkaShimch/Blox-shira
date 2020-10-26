@@ -18,9 +18,9 @@ body{
 
 }
   .sideTitles{
-    color: #EBEAEA;
-    font-size: 17px;
-    font-weight: 400;
+    color: white;
+    font-size: 0.9rem;
+    /* margin: 22px 0px 0px; */
   }
   ::placeholder {
     color:white;
@@ -49,7 +49,7 @@ body{
 
   .slider {
     -webkit-appearance: none;
-    width: 15vw;
+    /* width: 15vw; */
     height: 3px;
     border-radius: 5px;
     background: #d3d3d3;
@@ -82,7 +82,21 @@ body{
     cursor: pointer;
   }
   
-
+  .input_line{
+    /* width: 3vw; */
+    color: rgb(168, 170, 179);
+    background-color: transparent;
+    border-top-width: initial;
+    border-right-width: initial;
+    border-left-width: initial;
+    font-size: 0.8rem;
+    border-style: none none solid;
+    border-color: initial;
+    border-image: initial;
+    border-bottom: 1px solid;
+    border-radius: 0px;
+    padding: 0px;
+}
 
 
 

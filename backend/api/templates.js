@@ -21,33 +21,60 @@ router.get('/', (req, res) => {
         .catch(err => console.log(err))
 })
 router.post('/add', upload.single('image'), (req, res) => {
-    const type = req.body.type;
-    const background_img = req.body.background_img;
-    const title = req.body.title;
+    const template_name = req.body.template_name;
+    const canvas_width = req.body.canvas_width;
+    const canvas_height = req.body.canvas_height;
+    const background_img_name = req.body.background_img_name;
+    const background_img_path = req.body.background_img_path;
+    const titles = req.body.titles;
     const title_size = req.body.title_size;
     const title_color = req.body.title_color;
     const title_type = req.body.title_type;
-    const title_position = req.body.title_position;
+    const title_position_x = req.body.title_position_x;
+    const title_position_y = req.body.title_position_y;
     const element_img = req.body.element_img;
-    const element_position = req.body.element_position;
-    const element_size = req.body.element_size;
+    const element_position_x = req.body.element_position_x;
+    const element_position_y = req.body.element_position_y;
+    const element_width = req.body.element_width;
+    const element_height = req.body.element_height;
 
-    //get the image name
-    var back_img_name = background_img.split("\\");
-    console.log(back_img_name[2])
 
     const newTemplate = new Template({
-        type: type,
-        background_img: { data: fs.readFileSync(path.join(__dirname + '/uploads/' + back_img_name[2])), contentType: 'image/png' },
-        title: title,
+        template_name: template_name,
+        canvas_width: canvas_width,
+        canvas_height: canvas_height,
+        background_img_name: background_img_name,
+        background_img_path: background_img_path,
+        titles: titles,
         title_size: title_size,
         title_color: title_color,
         title_type: title_type,
-        title_position: title_position,
-        element_img: { data: element_img, contentType: 'image/png' },
-        element_position: element_position,
-        element_size: element_size
+        title_position_x: title_position_x,
+        title_position_y: title_position_y,
+        element_img: element_img,
+        element_position_x: element_position_x,
+        element_position_y: element_position_y,
+        element_width: element_width,
+        element_height: element_height
     })
+
+
+    //get the image name
+    // var back_img_name = background_img.split("\\");
+    // console.log(back_img_name[2])
+
+    // const newTemplate = new Template({
+    //     type: type,
+    //     background_img: { data: fs.readFileSync(path.join(__dirname + '/uploads/' + back_img_name[2])), contentType: 'image/png' },
+    //     title: title,
+    //     title_size: title_size,
+    //     title_color: title_color,
+    //     title_type: title_type,
+    //     title_position: title_position,
+    //     element_img: { data: element_img, contentType: 'image/png' },
+    //     element_position: element_position,
+    //     element_size: element_size
+    // })
     newTemplate.save()
         .then(() => res.json({
             message: "Created Template successfully"

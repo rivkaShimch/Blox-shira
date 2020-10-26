@@ -53,8 +53,8 @@ border: none;
 }
 .icon_style{
 align-items:center;
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     background-color: #E8EAEC ;
     /* padding: 20px; */
     border-radius: 50%;
@@ -83,7 +83,7 @@ align-items:center;
     background-color: #f6f7f8;
 
 }
-.widget_button:active{
+.widget_button:active:{
     background-color:red;
 }
 .wrap_flow {
@@ -97,7 +97,8 @@ align-items:center;
     display: none;
 }
 
-.widget_button:{  background-color:red;}
+.widget_button:active
+{  background-color:red;}
 .imgDetails{
     height: 5vh;
     width: 5vh;

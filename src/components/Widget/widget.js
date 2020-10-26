@@ -10,12 +10,14 @@ import lines from '../img/lines.png';
 import Text from '../img/text.png';
 // import { Circle } from 'react-konva';
 import onOff from '../img/onOff.png';
-
+import imageButton from '../img/imageButton.png';
 import { connect } from 'react-redux';
 
 
 import {
-    setDisplayTitleEditor
+    setDisplayTitleEditor,
+    setDisplayEditor,
+    setDisplayImageEditor
 } from '../../redux/actions/componentsActions';
 
 import {
@@ -30,14 +32,18 @@ class Widget extends Component {
 
         };
         this.openTitleEditor = this.openTitleEditor.bind(this)
+        this.openImageEditor = this.openImageEditor.bind(this)
 
     }
     openTitleEditor() {
-        this.props.dispatch(setDisplayTitleEditor(true))
+        this.props.dispatch(setDisplayEditor("title"))
         this.props.dispatch(setTitlesCanvas("TITLE 01"))
 
 
         console.log("open title editor " + this.props.displayComponents.display_title_editor)
+    }
+    openImageEditor() {
+        this.props.dispatch(setDisplayEditor("image"))
     }
     sectionFunc() {
 
@@ -58,9 +64,9 @@ class Widget extends Component {
                     <div className="d-flex flex-col justify-content-between icon_text"> Title </div>
                 </div>
 
-                <div className="d-flex flex-row  widget_button " onClick={this.openTitleEditor}>
-                    <div className="d-flex flex-column justify-content-center ml-4 mr-3 "> <img className="imgDetails" src={onOff} alt="icon" /></div>
-                    <div className="d-flex flex-col justify-content-between icon_text"> Button </div>
+                <div className="d-flex flex-row  widget_button " onClick={this.openImageEditor}>
+                    <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "17px", width: "17px" }} src={imageButton} alt="icon" /></div>
+                    <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
                 </div>
                 <div className="d-flex flex-row  widget_button " onClick={this.openTitleEditor}>
                     <div className="d-flex flex-column justify-content-center ml-4 mr-3 "> <img className="imgDetails" src={Text} alt="icon" /></div>

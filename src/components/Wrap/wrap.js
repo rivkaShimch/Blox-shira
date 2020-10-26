@@ -77,22 +77,20 @@ import logo from './assets/logo.png';
 import Canvas from '../canvas';
 import Edit_choice from '../Edit_choice/edit_choice';
 import Title_Editor from '../Title_Editor/title_editor';
+import Image_Editor from '../Image_Editor/image_editor';
 import TemplateCards from '../Templates-Page/templates-page'
 import 'semantic-ui-css/semantic.min.css'
-
-
 import { connect } from 'react-redux';
 
 import {
-    setDisplaySettingPage,
     setDisplayTitleEditor,
+    setDisplaySettingPage,
 
 } from '../../redux/actions/componentsActions'
 import {
     addTemplateImage
 
 } from '../../redux/actions/canvasActions'
-
 const drawerWidth = '15%';
 const useStyles = theme => ({
     // root: {
@@ -331,9 +329,7 @@ class Wrap extends React.Component {
         // const new_button = false
 
         return (
-            <div className="d-flex " style={{
-                backgroundColor: '#E8EAEC'
-            }}>
+            <div className="d-flex " style={{ backgroundColor: "#f1f1f1" }}>
                 {/* <Router> */}
                 {/* <CssBaseline /> */}
 
@@ -498,38 +494,32 @@ class Wrap extends React.Component {
                         </ListItem>
 
                     </List>
-                </Drawer>{this.props.displayComponents.display_setting_page ?
-                    <div className="d-flex justify-content-center" style={{ backgroundColor: "white", marginTop: "100px" }}>
-                        <TemplateCards />
-                    </div> : <span></span>}
-
-
+                </Drawer>
                 <div className="d-flex flex-row justify-content-between">
                     <div className="d-flex flex-column justify-content-between col-5 ">
-                        {console.log("display setting " + this.props.displayComponents.display_setting_page)}
-                        {this.props.displayComponents.display_setting_page ? <span></span> :
-                            <Edit_choice />}
+                        <Edit_choice />
                     </div>
                     <div className="col-1">
 
                     </div>
                     <div className="d-flex flex-column justify-content-around col-6">
-                        {/* <main className={classes.content} style={{ height: "200px", width: "400px" }}> */}
-                        {/* <Route path="/lastFiles" component={lastFiles} /> */}
-                        {/* <div className={classes.toolbar} /> */}
-                        {/* {this.showTips()} */}
-                        {!this.props.displayComponents.display_setting_page ? this.props.displayComponents.new_canva ? <div><Canvas /></div> : <span></span> : <span></span>}
+                        <main className={classes.content} style={{ height: "200px", width: "400px" }}>
 
-                        {/* פלוס אייקון שהורדנו*/}
-                        {/* <div style={{ direction: 'rtl' }} onMouseLeave={this.closeFastAccses}> */}
-                        {/* {this.state.hidden===false ?( */}
-                        {/* {this.fastAccses()} */}
-                        {/* : null } */}
+                            {/* <Route path="/lastFiles" component={lastFiles} /> */}
+                            {/* <div className={classes.toolbar} /> */}
+                            {/* {this.showTips()} */}
+                            {this.props.displayComponents.new_canva ? <Canvas /> : <span></span>}
 
-                        {/* </div> */}
+                            {/* פלוס אייקון שהורדנו*/}
+                            {/* <div style={{ direction: 'rtl' }} onMouseLeave={this.closeFastAccses}> */}
+                            {/* {this.state.hidden===false ?( */}
+                            {/* {this.fastAccses()} */}
+                            {/* : null } */}
+
+                            {/* </div> */}
 
 
-                        {/* </main> */}
+                        </main>
                     </div>
                 </div>
                 <Drawer anchor={'right'} classes={{ paper: clsx(classes.drawerPaper, { [classes.drawerPaperLight]: this.state.color === 'black', }) }} className={clsx(classes.configurator, {
@@ -554,7 +544,7 @@ class Wrap extends React.Component {
                     <div className={classes.row} style={{ position: 'static', marginTop: '5vh', marginBottom: '2vh' }}>
                         <IconButton edge="end" color="inherit" aria-label="setting" >
                             {/* component={Link} to="/lastFiles" */}
-                            <SettingsIcon onClick={this.onClickSetting} style={{ color: this.state.color }} />
+                            <SettingsIcon style={{ color: this.state.color }} />
                         </IconButton>
                         <Typography variant="h6" style={{ flexGrow: 5, color: this.state.fontColor, textAlign: 'center' }}>
                             {/*create new page*/}
@@ -563,27 +553,26 @@ class Wrap extends React.Component {
                             <InvertColorsIcon style={{ color: this.state.color }} />
                         </IconButton>
                     </div>
-
-                    {!this.props.displayComponents.display_setting_page  ? <Button variant="outlined"
+                    {page_setting_button ? <Button variant="outlined"
                         size="medium" className={classes.configuratorContent}
                         endIcon={<svg style={{ fill: this.state.color }}
                             xmlns="http://www.w3.org/2000/svg"
                             width="8.211"
                             height="11.124"
-                        // viewBox="0 0 8.211 11.124"
-                        >
+                            viewBox="0 0 8.211 11.124">
                             <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
                                 transform="translate(-5.5 0)" /></svg>}
                         style={{ color: this.state.color, textTransform: "inherit", height: "40px", paddingLeft: "20px", fontSize: "15px" }}
                         onClick={this.f}>Page Setting</Button>
                         : <span></span>}
-                    {this.props.displayComponents.display_title_editor ? <Title_Editor /> : <span></span>}
-                    {this.props.displayComponents.display_setting_page ? <div>
+                    {this.props.displayComponents.display_editor == "title" ? <Title_Editor /> : <span></span>}
+                    {this.props.displayComponents.display_editor == "image" ? <Image_Editor /> : <span></span>}
+                    {header_fashion_media ? <div>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Blank Page</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Template</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Thank You Email</Button>
                     </div> : <span></span>}
-                    <AppBar position="absolute" color="primary" className={classes.appBarBottom}>
+                    <AppBar position="absolute" color="primary" className={classes.appBarBottom} style={{ width: "17vw", position: "fixed" }}>
                         <Toolbar style={{ minHeight: '40px', paddingLeft: "10px", paddingRight: "0px" }}>
 
                             {/* <IconButton edge="start" color="inherit" aria-label="open drawer">
@@ -613,9 +602,10 @@ class Wrap extends React.Component {
                                 color="primary"
                                 aria-label="add"
                                 className={classes.margin}
-                                onClick={this.OnClickSave}
-                            >
+                                onClick={this.onClickSave}
 
+
+                            >
                                 <svg style={{ fill: "white", flexShrink: 0, margin: '5px' }}
                                     xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124"
                                     viewBox="0 0 8.211 11.124">
@@ -846,8 +836,6 @@ class Wrap extends React.Component {
 
 
     };
-
-
     handleClose = () => {
         this.setState({ openSpeedDial: false });
     };
@@ -867,6 +855,8 @@ function mapStateToProps(state) {
     return {
         displayComponents: state.displayComponents.displayComponents,
         canvasDetails: state.canvasDetails.canvasDetails
+
     };
 }
 export default connect(mapStateToProps)((withStyles(useStyles))(Wrap))
+//export default Wrap;

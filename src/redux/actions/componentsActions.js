@@ -16,3 +16,15 @@ export function setNewCanva(canva) {
         payload: canva
     };
 }
+export function setDisplayImageEditor(image) {
+    return {
+        type: 'DISPLAY_IMAGE_EDITOR',
+        payload: image
+    };
+}
+export function setDisplayEditor(image) {
+    return {
+        type: 'DISPLAY_EDITOR',
+        payload: image
+    };
+}

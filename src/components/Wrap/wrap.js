@@ -313,7 +313,8 @@ class Wrap extends React.Component {
             background: '#3a405e 0% 0% no-repeat padding-box',
             fontColor: 'white',
             arrowColor: '#B1B1B1',
-            openSpeedDial: false
+            openSpeedDial: false,
+            bringDataFromDB: false
         };
     }
 
@@ -326,8 +327,7 @@ class Wrap extends React.Component {
         const header_fashion_media = false
         const page_setting_button = true
         // const title_editor_option = this.props.displayComponents.display_title_editor
-        console.log("open title editor in wrap " + this.props.displayComponents.display_title_editor)
-
+        // console.log("open title editor in wrap " + this.props.displayComponents.display_title_editor)
         // const new_button = false
 
         return (
@@ -498,13 +498,13 @@ class Wrap extends React.Component {
                         </ListItem>
 
                     </List>
-                </Drawer>{this.props.displayComponents.display_setting_page ?
-                    <div className="d-flex justify-content-center" style={{ backgroundColor: "white", marginTop: "100px" }}>
+                </Drawer>
+                {this.props.displayComponents.display_setting_page ?
+                    <div className="d-flex justify-content-center" style={{ marginTop: "100px" }}>
                         <TemplateCards />
                     </div> : <span></span>}
 
-
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-row justify-content-between" style={{ maxWidth: "900px" }}>
                     <div className="d-flex flex-column justify-content-between col-5 ">
                         {console.log("display setting " + this.props.displayComponents.display_setting_page)}
                         {this.props.displayComponents.display_setting_page ? <span></span> :
@@ -518,7 +518,7 @@ class Wrap extends React.Component {
                         {/* <Route path="/lastFiles" component={lastFiles} /> */}
                         {/* <div className={classes.toolbar} /> */}
                         {/* {this.showTips()} */}
-                        {!this.props.displayComponents.display_setting_page ? this.props.displayComponents.new_canva ? <div><Canvas /></div> : <span></span> : <span></span>}
+                        {!this.props.displayComponents.display_setting_page ? this.props.displayComponents.new_canva ? <div><Canvas /></div> : <img src={require('./assets/tellYourStory.jpg')} /> : <span></span>}
 
                         {/* פלוס אייקון שהורדנו*/}
                         {/* <div style={{ direction: 'rtl' }} onMouseLeave={this.closeFastAccses}> */}
@@ -564,7 +564,7 @@ class Wrap extends React.Component {
                         </IconButton>
                     </div>
 
-                    {!this.props.displayComponents.display_setting_page  ? <Button variant="outlined"
+                    {!this.props.displayComponents.display_setting_page ? <Button variant="outlined"
                         size="medium" className={classes.configuratorContent}
                         endIcon={<svg style={{ fill: this.state.color }}
                             xmlns="http://www.w3.org/2000/svg"
@@ -801,6 +801,20 @@ class Wrap extends React.Component {
             this.setState({ color: 'gray', fontColor: 'white', arrowColor: 'gray' });
     };
     onClickSetting = () => {
+        if (!this.state.bringDataFromDB) {
+            this.setState({
+                bringDataFromDB: true
+            })
+            axios.get('http://localhost:9000/templateImages/')
+                .then(res => {
+                    console.log(res.data)
+                    let data = res.data
+                    data.map((image) => (
+                        this.props.dispatch(addTemplateImage(image))
+                    ))
+                    console.log("my array " + this.props.canvasDetails.imageTemplates)
+                })
+        }
         this.props.dispatch(setDisplaySettingPage(true))
 
     };
@@ -816,11 +830,18 @@ class Wrap extends React.Component {
     }
     OnClickSave = () => {
         let dataURL = (this.props.canvasDetails.dataURL)
-        debugger
         let image_base64 = (dataURL.toDataURL())
-        this.props.dispatch(addTemplateImage(image_base64))
-        console.log(this.props.canvasDetails.imageTemplates)
+        const newImageTemplate = {
+            image: image_base64,
+            name: this.props.canvasDetails.name
+        };
+        axios.post('http://localhost:9000/templateImages/add', newImageTemplate)
+            .then(
+                res => console.log(res.data));
+        // this.props.dispatch(addTemplateImage([image_base64, this.props.canvasDetails.name]))
+        // console.log(this.props.canvasDetails.imageTemplates)
         // this.downloadURI(dataURL.toDataURL(), 'my_template.png');
+        debugger
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
             canvas_width: this.props.canvasDetails.canvas_width,
@@ -841,8 +862,9 @@ class Wrap extends React.Component {
         };
         console.log(newTemplate);
         // save on mongodb
-        // axios.post('http://localhost:9000/templates/add', newTemplate)
-        //     .then(res => console.log(res.data));
+        axios.post('http://localhost:9000/templates/add', newTemplate)
+            .then(
+                res => console.log(res.data));
 
 
     };

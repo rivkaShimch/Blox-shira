@@ -26,6 +26,9 @@ body{
     color:white;
     opacity: 1; /* Firefox */
   }
+  #input_color{
+    
+  }
   
 /* .custom_pointer{
    height:1.6vh; 

@@ -17,6 +17,9 @@ app.use('/users', users);
 const templates = require('./api/templates');
 app.use('/templates', templates);
 
+const templateImages = require('./api/templateImages');
+app.use('/templateImages', templateImages);
+
 app.use(express.static(path.join(__dirname, '../build')))
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../build'))

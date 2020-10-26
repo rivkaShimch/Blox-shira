@@ -15,11 +15,26 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({ storage: storage });
-router.get('/', (req, res) => {
-    Template.find()
+
+
+router.get('/find', (req, res) => {
+    Template.find({ template_name: req.query.template_name })
         .then(templates => res.json(templates))
+        .then((res) => {
+            console.log(res)
+        })
         .catch(err => console.log(err))
 })
+
+
+// router.route('/:id').get((req, res) => {
+//     Exercise.findById(req.params.id)
+//       .then(exercise => res.json(exercise))
+//       .catch(err => res.status(400).json('Error: ' + err));
+//   });
+
+
+
 router.post('/add', upload.single('image'), (req, res) => {
     const template_name = req.body.template_name;
     const canvas_width = req.body.canvas_width;

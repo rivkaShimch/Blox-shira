@@ -5,14 +5,10 @@ import produce from 'immer'
 
 const initialState = {
   canvasDetails: {
-    name: "my template",
+    name: "",
     titles: "",
     dataURL: "",
-    imageTemplates: [{
-      image: null,
-      name: ''
-    }
-    ],
+    imageTemplates: [],
 
     canvas_width: 600,
     canvas_height: 400,
@@ -36,8 +32,7 @@ export default produce((state, action) => {
   switch (action.type) {
     case 'IMAGE_TEMPLATE':
       state.canvasDetails.imageTemplates = state.canvasDetails.imageTemplates.slice();
-      let image = [action.image, action.name]
-      state.canvasDetails.imageTemplates.push(image);
+      state.canvasDetails.imageTemplates.push(action.payload);
       break;
     case 'NAME_CANVAS':
       state.canvasDetails.name = action.payload;

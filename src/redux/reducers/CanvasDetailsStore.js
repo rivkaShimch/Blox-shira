@@ -5,7 +5,7 @@ import produce from 'immer'
 
 const initialState = {
   canvasDetails: {
-    name: "",
+    name: "Template Name",
     titles: "",
     dataURL: "",
     imageTemplates: [],

@@ -1,9 +1,8 @@
-export function addTemplateImage(image, name) {
+export function addTemplateImage(data) {
 
     return {
         type: 'IMAGE_TEMPLATE',
-        image: image,
-        name: name
+        payload: data
     };
 }
 export function setName(name) {

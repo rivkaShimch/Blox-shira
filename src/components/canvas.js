@@ -320,19 +320,17 @@ const Canvas = (props) => {
                 text={props.canvasDetails.titles}
                 fontStyle={fontStyleTitle}
                 fontSize={30}
-                // x={x}
-                // y={y}
                 x={props.canvasDetails.title_position_x}
                 y={props.canvasDetails.title_position_y}
                 drawBorder={true}
                 draggable
-                fill={textColor ? textColor : 'black'}
+                fill={props.canvasDetails.title_color ? props.canvasDetails.title_color : 'black'}
                 onDragStart={() => {
                 }}
                 onDragEnd={(e) => {
                   // y = (e.target.x())
                   props.dispatch(setTitlePositionX(e.target.x()))
-                  console.log("x " + e.target.x())
+                  console.log("x " + props.canvasDetails.title_position_x)
                   // x = (e.target.x())
                   props.dispatch(setTitlePositionY(e.target.y()))
                 }}

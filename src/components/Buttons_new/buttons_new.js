@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 
 import {
-    setNewCanva
+    setDisplayMainOption
 } from '../../redux/actions/componentsActions'
 
 
@@ -21,7 +21,7 @@ class Buttons_new extends Component {
         this.onClickNewFunc = this.onClickNewFunc.bind(this)
     }
     onClickNewFunc() {
-        this.props.dispatch(setNewCanva(true))
+        this.props.dispatch(setDisplayMainOption('canva'))
     }
 
     render() {

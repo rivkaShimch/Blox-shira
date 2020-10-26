@@ -85,6 +85,7 @@ import { connect } from 'react-redux';
 import {
     setDisplayTitleEditor,
     setDisplaySettingPage,
+    setDisplayMainOption,
 
 } from '../../redux/actions/componentsActions'
 import {
@@ -312,7 +313,7 @@ class Wrap extends React.Component {
             fontColor: 'white',
             arrowColor: '#B1B1B1',
             openSpeedDial: false,
-            bringDataFromDB: false
+            bringDataFromDB: false,
         };
     }
 
@@ -495,44 +496,57 @@ class Wrap extends React.Component {
 
                     </List>
                 </Drawer>
-                {this.props.displayComponents.display_setting_page ?
+                {/* {this.props.displayComponents.display_setting_page ?
                     <div className="d-flex justify-content-center" style={{ marginTop: "100px" }}>
-                        <TemplateCards />
+                        
                     </div> : <span></span>}
 
-                <div className="d-flex flex-row justify-content-between" style={{ maxWidth: "900px" }}>
+                 */}
+                {this.props.displayComponents.display_main_option === '' ?
+                    <div className="d-flex flex-row justify-content-between" style={{ maxWidth: "900px" }}>
+                        <div className="d-flex flex-column justify-content-between col-5 ">
+                            <Edit_choice />
+                        </div>
+                        <div className="d-flex flex-column justify-content-around col-6">
+                            <img src={require('./assets/tellYourStory.jpg')} />
+                        </div>
+                    </div>
+                    :
+                    <span></span>
+                }
 
-                    <div className="d-flex flex-column justify-content-between col-5 ">
+                {this.props.displayComponents.display_main_option === 'canva' ?
+                    <div className="d-flex flex-row justify-content-between" style={{ maxWidth: "900px" }}>
+                        <div className="d-flex flex-column justify-content-between col-5 ">
+                            <Edit_choice />
+                        </div>
+                        <div className="d-flex flex-column justify-content-around col-6">
+                            <Canvas />
+                        </div>
+                    </div>
+                    :
+                    <span></span>
+                }
+                {this.props.displayComponents.display_main_option === 'cards' ?
+                    <div className="d-flex flex-row justify-content-between" style={{ maxWidth: "900px" }}>
+                        <TemplateCards />
+                    </div>
+                    :
+                    <span></span>
+                }
+
+
+
+                {/* <div className="d-flex flex-column justify-content-between col-5 ">
                         {!this.props.displayComponents.display_setting_page ? <Edit_choice /> : <span></span>}
                     </div>
-                    <div className="col-1">
-
-                    </div>
                     <div className="d-flex flex-column justify-content-around col-6">
-                        {/* <main className={classes.content} style={{ height: "200px", width: "400px" }}> */}
-                        {/* <Route path="/lastFiles" component={lastFiles} /> */}
-                        {/* <div className={classes.toolbar} /> */}
-                        {/* {this.showTips()} */}
                         {!this.props.displayComponents.display_setting_page ? this.props.displayComponents.new_canva ? <div><Canvas /></div> : <img src={require('./assets/tellYourStory.jpg')} /> : <span></span>}
-
-
-                        {/* <Route path="/lastFiles" component={lastFiles} /> */}
-                        {/* <div className={classes.toolbar} /> */}
-                        {/* {this.showTips()} */}
-                        {this.props.displayComponents.new_canva ? <Canvas /> : <span></span>}
-
-                        {/* פלוס אייקון שהורדנו*/}
-                        {/* <div style={{ direction: 'rtl' }} onMouseLeave={this.closeFastAccses}> */}
-                        {/* {this.state.hidden===false ?( */}
-                        {/* {this.fastAccses()} */}
-                        {/* : null } */}
-
-                        {/* </div> */}
-
-
-                        {/* </main> */}
                     </div>
-                </div>
+
+                    <div><Canvas /></div> 
+                     <TemplateCards />
+                </div> */}
                 <Drawer anchor={'right'} classes={{ paper: clsx(classes.drawerPaper, { [classes.drawerPaperLight]: this.state.color === 'black', }) }} className={clsx(classes.configurator, {
                     [classes.configuratorOpen]: this.state.right,
                     [classes.configuratorClose]: !this.state.right,
@@ -804,8 +818,7 @@ class Wrap extends React.Component {
             this.setState({ color: 'gray', fontColor: 'white', arrowColor: 'gray' });
     };
     onClickSetting = () => {
-        debugger
-        console.log("in onClickSetting")
+        // console.log("in onClickSetting")
 
         if (!this.state.bringDataFromDB) {
             this.setState({
@@ -821,7 +834,8 @@ class Wrap extends React.Component {
                     console.log("my array " + this.props.canvasDetails.imageTemplates)
                 })
         }
-        this.props.dispatch(setDisplaySettingPage(true))
+        this.props.dispatch(setDisplayMainOption('cards'))
+        console.log("in onClickSetting " + this.props.displayComponents.display_main_option)
 
     };
 

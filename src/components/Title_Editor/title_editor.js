@@ -30,18 +30,6 @@ import TextField from '@material-ui/core/TextField';
 import alignLeftWhite1 from '../img/alignLeftWhite1.png';
 import alignRight from '../img/alignRight.png';
 
-class CustomPointer extends Component {
-    render() {
-        return (
-            <>
-                <div className="custom_pointer"></div>
-            </>
-        );
-
-    }
-}
-
-
 class Title_Editor extends Component {
     constructor(prop) {
         super(prop);
@@ -55,8 +43,12 @@ class Title_Editor extends Component {
             valueColor: "red",
             finalValueRange: '',
             finalValueColor: '',
+            SizeTitleValue: '',
             WidthTitleValue: '',
+            HeightTitleValue: '',
+            finalSizeTitleValue: '',
             finalWidthTitleValue: '',
+            finalHeightTitleValue: '',
 
             bold_img_align: 1
         };
@@ -101,86 +93,95 @@ class Title_Editor extends Component {
             <div className="col-12 d-flex flex-column justify-content-start">
 
 
-                <div className="d-flex flex-row justify-content-start mb-1">
-                    <div className="sideLittleTitles  mb-2">Title Setting</div>
-                </div>
+            <div className="d-flex flex-column justify-content-between" style={{ height: "400px", marginLeft: "20px", marginRight: "20px" }}>
+                <div className="d-flex flex-column justify-content-start">
+                    <div className="d-flex flex-row justify-content-between">
+                        <div className="sideLittleTitles  ">Title Setting</div>
+                    </div>
 
-                <div className="d-flex flex-row justify-content-between  mb-1 mt-2">
-                    <div className="d-flex flex-column  mb-2 sideTitles">Title Name</div>
-                    <div className="d-flex flex-row  mb-2">  <Switch /></div>
-                </div>
-
+                    <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column  sideTitles">Title Name</div>
+                        <div className="d-flex flex-row  ">  <Switch /></div>
+                    </div>
 
                 <div className="d-flex flex-column justify-content-start  mb-1">
                     <input className="w3-input  mb-2" style={{ color: "white", backgroundColor: "#3A405E" }}
                         onKeyUp={this.onChangeTitleInput} placeholder={this.props.canvasDetails.titles} />
+          </div>
 
-                </div>
 
-                <div className="d-flex flex-row justify-content-between mt-2  mb-1">
-                    <div className="d-flex flex-column sideTitles">Title Size</div>
-                </div>
+                <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-between sideTitles">
+                        <div className="d-flex flex-row sideTitles">Title Size</div>
 
-                <div className="d-flex flex-row justify-content-start  mb-2">
-                    <input type="range" min="1" max="100" className="slider mt-4  mb-1"
-                        value={this.state.valueRange}
-                        onChange={e => this.setState({ valueRange: (e.target.value) })}
-                        onAfterChange={e => this.setState({ finalValueRange: (e.target.value) })} />
-                    <input type="number" style={{ color: "white", backgroundColor: "#3A405E", width: "2vw" }} value={this.finalValueRange} />
 
-                </div>
-                <div className="d-flex flex-row justify-content-between mt-4 mb-1">
-                    <div className="d-flex flex-column sideTitles">Alignment</div>
-                    <div className="d-flex flex-column">
-                        <div className="d-flex flex-row">
-                            <img className="col" onClick={this.changeImage1} style={{ height: "20px" }} src={this.state.bold_img_align === 1 ? alignCenter : alignLeftWhite1} alt="icon" />
-                            <img className="col" onClick={this.changeImage2} style={{ height: "20px" }} src={this.state.bold_img_align === 2 ? alignCenter : alignLeftWhite1} alt="icon" />
-                            <img className="col" onClick={this.changeImage3} style={{ height: "20px" }} src={this.state.bold_img_align === 3 ? alignCenter : alignLeftWhite1} alt="icon" />
+                        <div className="d-flex flex-row justify-content-between">
+                            <input type="range" min="1" max="100" className="col-9 slider mt-3"
+                                value={this.state.SizeTitleValue}
+                                onChange={e => this.setState({ SizeTitleValue: (e.target.value) })}
+                                onAfterChange={e => this.setState({ finalSizeTitleValue: (e.target.value) })} />
+                            <input className="input_line col-2" value={this.finalSizeTitleValue} />
 
                         </div>
                     </div>
                 </div>
-                <div className="d-flex flex-row justify-content-between mt-4 mb-1">
+
+
+                <div className="d-flex flex-row justify-content-between ">
+                    <div className="d-flex flex-column sideTitles mr-5">Alignment</div>
+                    <div className="d-flex flex-column">
+                        <div className="d-flex flex-row justify-content-end">
+                            <img onClick={this.changeImage1} style={{ height: "20px", marginLeft: "9px" }} src={this.state.bold_img_align === 1 ? alignCenter : alignLeftWhite1} alt="icon" />
+                            <img onClick={this.changeImage2} style={{ height: "20px", marginLeft: "9px" }} src={this.state.bold_img_align === 2 ? alignCenter : alignLeftWhite1} alt="icon" />
+                            <img onClick={this.changeImage3} style={{ height: "20px", marginLeft: "9px" }} src={this.state.bold_img_align === 3 ? alignCenter : alignLeftWhite1} alt="icon" />
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+               <div className="d-flex flex-row justify-content-between mt-4 mb-1">
                     <div className="d-flex flex-column sideTitles">Title Fill</div>
-                    <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
+                   <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
                         onChange={this.onChangeTitleColor} value={this.props.canvasDetails.title_color} />
-                    {/* <input type="color" className="d-flex flex-column form-control" name="favcolor" value={this.state.finalValueColor}
-                        onChange={e => this.setState({ valueColor: (e.target.value) })}
-                        onAfterChange={e => this.setState({ finalValueColor: (e.target.value) })} /> */}
                 </div>
 
 
 
+                <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-between sideTitles">
+                        <div className="d-flex flex-row sideTitles">Title Width</div>
 
-                <div className="d-flex flex-row justify-content-between mt-2 mb-2">
-                    <div className="d-flex flex-column sideTitles">Title Width</div>
+
+                        <div className="d-flex flex-row justify-content-between">
+                            <input type="range" min="1" max="100" className="col-9 slider mt-3"
+                                value={this.state.WidthTitleValue}
+                                onChange={e => this.setState({ WidthTitleValue: (e.target.value) })}
+                                onAfterChange={e => this.setState({ finalWidthTitleValue: (e.target.value) })} />
+                            <input className="input_line col-2" value={this.finalWidthTitleValue} />
+
+                        </div>
+                    </div>
                 </div>
 
-                <div className="d-flex flex-row justify-content-start mb-2 mb-1">
-                    <input type="range" min="1" max="100" className="slider mt-4 mb-1"
-                        value={this.state.WidthTitleValue}
-                        onChange={e => this.setState({ WidthTitleValue: (e.target.value) })}
-                        onAfterChange={e => this.setState({ finalWidthTitleValue: (e.target.value) })} />
-                    <input style={{ color: "white", backgroundColor: "#3A405E", width: "2vw" }} value={this.finalWidthTitleValue} />
+                <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-between sideTitles">
+                        <div className="d-flex flex-row sideTitles">Title Height</div>
 
+
+                        <div className="d-flex flex-row justify-content-between">
+                            <input type="range" min="1" max="100" className="col-9 slider mt-3"
+                                value={this.state.HeightTitleValue}
+                                onChange={e => this.setState({ HeightTitleValue: (e.target.value) })}
+                                onAfterChange={e => this.setState({ finalHeightTitleValue: (e.target.value) })} />
+                            <input className="input_line col-2" value={this.finalHeightTitleValue} />
+
+                        </div>
+                    </div>
                 </div>
 
-                <div className="d-flex flex-row justify-content-between mt-2 mb-1">
-                    <div className="d-flex flex-column sideTitles">Title Height</div>
-                </div>
 
-                <div className="d-flex flex-row justify-content-start mb-1">
-                    <input type="range" min="1" max="100" className="slider mt-4"
-                        value={this.state.valueRange}
-                        onChange={e => this.setState({ valueRange: (e.target.value) })}
-                        onAfterChange={e => this.setState({ finalValueRange: (e.target.value) })} />
-                    <input style={{ color: "white", backgroundColor: "#3A405E", width: "2vw" }} value={this.finalValueRange} />
-
-                </div>
-                <div className="d-flex">
-                    <label>template name</label>
-                    <input placeholder="template name" onKeyUp={this.onKeyTemplateName} />
-                </div>
             </div>
 
         );

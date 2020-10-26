@@ -9,7 +9,8 @@ const initialState = {
         display_title_editor: false,
         new_canva: false,
         display_setting_page: false,
-        display_editor: ''
+        display_editor: '',
+        display_main_option: ''
     }
 
 };
@@ -30,6 +31,9 @@ export default produce((state, action) => {
             break;
         case 'DISPLAY_EDITOR':
             state.displayComponents.display_editor = action.payload;
+            break;
+        case 'DISPLAY_MAIN_OPTION':
+            state.displayComponents.display_main_option = action.payload;
             break;
         default:
             return state;

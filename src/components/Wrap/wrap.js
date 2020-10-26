@@ -85,10 +85,12 @@ import { connect } from 'react-redux';
 import {
     setDisplayTitleEditor,
     setDisplaySettingPage,
+    setDisplayMainOption
 
 } from '../../redux/actions/componentsActions'
 import {
-    addTemplateImage
+    addTemplateImage,
+    setName
 
 } from '../../redux/actions/canvasActions'
 const drawerWidth = '15%';
@@ -219,6 +221,7 @@ const useStyles = theme => ({
         bottom: 0,
         background: '#0A0E1B 0% 0% no-repeat padding-box',
         minHeight: '50px',
+
     },
     grow: {
         flexGrow: 1,
@@ -311,11 +314,17 @@ class Wrap extends React.Component {
             background: '#3a405e 0% 0% no-repeat padding-box',
             fontColor: 'white',
             arrowColor: '#B1B1B1',
-            openSpeedDial: false
+            openSpeedDial: false,
+            bringDataFromDB: false,
         };
+        this.onKeyTemplateName = this.onKeyTemplateName.bind(this)
+
     }
 
-
+    onKeyTemplateName(e) {
+        this.props.dispatch(setName(e.target.value))
+        console.log("onKeyTemplateName " + this.props.canvasDetails.name)
+    }
     render() {
         const { classes } = this.props;
         const { theme } = this.props;
@@ -324,8 +333,7 @@ class Wrap extends React.Component {
         const header_fashion_media = false
         const page_setting_button = true
         // const title_editor_option = this.props.displayComponents.display_title_editor
-        console.log("open title editor in wrap " + this.props.displayComponents.display_title_editor)
-
+        // console.log("open title editor in wrap " + this.props.displayComponents.display_title_editor)
         // const new_button = false
 
         return (
@@ -495,37 +503,50 @@ class Wrap extends React.Component {
 
                     </List>
                 </Drawer>
-                <div className="d-flex flex-row justify-content-between">
-                    <div className="d-flex flex-column justify-content-between col-5 ">
-                        <Edit_choice />
+                {/* {this.props.displayComponents.display_setting_page ?
+                    <div className="d-flex justify-content-center" style={{ marginTop: "100px" }}>
+                        
+                    </div> : <span></span>}
+
+                 */}
+                {this.props.displayComponents.display_main_option === '' ?
+                    <div className="d-flex flex-row justify-content-between col-9" style={{ maxWidth: "900px" }}>
+                        <div className="d-flex flex-column justify-content-between col-5 ">
+                            <Edit_choice />
+                        </div>
+                        <div className="d-flex flex-column justify-content-around col-6">
+                            <img src={require('./assets/tellYourStory.jpg')} />
+                        </div>
                     </div>
-                    <div className="col-1">
+                    :
+                    <span></span>
+                }
 
+                {this.props.displayComponents.display_main_option === 'canva' ?
+                    <div className="d-flex flex-row justify-content-between col-9" style={{ maxWidth: "900px" }}>
+                        <div className="d-flex flex-column justify-content-between col-5 ">
+                            <Edit_choice />
+                        </div>
+                        <div className="d-flex flex-column justify-content-around col-6">
+                            <Canvas />
+                        </div>
                     </div>
-                    <div className="d-flex flex-column justify-content-around col-6">
-                        <main className={classes.content} style={{ height: "200px", width: "400px" }}>
-
-                            {/* <Route path="/lastFiles" component={lastFiles} /> */}
-                            {/* <div className={classes.toolbar} /> */}
-                            {/* {this.showTips()} */}
-                            {this.props.displayComponents.new_canva ? <Canvas /> : <span></span>}
-
-                            {/* פלוס אייקון שהורדנו*/}
-                            {/* <div style={{ direction: 'rtl' }} onMouseLeave={this.closeFastAccses}> */}
-                            {/* {this.state.hidden===false ?( */}
-                            {/* {this.fastAccses()} */}
-                            {/* : null } */}
-
-                            {/* </div> */}
-
-
-                        </main>
+                    :
+                    <span></span>
+                }
+                {this.props.displayComponents.display_main_option === 'cards' ?
+                    <div className="d-flex flex-row justify-content-between col-9" style={{ maxWidth: "900px" }}>
+                        <TemplateCards />
                     </div>
-                </div>
+                    :
+                    <span></span>
+                }
+
+
                 <Drawer anchor={'right'} classes={{ paper: clsx(classes.drawerPaper, { [classes.drawerPaperLight]: this.state.color === 'black', }) }} className={clsx(classes.configurator, {
                     [classes.configuratorOpen]: this.state.right,
                     [classes.configuratorClose]: !this.state.right,
-                })} open={this.state['right']} fullWidth="true" variant="persistent" onClose={this.toggleDrawer}>
+                })} className="col-1" open={this.state['right']} fullWidth="true" variant="persistent" onClose={this.toggleDrawer}>
                     {/* <AppBar position="static" style={{ background: '#3A405E 0% 0% no-repeat padding-box !important', backgroundColor: '#3A405E' }}>
             <Toolbar>
               <IconButton edge="start" color="inherit" aria-label="setting" >
@@ -542,7 +563,7 @@ class Wrap extends React.Component {
 
 
                     <div className={classes.row} style={{ position: 'static', marginTop: '5vh', marginBottom: '2vh' }}>
-                        <IconButton edge="end" color="inherit" aria-label="setting" >
+                        <IconButton edge="end" color="inherit" aria-label="setting" onClick={this.onClickSetting} >
                             {/* component={Link} to="/lastFiles" */}
                             <SettingsIcon style={{ color: this.state.color }} />
                         </IconButton>
@@ -553,7 +574,9 @@ class Wrap extends React.Component {
                             <InvertColorsIcon style={{ color: this.state.color }} />
                         </IconButton>
                     </div>
-                    {page_setting_button ? <Button variant="outlined"
+
+                    {!this.props.displayComponents.display_setting_page ? <Button variant="outlined"
+
                         size="medium" className={classes.configuratorContent}
                         endIcon={<svg style={{ fill: this.state.color }}
                             xmlns="http://www.w3.org/2000/svg"
@@ -572,8 +595,9 @@ class Wrap extends React.Component {
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Template</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Thank You Email</Button>
                     </div> : <span></span>}
+
                     <AppBar position="absolute" color="primary" className={classes.appBarBottom} style={{ width: "17vw", position: "fixed" }}>
-                        <Toolbar style={{ minHeight: '40px', paddingLeft: "10px", paddingRight: "0px" }}>
+                        <Toolbar style={{ minHeight: '40px' }}>
 
                             {/* <IconButton edge="start" color="inherit" aria-label="open drawer">
             <MenuIcon />
@@ -582,42 +606,46 @@ class Wrap extends React.Component {
             <AddIcon />
           </Fab> */}
                             <div className={classes.grow} />
-                            <IconButton color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
-                                <InvertDesktopWindows />
-                            </IconButton>
-                            <IconButton color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
-                                <TabletMacIcon />
-                            </IconButton>
-                            <IconButton color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
-                                <PhoneIphoneIcon />
-                                {/* <svg style={{fill:this.state.arrowColor}} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><defs></defs><path class="a" d="M8,23A15,15,0,1,1,23,38,15,15,0,0,1,8,23Zm27.1,0A12.1,12.1,0,1,0,23,35.1,12.093,12.093,0,0,0,35.1,23Zm-4.355,1.21V21.79a.728.728,0,0,0-.726-.726H23V17.012a.727.727,0,0,0-1.24-.514l-5.988,5.988a.726.726,0,0,0,0,1.028L21.76,29.5A.726.726,0,0,0,23,28.988V24.935h7.016A.728.728,0,0,0,30.742,24.21Z" transform="translate(-8 -8)"/></svg> */}
-                            </IconButton>
-                            {/* <IconButton edge="end" color="inherit" style={{paddingLeft:'0px', paddingRight:'12px'}}>
-          <svg style={{fill:this.state.arrowColor}} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><defs></defs><path class="a" d="M38,23A15,15,0,1,0,23,38,15,15,0,0,0,38,23ZM10.9,23A12.1,12.1,0,1,1,23,35.1,12.093,12.093,0,0,1,10.9,23Zm4.355,1.21V21.79a.728.728,0,0,1,.726-.726H23V17.012a.727.727,0,0,1,1.24-.514l5.988,5.988a.726.726,0,0,1,0,1.028L24.24,29.5A.726.726,0,0,1,23,28.988V24.935H15.984A.728.728,0,0,1,15.258,24.21Z" transform="translate(-8 -8)"/></svg>        
+                            <div className="d-flex flex-column ">
+                                <div className="d-flex flex-row">
+                                    <input className="w3-input" style={{ color: "white", backgroundColor: " black" }}
+                                        placeholder={this.props.canvasDetails.name}
+                                        onKeyUp={this.onKeyTemplateName}
+                                    >
+                                    </input>
+                                    {/* <IconButton edge="end" color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
+          <svg style={{ fill: this.state.arrowColor }} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><defs></defs><path class="a" d="M38,23A15,15,0,1,0,23,38,15,15,0,0,0,38,23ZM10.9,23A12.1,12.1,0,1,1,23,35.1,12.093,12.093,0,0,1,10.9,23Zm4.355,1.21V21.79a.728.728,0,0,1,.726-.726H23V17.012a.727.727,0,0,1,1.24-.514l5.988,5.988a.726.726,0,0,1,0,1.028L24.24,29.5A.726.726,0,0,1,23,28.988V24.935H15.984A.728.728,0,0,1,15.258,24.21Z" transform="translate(-8 -8)" /></svg>        
             </IconButton> */}
-                            <Fab
-                                style={{ width: "150px" }}
-                                variant="extended"
-                                size="small"
-                                color="primary"
-                                aria-label="add"
-                                className={classes.margin}
-                                onClick={this.onClickSave}
+                                </div>
+                                <div className="d-flex flex-row">
+                                    <IconButton color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
+                                        <InvertDesktopWindows />
+                                    </IconButton>
+                                    <Fab
+                                        style={{ width: "150px" }}
+                                        variant="extended"
+                                        size="small"
+                                        color="primary"
+                                        aria-label="add"
+                                        className={classes.margin}
+                                        onClick={this.onClickSave}
 
 
-                            >
-                                <svg style={{ fill: "white", flexShrink: 0, margin: '5px' }}
-                                    xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124"
-                                    viewBox="0 0 8.211 11.124">
-                                    <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
-                                        transform="translate(-5.5 0)" /></svg>
+                                    >
+                                        <svg style={{ fill: "white", flexShrink: 0, margin: '5px' }}
+                                            xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124"
+                                            viewBox="0 0 8.211 11.124">
+                                            <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
+                                                transform="translate(-5.5 0)" /></svg>
                                                         Save
                                            </Fab>
+                                </div>
+                            </div>
                         </Toolbar>
                     </AppBar>
                 </Drawer>
                 {/* </Router> */}
-            </div>
+            </div >
         )
     };
 
@@ -791,7 +819,24 @@ class Wrap extends React.Component {
             this.setState({ color: 'gray', fontColor: 'white', arrowColor: 'gray' });
     };
     onClickSetting = () => {
-        this.props.dispatch(setDisplaySettingPage(true))
+        // console.log("in onClickSetting")
+
+        if (!this.state.bringDataFromDB) {
+            this.setState({
+                bringDataFromDB: true
+            })
+            axios.get('http://localhost:9001/templateImages/')
+                .then(res => {
+                    console.log(res.data)
+                    let data = res.data
+                    data.map((image) => (
+                        this.props.dispatch(addTemplateImage(image))
+                    ))
+                    console.log("my array " + this.props.canvasDetails.imageTemplates)
+                })
+        }
+        this.props.dispatch(setDisplayMainOption('cards'))
+        console.log("in onClickSetting " + this.props.displayComponents.display_main_option)
 
     };
 
@@ -806,11 +851,18 @@ class Wrap extends React.Component {
     }
     OnClickSave = () => {
         let dataURL = (this.props.canvasDetails.dataURL)
-        debugger
         let image_base64 = (dataURL.toDataURL())
-        this.props.dispatch(addTemplateImage(image_base64))
-        console.log(this.props.canvasDetails.imageTemplates)
+        const newImageTemplate = {
+            image: image_base64,
+            name: this.props.canvasDetails.name
+        };
+        axios.post('http://localhost:9001/templateImages/add', newImageTemplate)
+            .then(
+                res => console.log(res.data));
+        // this.props.dispatch(addTemplateImage([image_base64, this.props.canvasDetails.name]))
+        // console.log(this.props.canvasDetails.imageTemplates)
         // this.downloadURI(dataURL.toDataURL(), 'my_template.png');
+        debugger
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
             canvas_width: this.props.canvasDetails.canvas_width,
@@ -831,8 +883,9 @@ class Wrap extends React.Component {
         };
         console.log(newTemplate);
         // save on mongodb
-        // axios.post('http://localhost:9000/templates/add', newTemplate)
-        //     .then(res => console.log(res.data));
+        axios.post('http://localhost:9001/templates/add', newTemplate)
+            .then(
+                res => console.log(res.data));
 
 
     };

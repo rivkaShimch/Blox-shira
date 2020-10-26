@@ -28,3 +28,9 @@ export function setDisplayEditor(image) {
         payload: image
     };
 }
+export function setDisplayMainOption(opt) {
+    return {
+        type: 'DISPLAY_MAIN_OPTION',
+        payload: opt
+    };
+}

@@ -13,8 +13,6 @@ export default class Edit_choice extends Component {
         this.state = {
         };
     }
-
-
     render() {
         return (
 

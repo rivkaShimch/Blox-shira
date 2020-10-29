@@ -1,26 +1,28 @@
 
 
 .white_circleborder_background{
-    /* margin-top: 200px;
-    top: 112px;
-left: 113px; */
-/* width: 293px;
-height: 41px; */
+
 background: #FFFFFF 0% 0% no-repeat padding-box;
 border-radius: 7px;
 border: none;
 
 }
 .up_button{
+   
     color: #A66DFF;
     border-style: solid;
     border-width: 1px;
     border-color: #A66DFF;
-    /* height: 35px; */
-    /* align-items:center; */
     align-content: center;
-    font-weight: 500;
-    /* color:rgb(248, 245, 245); */
+    font-weight: 500; 
+}
+.up_button:active{
+    color:white;
+    background-color:  #A66DFF;
+    border-style: solid;
+    border-width: 1px;
+    border-color:white;
+image-rendering: initial;
    
 }
 .arow_img{
@@ -35,18 +37,38 @@ border: none;
 }
 .navTitle{
     font-weight: 500;
-    /* border-bottom: gold; */
-    /* border-style: solid; */
+
     padding: none;
+    z-index: 2;
+ 
+    /* z-index: 444;
+    background-color: thistle;
+    border-bottom: tomato;
+    border-bottom-color: yellow ;
+    border-bottom-width: 5px;
+    border-bottom-style: solid; */
 }
-.navTitle:active{
+.navTitle:checked{
     color :#A66DFF ;
-  
+    text-decoration: underline;
     text-decoration-color:#A66DFF ;
 }
-.ui.divider{
+.dividerStyle{
+    top:200px;
+    left: 400px;
     margin-top: 0;
+    height: 6px;
+ z-index: 1;
+ color: red;
+ width: 300px;
+ height: 20px;
 }
+
+
+
+
+
+
 .medAndSecImg{
     height: 9vh;
     width: 9vh;
@@ -83,7 +105,8 @@ align-items:center;
     background-color: #f6f7f8;
 
 }
-.widget_button:active:{
+
+.widget_button:checked{
     background-color:red;
 }
 .wrap_flow {

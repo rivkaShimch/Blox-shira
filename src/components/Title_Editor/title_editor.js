@@ -1,4 +1,3 @@
-
 import React, { Component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Styles from './title_editor.css'
@@ -15,20 +14,24 @@ import RangeSlider from 'react-bootstrap-range-slider';
 import 'semantic-ui-css/semantic.min.css'
 import { Form } from 'semantic-ui-react'
 import { connect } from 'react-redux';
-
+import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
+import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
+import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
 
 import {
     setTitlesCanvas,
     setTitleColor,
-    setName,
+    setTitleSize,
+    setTitleWidth,
+    setTitleHeight,
+    setTitlesTextCanvas,
+    setTitleAlign
 
 } from '../../redux/actions/canvasActions'
 
 import Slider from '@material-ui/core/Slider';
-import alignCenter from '../img/alignCenter.png';
 import TextField from '@material-ui/core/TextField';
-import alignLeftWhite1 from '../img/alignLeftWhite1.png';
-import alignRight from '../img/alignRight.png';
+
 
 class Title_Editor extends Component {
     constructor(prop) {
@@ -43,29 +46,34 @@ class Title_Editor extends Component {
             valueColor: "red",
             finalValueRange: '',
             finalValueColor: '',
-            SizeTitleValue: '',
+            sizeTitleValue: '',
             WidthTitleValue: '',
             HeightTitleValue: '',
             finalSizeTitleValue: '',
             finalWidthTitleValue: '',
             finalHeightTitleValue: '',
 
-            bold_img_align: 1
+            bold_img_align: 'left'
         };
         this.handleChange = this.handleChange.bind(this);
         this.onChangeTitleColor = this.onChangeTitleColor.bind(this)
         this.onChangeTitleInput = this.onChangeTitleInput.bind(this)
-        this.onKeyTemplateName = this.onKeyTemplateName.bind(this)
     }
 
     changeImage1 = () => {
-        this.setState({ bold_img_align: 1 });
+        this.setState({ bold_img_align: 'left' });
+        this.props.dispatch(setTitleAlign(('left'), this.props.canvasDetails.titles_i))
+
     };
     changeImage2 = () => {
-        this.setState({ bold_img_align: 2 });
+        this.setState({ bold_img_align: 'center' });
+        this.props.dispatch(setTitleAlign(('center'), this.props.canvasDetails.titles_i))
+
     };
     changeImage3 = () => {
-        this.setState({ bold_img_align: 3 });
+        this.setState({ bold_img_align: 'right' });
+        this.props.dispatch(setTitleAlign(('right'), this.props.canvasDetails.titles_i))
+
     };
     handleChange(checked) {
         this.setState({ checked });
@@ -75,112 +83,112 @@ class Title_Editor extends Component {
     };
 
     onChangeTitleColor(e) {
-        this.props.dispatch(setTitleColor(e.target.value))
+        this.props.dispatch(setTitleColor((e.target.value), this.props.canvasDetails.titles_i))
     }
     onChangeTitleInput(e) {
-        this.props.dispatch(setTitlesCanvas(e.target.value))
+        this.props.dispatch(setTitlesTextCanvas((e.target.value), this.props.canvasDetails.titles_i))
     }
-    onKeyTemplateName(e) {
-        this.props.dispatch(setName(e.target.value))
+    onChangeTitleSizeSlider = (e) => {
+        this.props.dispatch(setTitleSize((e.target.value), this.props.canvasDetails.titles_i))
+        document.getElementById("title_size_input").value = ''
+        this.setState({ finalSizeTitleValue: e.target.value })
     }
-    // hh = () => {
-    //     slider = new Slider('#ex26');
-    //     slider.refresh({ useCurrentValue: true });
-    // }
+    onChangeTitleSizeInput = (e) => {
+        this.props.dispatch(setTitleSize((e.target.value), this.props.canvasDetails.titles_i))
+        this.setState({ finalSizeTitleValue: e.target.value })
+    }
+    onChangeTitleWidthSlider = (e) => {
+        this.props.dispatch(setTitleWidth((e.target.value), this.props.canvasDetails.titles_i))
+        document.getElementById("title_width_input").value = ''
+        this.setState({ finalWidthTitleValue: e.target.value })
+    }
+    onChangeTitleWidthInput = (e) => {
+        this.props.dispatch(setTitleWidth((e.target.value), this.props.canvasDetails.titles_i))
+        this.setState({ finalWidthTitleValue: e.target.value })
+    }
+    onChangeTitleHeightSlider = (e) => {
+        this.props.dispatch(setTitleHeight((e.target.value), this.props.canvasDetails.titles_i))
+        document.getElementById("title_height_input").value = ''
+        this.setState({ finalHeightTitleValue: e.target.value })
+    }
+    onChangeTitleHeightInput = (e) => {
+        this.props.dispatch(setTitleHeight((e.target.value), this.props.canvasDetails.titles_i))
+        this.setState({ finalHeightTitleValue: e.target.value })
+    }
+
     render() {
 
         return (
-            <div className="col-12 d-flex flex-column justify-content-start">
-                <div className="d-flex flex-column justify-content-between" style={{ height: "400px", marginLeft: "20px", marginRight: "20px" }}>
-                    <div className="d-flex flex-column justify-content-start">
+            <div className="d-flex flex-column justify-content-around" style={{ marginLeft: "20px", marginRight: "20px" }}>
+                <div className="d-flex flex-column justify-content-start">
+                    <div className="d-flex flex-row justify-content-between">
+                        <div className="sideLittleTitles">Title Setting</div>
+                    </div>
+                </div>
+
+                <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column  sideTitles">Title Name</div>
+                    <div className="d-flex flex-row  ">  <Switch /></div>
+                </div>
+
+                <div className="d-flex flex-column justify-content-start  mb-1">
+                    <input className="w3-input  mb-2" id="title_input" style={{ color: "white", backgroundColor: "#3A405E" }}
+                        onKeyUp={this.onChangeTitleInput} onClick={() => document.getElementById('title_input').value = ''} placeholder={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].text} />
+                </div>
+
+                <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-between sideTitles">
+                        <div className="d-flex flex-row sideTitles">Title Size</div>
                         <div className="d-flex flex-row justify-content-between">
-                            <div className="sideLittleTitles  ">Title Setting</div>
+                            <input type="range" min="12" max="98" className="col-8 slider mt-3"
+                                value={this.state.finalSizeTitleValue}
+                                onChange={this.onChangeTitleSizeSlider}
+                            />
+                            <input style={{ color: "white" }} id="title_size_input" className="input_line col-3"
+                                onKeyUp={this.onChangeTitleSizeInput} placeholder={this.state.finalSizeTitleValue} />
                         </div>
                     </div>
-
+                </div>
+                <br />
+                <div className="d-flex flex-row justify-content-around ">
+                    <div className="d-flex flex-column sideTitles mr-5">Alignment</div>
                     <div className="d-flex flex-row justify-content-between">
-                        <div className="d-flex flex-column  sideTitles">Title Name</div>
-                        <div className="d-flex flex-row  ">  <Switch /></div>
+                        <FormatAlignLeftIcon onClick={this.changeImage1} style={{ color: this.state.bold_img_align === 'left' ? "#EBEAEA" : "#BCBDC7" }} />
+                        <FormatAlignJustifyIcon onClick={this.changeImage2} style={{ color: this.state.bold_img_align === 'center' ? "#EBEAEA" : "#BCBDC7" }} />
+                        <FormatAlignRightIcon onClick={this.changeImage3} style={{ color: this.state.bold_img_align === 'right' ? "#EBEAEA" : "#BCBDC7" }} />
                     </div>
+                </div>
 
-                    <div className="d-flex flex-column justify-content-start  mb-1">
-                        <input className="w3-input  mb-2" style={{ color: "white", backgroundColor: "#3A405E" }}
-                            onKeyUp={this.onChangeTitleInput} placeholder={this.props.canvasDetails.titles} />
-                    </div>
+                <div className="d-flex flex-row justify-content-between mt-4 mb-1">
+                    <div className="d-flex flex-column sideTitles">Title Fill</div>
+                    <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
+                        onChange={this.onChangeTitleColor} value={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].fill} />
+                </div>
 
-
-                    <div className="d-flex flex-row justify-content-between">
-                        <div className="d-flex flex-column justify-content-between sideTitles">
-                            <div className="d-flex flex-row sideTitles">Title Size</div>
-
-
-                            <div className="d-flex flex-row justify-content-between">
-                                <input type="range" min="1" max="100" className="col-9 slider mt-3"
-                                    value={this.state.SizeTitleValue}
-                                    onChange={e => this.setState({ SizeTitleValue: (e.target.value) })}
-                                    onAfterChange={e => this.setState({ finalSizeTitleValue: (e.target.value) })} />
-                                <input className="input_line col-2" value={this.finalSizeTitleValue} />
-
-                            </div>
+                <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-between sideTitles">
+                        <div className="d-flex flex-row sideTitles">Title Width</div>
+                        <div className="d-flex flex-row justify-content-between">
+                            <input type="range" min="1" max="100" className="col-8 slider mt-3"
+                                value={this.state.finalWidthTitleValue}
+                                onChange={this.onChangeTitleWidthSlider} />
+                            <input style={{ color: "white" }} id="title_width_input" className="input_line col-3"
+                                onKeyUp={this.onChangeTitleWidthInput} placeholder={this.finalWidthTitleValue} />
                         </div>
                     </div>
+                </div>
 
-
-                    <div className="d-flex flex-row justify-content-between ">
-                        <div className="d-flex flex-column sideTitles mr-5">Alignment</div>
-                        <div className="d-flex flex-column">
-                            <div className="d-flex flex-row justify-content-end">
-                                <img onClick={this.changeImage1} style={{ height: "20px", marginLeft: "9px" }} src={this.state.bold_img_align === 1 ? alignCenter : alignLeftWhite1} alt="icon" />
-                                <img onClick={this.changeImage2} style={{ height: "20px", marginLeft: "9px" }} src={this.state.bold_img_align === 2 ? alignCenter : alignLeftWhite1} alt="icon" />
-                                <img onClick={this.changeImage3} style={{ height: "20px", marginLeft: "9px" }} src={this.state.bold_img_align === 3 ? alignCenter : alignLeftWhite1} alt="icon" />
-
-                            </div>
+                <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-between sideTitles">
+                        <div className="d-flex flex-row sideTitles">Title Height</div>
+                        <div className="d-flex flex-row justify-content-between">
+                            <input type="range" min="1" max="100" className="col-9 slider mt-3"
+                                value={this.state.finalHeightTitleValue}
+                                onChange={this.onChangeTitleHeightSlider} />
+                            <input style={{ color: "white" }} id="title_height_input" className="input_line col-3"
+                                onKeyUp={this.onChangeTitleHeightInput} placeholder={this.finalHeightTitleValue} />
                         </div>
                     </div>
-
-
-
-                    <div className="d-flex flex-row justify-content-between mt-4 mb-1">
-                        <div className="d-flex flex-column sideTitles">Title Fill</div>
-                        <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
-                            onChange={this.onChangeTitleColor} value={this.props.canvasDetails.title_color} />
-                    </div>
-
-
-
-                    <div className="d-flex flex-row justify-content-between">
-                        <div className="d-flex flex-column justify-content-between sideTitles">
-                            <div className="d-flex flex-row sideTitles">Title Width</div>
-
-
-                            <div className="d-flex flex-row justify-content-between">
-                                <input type="range" min="1" max="100" className="col-9 slider mt-3"
-                                    value={this.state.WidthTitleValue}
-                                    onChange={e => this.setState({ WidthTitleValue: (e.target.value) })}
-                                    onAfterChange={e => this.setState({ finalWidthTitleValue: (e.target.value) })} />
-                                <input className="input_line col-2" value={this.finalWidthTitleValue} />
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="d-flex flex-row justify-content-between">
-                        <div className="d-flex flex-column justify-content-between sideTitles">
-                            <div className="d-flex flex-row sideTitles">Title Height</div>
-
-
-                            <div className="d-flex flex-row justify-content-between">
-                                <input type="range" min="1" max="100" className="col-9 slider mt-3"
-                                    value={this.state.HeightTitleValue}
-                                    onChange={e => this.setState({ HeightTitleValue: (e.target.value) })}
-                                    onAfterChange={e => this.setState({ finalHeightTitleValue: (e.target.value) })} />
-                                <input className="input_line col-2" value={this.finalHeightTitleValue} />
-
-                            </div>
-                        </div>
-                    </div>
-
-
                 </div>
             </div>
 

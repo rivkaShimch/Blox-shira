@@ -85,11 +85,12 @@ import { connect } from 'react-redux';
 import {
     setDisplayTitleEditor,
     setDisplaySettingPage,
-    setDisplayMainOption,
+    setDisplayMainOption
 
 } from '../../redux/actions/componentsActions'
 import {
-    addTemplateImage
+    addTemplateImage,
+    setName
 
 } from '../../redux/actions/canvasActions'
 const drawerWidth = '15%';
@@ -220,6 +221,7 @@ const useStyles = theme => ({
         bottom: 0,
         background: '#0A0E1B 0% 0% no-repeat padding-box',
         minHeight: '50px',
+
     },
     grow: {
         flexGrow: 1,
@@ -315,9 +317,14 @@ class Wrap extends React.Component {
             openSpeedDial: false,
             bringDataFromDB: false,
         };
+        this.onKeyTemplateName = this.onKeyTemplateName.bind(this)
+
     }
 
-
+    onKeyTemplateName(e) {
+        this.props.dispatch(setName(e.target.value))
+        console.log("onKeyTemplateName " + this.props.canvasDetails.name)
+    }
     render() {
         const { classes } = this.props;
         const { theme } = this.props;
@@ -503,7 +510,7 @@ class Wrap extends React.Component {
 
                  */}
                 {this.props.displayComponents.display_main_option === '' ?
-                    <div className="d-flex flex-row justify-content-between" style={{ maxWidth: "900px" }}>
+                    <div className="d-flex flex-row justify-content-between col-9" style={{ maxWidth: "900px" }}>
                         <div className="d-flex flex-column justify-content-between col-5 ">
                             <Edit_choice />
                         </div>
@@ -516,7 +523,7 @@ class Wrap extends React.Component {
                 }
 
                 {this.props.displayComponents.display_main_option === 'canva' ?
-                    <div className="d-flex flex-row justify-content-between" style={{ maxWidth: "900px" }}>
+                    <div className="d-flex flex-row justify-content-between col-9" style={{ maxWidth: "900px" }}>
                         <div className="d-flex flex-column justify-content-between col-5 ">
                             <Edit_choice />
                         </div>
@@ -528,7 +535,7 @@ class Wrap extends React.Component {
                     <span></span>
                 }
                 {this.props.displayComponents.display_main_option === 'cards' ?
-                    <div className="d-flex flex-row justify-content-between" style={{ maxWidth: "900px" }}>
+                    <div className="d-flex flex-row justify-content-between col-9" style={{ padding: "70px", maxWidth: "900px" }}>
                         <TemplateCards />
                     </div>
                     :
@@ -536,21 +543,10 @@ class Wrap extends React.Component {
                 }
 
 
-
-                {/* <div className="d-flex flex-column justify-content-between col-5 ">
-                        {!this.props.displayComponents.display_setting_page ? <Edit_choice /> : <span></span>}
-                    </div>
-                    <div className="d-flex flex-column justify-content-around col-6">
-                        {!this.props.displayComponents.display_setting_page ? this.props.displayComponents.new_canva ? <div><Canvas /></div> : <img src={require('./assets/tellYourStory.jpg')} /> : <span></span>}
-                    </div>
-
-                    <div><Canvas /></div> 
-                     <TemplateCards />
-                </div> */}
                 <Drawer anchor={'right'} classes={{ paper: clsx(classes.drawerPaper, { [classes.drawerPaperLight]: this.state.color === 'black', }) }} className={clsx(classes.configurator, {
                     [classes.configuratorOpen]: this.state.right,
                     [classes.configuratorClose]: !this.state.right,
-                })} open={this.state['right']} fullWidth="true" variant="persistent" onClose={this.toggleDrawer}>
+                })} className="col-1" open={this.state['right']} fullwidth="true" variant="persistent" onClose={this.toggleDrawer}>
                     {/* <AppBar position="static" style={{ background: '#3A405E 0% 0% no-repeat padding-box !important', backgroundColor: '#3A405E' }}>
             <Toolbar>
               <IconButton edge="start" color="inherit" aria-label="setting" >
@@ -599,8 +595,9 @@ class Wrap extends React.Component {
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Template</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Thank You Email</Button>
                     </div> : <span></span>}
+
                     <AppBar position="absolute" color="primary" className={classes.appBarBottom} style={{ width: "17vw", position: "fixed" }}>
-                        <Toolbar style={{ minHeight: '40px', paddingLeft: "10px", paddingRight: "0px" }}>
+                        <Toolbar style={{ minHeight: '40px' }}>
 
                             {/* <IconButton edge="start" color="inherit" aria-label="open drawer">
             <MenuIcon />
@@ -609,42 +606,46 @@ class Wrap extends React.Component {
             <AddIcon />
           </Fab> */}
                             <div className={classes.grow} />
-                            <IconButton color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
-                                <InvertDesktopWindows />
-                            </IconButton>
-                            <IconButton color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
-                                <TabletMacIcon />
-                            </IconButton>
-                            <IconButton color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
-                                <PhoneIphoneIcon />
-                                {/* <svg style={{fill:this.state.arrowColor}} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><defs></defs><path class="a" d="M8,23A15,15,0,1,1,23,38,15,15,0,0,1,8,23Zm27.1,0A12.1,12.1,0,1,0,23,35.1,12.093,12.093,0,0,0,35.1,23Zm-4.355,1.21V21.79a.728.728,0,0,0-.726-.726H23V17.012a.727.727,0,0,0-1.24-.514l-5.988,5.988a.726.726,0,0,0,0,1.028L21.76,29.5A.726.726,0,0,0,23,28.988V24.935h7.016A.728.728,0,0,0,30.742,24.21Z" transform="translate(-8 -8)"/></svg> */}
-                            </IconButton>
-                            {/* <IconButton edge="end" color="inherit" style={{paddingLeft:'0px', paddingRight:'12px'}}>
-          <svg style={{fill:this.state.arrowColor}} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><defs></defs><path class="a" d="M38,23A15,15,0,1,0,23,38,15,15,0,0,0,38,23ZM10.9,23A12.1,12.1,0,1,1,23,35.1,12.093,12.093,0,0,1,10.9,23Zm4.355,1.21V21.79a.728.728,0,0,1,.726-.726H23V17.012a.727.727,0,0,1,1.24-.514l5.988,5.988a.726.726,0,0,1,0,1.028L24.24,29.5A.726.726,0,0,1,23,28.988V24.935H15.984A.728.728,0,0,1,15.258,24.21Z" transform="translate(-8 -8)"/></svg>        
+                            <div className="d-flex flex-column ">
+                                <div className="d-flex flex-row">
+                                    <input className="w3-input" style={{ color: "white", backgroundColor: " black" }}
+                                        placeholder={this.props.canvasDetails.name}
+                                        onKeyUp={this.onKeyTemplateName}
+                                    >
+                                    </input>
+                                    {/* <IconButton edge="end" color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
+          <svg style={{ fill: this.state.arrowColor }} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><defs></defs><path class="a" d="M38,23A15,15,0,1,0,23,38,15,15,0,0,0,38,23ZM10.9,23A12.1,12.1,0,1,1,23,35.1,12.093,12.093,0,0,1,10.9,23Zm4.355,1.21V21.79a.728.728,0,0,1,.726-.726H23V17.012a.727.727,0,0,1,1.24-.514l5.988,5.988a.726.726,0,0,1,0,1.028L24.24,29.5A.726.726,0,0,1,23,28.988V24.935H15.984A.728.728,0,0,1,15.258,24.21Z" transform="translate(-8 -8)" /></svg>        
             </IconButton> */}
-                            <Fab
-                                style={{ width: "150px" }}
-                                variant="extended"
-                                size="small"
-                                color="primary"
-                                aria-label="add"
-                                className={classes.margin}
-                                onClick={this.onClickSave}
+                                </div>
+                                <div className="d-flex flex-row">
+                                    <IconButton color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
+                                        <InvertDesktopWindows />
+                                    </IconButton>
+                                    <Fab
+                                        style={{ width: "150px" }}
+                                        variant="extended"
+                                        size="small"
+                                        color="primary"
+                                        aria-label="add"
+                                        className={classes.margin}
+                                        onClick={this.OnClickSave}
 
 
-                            >
-                                <svg style={{ fill: "white", flexShrink: 0, margin: '5px' }}
-                                    xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124"
-                                    viewBox="0 0 8.211 11.124">
-                                    <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
-                                        transform="translate(-5.5 0)" /></svg>
+                                    >
+                                        <svg style={{ fill: "white", flexShrink: 0, margin: '5px' }}
+                                            xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124"
+                                            viewBox="0 0 8.211 11.124">
+                                            <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
+                                                transform="translate(-5.5 0)" /></svg>
                                                         Save
                                            </Fab>
+                                </div>
+                            </div>
                         </Toolbar>
                     </AppBar>
                 </Drawer>
                 {/* </Router> */}
-            </div>
+            </div >
         )
     };
 
@@ -849,6 +850,7 @@ class Wrap extends React.Component {
         delete link.click;
     }
     OnClickSave = () => {
+        console.log("in OnClickSave")
         let dataURL = (this.props.canvasDetails.dataURL)
         let image_base64 = (dataURL.toDataURL())
         const newImageTemplate = {
@@ -864,16 +866,20 @@ class Wrap extends React.Component {
         debugger
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
-            canvas_width: this.props.canvasDetails.canvas_width,
-            canvas_height: this.props.canvasDetails.canvas_height,
-            background_img_name: this.props.canvasDetails.background_img_name,
-            background_img_path: this.props.canvasDetails.background_img_path,
+            // canvas_width: this.props.canvasDetails.canvas_width,
+            // canvas_height: this.props.canvasDetails.canvas_height,
+            // background_img_name: this.props.canvasDetails.background_img_name,
+            // background_img_path: this.props.canvasDetails.background_img_path,
             titles: this.props.canvasDetails.titles,
-            title_size: this.props.canvasDetails.title_size,
-            title_color: this.props.canvasDetails.title_color,
-            title_type: this.props.canvasDetails.title_type,
-            title_position_x: this.props.canvasDetails.title_position_x,
-            title_position_y: this.props.canvasDetails.title_position_y,
+            titles_i: this.props.canvasDetails.titles_i,
+            // title_align: this.props.canvasDetails.title_align,
+            // title_size: this.props.canvasDetails.title_size,
+            // title_width: this.props.canvasDetails.title_width,
+            // title_height: this.props.canvasDetails.title_height,
+            // title_color: this.props.canvasDetails.title_color,
+            // title_type: this.props.canvasDetails.title_type,
+            // title_position_x: this.props.canvasDetails.title_position_x,
+            // title_position_y: this.props.canvasDetails.title_position_y,
             element_img: this.props.canvasDetails.element_img,
             element_position_x: this.props.canvasDetails.element_position_x,
             element_position_y: this.props.canvasDetails.element_position_y,

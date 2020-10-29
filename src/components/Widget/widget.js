@@ -37,7 +37,28 @@ class Widget extends Component {
     }
     openTitleEditor() {
         this.props.dispatch(setDisplayEditor("title"))
-        this.props.dispatch(setTitlesCanvas("TITLE 01"))
+        let arr_length = (this.props.canvasDetails.titles).length
+        const newTitle = {
+            id: arr_length,
+            x: this.props.canvasDetails.title_position_x,
+            y: 10,
+            width: 100,
+            height: 100,
+            text: 'TITLE 0' + arr_length,
+            align: 'left',
+            fill: 'black',
+            fontSize: 24,
+            // x: 10,
+            // y: 10,
+            // width: 100,
+            // height: 100,
+            // id: arr_length,
+            // text: 'TITLE 0' + arr_length,
+            // align: 'left',
+            // fill: 'black',
+            // fontSize: '24'
+        }
+        this.props.dispatch(setTitlesCanvas(newTitle))
 
 
         console.log("open title editor " + this.props.displayComponents.display_title_editor)

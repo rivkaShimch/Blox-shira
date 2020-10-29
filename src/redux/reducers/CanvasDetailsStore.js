@@ -6,7 +6,8 @@ import produce from 'immer'
 const initialState = {
   canvasDetails: {
     name: "",
-    titles: "",
+    titles: [],
+    titles_i: 0,
     dataURL: "",
     imageTemplates: [],
 
@@ -14,11 +15,16 @@ const initialState = {
     canvas_height: 400,
     background_img_name: '',
     background_img_path: '',
-    title_size: '',
+
+    title_align: '',
+    title_size: '24',
+    title_width: '100',
+    title_height: '50',
     title_color: '',
     title_type: '',
-    title_position_x: 50,
+    title_position_x: 200,
     title_position_y: 50,
+
     element_img: '',
     element_position_x: '',
     element_position_y: '',
@@ -37,8 +43,25 @@ export default produce((state, action) => {
     case 'NAME_CANVAS':
       state.canvasDetails.name = action.payload;
       break;
-    case 'TITLES_CANVAS':
+    case 'UPDATE_TITLES_CANVAS':
+      const texts = state.canvasDetails.titles.slice();
+      texts[action.counter] = action.payload;
+      console.log("newattrs " + action.payload)
+      state.canvasDetails.titles = (texts);
+      break;
+    case 'SET_TITLES_CANVAS':
       state.canvasDetails.titles = action.payload;
+      // state.canvasDetails.titles.push(action.payload);
+      break;
+    case 'TITLES_CANVAS':
+      state.canvasDetails.titles = state.canvasDetails.titles.slice();
+      state.canvasDetails.titles.push(action.payload);
+      break;
+    case 'TITLES_I_CANVAS':
+      state.canvasDetails.titles_i = action.payload;
+      break;
+    case 'TITLES_TEXT_CANVAS':
+      state.canvasDetails.titles[action.id].text = action.payload;
       break;
     case 'DATA_URL_CANVAS':
       state.canvasDetails.dataURL = action.payload;
@@ -56,11 +79,21 @@ export default produce((state, action) => {
     case 'BACKGROUND_IMG_PATH_CANVAS':
       state.canvasDetails.background_img_path = action.payload;
       break;
+    case 'TITLE_ALIGN_CANVAS':
+      state.canvasDetails.titles[action.id].align = action.payload;
+      break;
+
     case 'TITLE_SIZE_CANVAS':
-      state.canvasDetails.title_size = action.payload;
+      state.canvasDetails.titles[action.id].fontSize = action.payload;
+      break;
+    case 'TITLE_WIDTH_CANVAS':
+      state.canvasDetails.titles[action.id].width = action.payload;
+      break;
+    case 'TITLE_HEIGHT_CANVAS':
+      state.canvasDetails.titles[action.id].height = action.payload;
       break;
     case 'TITLE_COLOR_CANVAS':
-      state.canvasDetails.title_color = action.payload;
+      state.canvasDetails.titles[action.id].fill = action.payload;
       break;
     case 'TITLE_TYPE_CANVAS':
       state.canvasDetails.title_type = action.payload;

@@ -63,7 +63,7 @@ export default class MediaAndSection111 extends Component {
 
                     </Navbar>
                 </div>
-                <Divider style={{ marginTop: " 0px " }} />
+                <Divider className="dividerStyle" />
                 <div className="d-flex flex-row justify-content-around wrap_flow">
                     {this.state.display_media ?
                         <div id="media" className="d-flex flex-column" >

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import AddIcon from '@material-ui/icons/Add';
-import { connect } from 'react-redux';
 import axios from 'axios';
+import Edit_choice from '../Edit_choice/edit_choice';
 import templates_page from './templates-page.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { connect } from 'react-redux';
 
 
 import {
@@ -51,7 +53,7 @@ class TemplateCards extends Component {
 
     onClickTemplateCard = (name) => {
         console.log("in onClickTemplateCard " + name)
-        axios.get('http://localhost:9000/templates/find', { params: { template_name: name } })
+        axios.get('http://localhost:9001/templates/find', { params: { template_name: name } })
             .then(res => {
                 console.log(res.data)
                 let template_data = res.data[0]
@@ -120,25 +122,27 @@ class TemplateCards extends Component {
                             </Card.Content>
                         </Card>
 
-                        {this.props.canvasDetails.imageTemplates.map((data) => (
-                            <Card className="card_style" raised
-                                onClick={() => this.onClickTemplateCard(data["name"])}>
-                                {/* {this.setState({ name_of_temp: data[1] })} */}
-                                <Image src={data["image"]} wrapped ui={false} />
-                                <Card.Content extra>
-                                    <Card.Header className="d-flex justify-content-center">
-                                        {data["name"]}
-                                        {/* {{temp_name = data[1]} } */}
-                                    </Card.Header>
-                                    <a className="d-flex justify-content-center">
-                                        <Icon name='heart' />
+                        {
+                            this.props.canvasDetails.imageTemplates.map((data) => (
+                                <Card className="card_style" raised
+                                    onClick={() => this.onClickTemplateCard(data["name"])}>
+                                    {/* {this.setState({ name_of_temp: data[1] })} */}
+                                    <Image src={data["image"]} wrapped ui={false} />
+                                    <Card.Content extra>
+                                        <Card.Header className="d-flex justify-content-center">
+                                            {data["name"]}
+                                            {/* {{temp_name = data[1]} } */}
+                                        </Card.Header>
+                                        <a className="d-flex justify-content-center">
+                                            <Icon name='heart' />
                          180 pepole like
                                   </a>
-                                </Card.Content>
-                            </Card>))}
+                                    </Card.Content>
+                                </Card>))
+                        }
 
-                    </Card.Group>
-                </div>
+                    </Card.Group >
+                </div >
             </div >
         );
     }

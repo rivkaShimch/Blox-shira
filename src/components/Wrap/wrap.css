@@ -41,3 +41,10 @@ body{
 .fast-accses {
     fill: #5f5757;
   }
+  .inputNameTemplate{
+      
+  }
+  ::placeholder {
+    color:red;
+    opacity: 1; /* Firefox */
+  }

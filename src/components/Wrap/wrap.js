@@ -78,6 +78,7 @@ import Canvas from '../canvas';
 import Edit_choice from '../Edit_choice/edit_choice';
 import Title_Editor from '../Title_Editor/title_editor';
 import Image_Editor from '../Image_Editor/image_editor';
+import Shape_Editor from '../Shape_Editor/shape_editor';
 import TemplateCards from '../Templates-Page/templates-page'
 import 'semantic-ui-css/semantic.min.css'
 import { connect } from 'react-redux';
@@ -85,7 +86,8 @@ import { connect } from 'react-redux';
 import {
     setDisplayTitleEditor,
     setDisplaySettingPage,
-    setDisplayMainOption
+    setDisplayMainOption,
+    setDisplayShapeEditor,
 
 } from '../../redux/actions/componentsActions'
 import {
@@ -523,7 +525,7 @@ class Wrap extends React.Component {
                 }
 
                 {this.props.displayComponents.display_main_option === 'canva' ?
-                    <div className="d-flex flex-row justify-content-between col-9" style={{ maxWidth: "900px" }}>
+                    <div className="d-flex flex-column justify-content-between col-9">
                         <div className="d-flex flex-column justify-content-between col-5 ">
                             <Edit_choice />
                         </div>
@@ -592,6 +594,7 @@ class Wrap extends React.Component {
                         : <span></span>}
                     {this.props.displayComponents.display_editor == "title" ? <Title_Editor /> : <span></span>}
                     {this.props.displayComponents.display_editor == "image" ? <Image_Editor /> : <span></span>}
+                    {this.props.displayComponents.display_editor == "shape" ? <Shape_Editor /> : <span></span>}
                     {header_fashion_media ? <div>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Blank Page</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Template</Button>

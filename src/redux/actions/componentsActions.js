@@ -22,6 +22,12 @@ export function setDisplayImageEditor(image) {
         payload: image
     };
 }
+export function setDisplayShapeEditor(shape) {
+    return {
+        type: 'DISPLAY_SHAPE_EDITOR',
+        payload: shape
+    };
+}
 export function setDisplayEditor(image) {
     return {
         type: 'DISPLAY_EDITOR',

@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import { Link } from 'react-router-dom';
 import arow from '../img/arow.png';
 
+// import purpleArrow from '../img/purpleArrow.png';
 
 import { connect } from 'react-redux';
 
@@ -29,13 +30,14 @@ class Buttons_new extends Component {
             <>
                 <div className="col-12 d-flex flex-row justify-content-start" style={{ marginTop: "9vh", height: "31px", padding: "0px" }}>
                     <div className="col-10 d-flex flex-column align-items-center white_circleborder_background up_button pt-1 "
-                        onClick={this.onClickNewFunc} style={{ height: "35px", color: "#A66DFF" }} >
+                        onClick={this.onClickNewFunc} style={{ height: "35px" }} >
                         +New
                          </div>
                     <div className="col-2 d-flex flex-column justify-content-start " style={{ height: "37px" }}>
 
                         <div className="d-flex flex-column justify-content-center  white_circleborder_background up_button" style={{ height: "34px", width: "34px", marginRight: "40px" }}>
                             <img className="arow_img" src={arow} alt="icon" />
+
                         </div>
 
                     </div>

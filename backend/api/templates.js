@@ -42,11 +42,15 @@ router.post('/add', upload.single('image'), (req, res) => {
     const background_img_name = req.body.background_img_name;
     const background_img_path = req.body.background_img_path;
     const titles = req.body.titles;
-    const title_size = req.body.title_size;
-    const title_color = req.body.title_color;
-    const title_type = req.body.title_type;
-    const title_position_x = req.body.title_position_x;
-    const title_position_y = req.body.title_position_y;
+    const titles_i = req.body.titles_i;
+    // const title_align = req.body.title_align;
+    // const title_size = req.body.title_size;
+    // const title_width = req.body.title_width;
+    // const title_height = req.body.title_height;
+    // const title_color = req.body.title_color;
+    // const title_type = req.body.title_type;
+    // const title_position_x = req.body.title_position_x;
+    // const title_position_y = req.body.title_position_y;
     const element_img = req.body.element_img;
     const element_position_x = req.body.element_position_x;
     const element_position_y = req.body.element_position_y;
@@ -61,16 +65,21 @@ router.post('/add', upload.single('image'), (req, res) => {
         background_img_name: background_img_name,
         background_img_path: background_img_path,
         titles: titles,
-        title_size: title_size,
-        title_color: title_color,
-        title_type: title_type,
-        title_position_x: title_position_x,
-        title_position_y: title_position_y,
+        titles_i: titles_i,
         element_img: element_img,
         element_position_x: element_position_x,
         element_position_y: element_position_y,
         element_width: element_width,
         element_height: element_height
+
+        // title_align: title_align,
+        // title_size: title_size,
+        // title_width: title_width,
+        // title_height: title_height,
+        // title_color: title_color,
+        // title_type: title_type,
+        // title_position_x: title_position_x,
+        // title_position_y: title_position_y,
     })
 
 

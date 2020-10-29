@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Stage, Layer, Image, Text, Transformer } from 'react-konva';
+import { Stage, Layer, Image, Text, Transformer, Rectangle } from 'react-konva';
 import useImage from 'use-image';
 import Portal from './portal';
 
@@ -9,9 +9,17 @@ import { connect } from 'react-redux';
 import {
   setDataUrl,
   setTitlePositionX,
-  setTitlePositionY
+  setTitlePositionY,
+  setTitlesCanvas,
+  setUpdateTitlesCanvas,
+  setTitlesICanvas,
+  setTitlesTextCanvas
 
 } from '../redux/actions/canvasActions'
+import {
+  setDisplayEditor
+
+} from '../redux/actions/componentsActions'
 
 
 const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onChange }) => {
@@ -90,11 +98,107 @@ const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onCha
     </React.Fragment>
   );
 };
-var x = 50;
-var y = 50;
-// var w = 100;
-// var z = 100;
+
+
+const TextObj = ({ shapeProps, isSelected, onSelect, onChange }) => {
+  const TextRef = React.useRef();
+  const trRefText = React.useRef();
+
+  React.useEffect(() => {
+    if (isSelected) {
+      // we need to attach transformer manually
+      trRefText.current.nodes([TextRef.current]);
+      trRefText.current.getLayer().batchDraw();
+    }
+  }, [isSelected]);
+
+  return (
+    <React.Fragment>
+      <Text
+        onClick={onSelect}
+        onTap={onSelect}
+        ref={TextRef}
+        {...shapeProps}
+        draggable
+        onDragEnd={(e) => {
+          onChange({
+            ...shapeProps,
+            x: e.target.x(),
+            y: e.target.y(),
+          });
+        }}
+        onTransformEnd={(e) => {
+          // transformer is changing scale of the node
+          // and NOT its width or height
+          // but in the store we have only width and height
+          // to match the data better we will reset scale on transform end
+          const node = TextRef.current;
+          const scaleX = node.scaleX();
+          const scaleY = node.scaleY();
+          // we will reset it back
+          node.scaleX(1);
+          node.scaleY(1);
+          onChange({
+            ...shapeProps,
+            x: node.x(),
+            y: node.y(),
+            // set minimal value
+            width: Math.max(5, node.width() * scaleX),
+            height: Math.max(node.height() * scaleY),
+          });
+        }}
+      />
+      {isSelected && (
+        <Transformer
+          ref={trRefText}
+          boundBoxFunc={(oldBox, newBox) => {
+            // limit resize
+            if (newBox.width < 5 || newBox.height < 5) {
+              return oldBox;
+            }
+            return newBox;
+          }}
+        />
+      )}
+    </React.Fragment>
+  );
+};
+
+
 const Canvas = (props) => {
+  const initialTextArray = props.canvasDetails.titles
+  //               fontStyle={fontStyleTitle}
+  //               fontSize={props.canvasDetails.title_size}
+  //               align={props.canvasDetails.title_align}
+  //               width={props.canvasDetails.title_width}
+  //               height={props.canvasDetails.title_height}
+  //               x={props.canvasDetails.title_position_x}
+  //               y={props.canvasDetails.title_position_y}
+  //               drawBorder={false}
+  //               draggable
+  //               fill={props.canvasDetails.title_color ? props.canvasDetails.title_color : 'black'}
+
+  //   {
+  //     x: 10,
+  //     y: 10,
+  //     width: 100,
+  //     height: 100,
+  //     id: 'rect1',
+  //     text: '1111',
+  //     align: 'left'
+  //   },
+  //   {
+  //     x: 150,
+  //     y: 150,
+  //     width: 100,
+  //     height: 100,
+  //     fill: 'green',
+  //     id: 'rect2',
+  //     text: '2222'
+  //   },
+
+
+
   const dragUrl = React.useRef();
   const stageRef = React.useRef();
   const [images, setImages] = React.useState([]);
@@ -106,15 +210,21 @@ const Canvas = (props) => {
   const [textColor, setTextColor] = React.useState(null)
   const [background_color_stage, setBackground_color_stage] = React.useState(null)
   const [background_image, setBackground_image] = React.useState(null)
+  // const [textArray, setTextArray] = React.useState(props.canvasDetails.titles);
+  // const [textArray, setTextArray] = React.useState(initialTextArray);
+
+  const [selectedTextId, selectText] = React.useState(null);
+
 
   props.dispatch(setDataUrl(stageRef.current))
 
-  const LionImage = (onSelect) => {
-    const [image] = useImage(require('../background_images/green_b.png'));
+  const LionImage = () => {
+    const [image] = useImage(require('../background_images/gray_bb.png'));
     return <Image
       width={stageRef.current.width()}
       height={stageRef.current.height()}
-      // onClick={onSelect}
+      onTouchStart={checkDeselectBackground}
+      onMouseDown={checkDeselectBackground}
       // onTap={onSelect}
       image={image}
       id="background_image" />;
@@ -153,10 +263,22 @@ const Canvas = (props) => {
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
-    if (clickedOnEmpty || selectedId === 0) {
+    console.log("stage is " + clickedOnEmpty)
+    if (clickedOnEmpty) {
       selectImage(null);
+      selectText(null);
     }
 
+  };
+  const checkDeselectBackground = (e) => {
+    // deselect when clicked on empty area
+    const clickedOnEmpty = e.target.text === undefined
+    console.log("checkDeselectBackground is " + clickedOnEmpty)
+    if (clickedOnEmpty) {
+      selectImage(null);
+      selectText(null);
+    }
+    props.dispatch(setDisplayEditor(''))
   };
 
   const downloadURI = (uri, name) => {
@@ -308,33 +430,48 @@ const Canvas = (props) => {
             onTouchStart={checkDeselect}
 
           >
-            {/* <Layer><LionImage /></Layer> */}
             <Layer>
               <LionImage
-                isSelected={0}
-                onSelect={() => {
-                  selectImage(null);
-                }}
               ></LionImage>
-              <Text
-                text={props.canvasDetails.titles}
+              {props.canvasDetails.titles.map((text, i) => {
+                return (
+                  <TextObj
+                    key={i}
+                    shapeProps={text}
+                    isSelected={text.id === selectedTextId}
+                    onSelect={() => {
+                      selectText(text.id);
+                      props.dispatch(setTitlesICanvas(text.id))
+                      props.dispatch(setTitlesTextCanvas(text.text, text.id))
+                      props.dispatch(setDisplayEditor('title'))
+                    }}
+                    onChange={(newAttrs) => {
+                      props.dispatch(setUpdateTitlesCanvas(newAttrs, i))
+                    }}
+                  />
+                );
+              })}
+
+              {/* <Text
+                text={props.canvasDetails.titles[0].text}
                 fontStyle={fontStyleTitle}
-                fontSize={30}
+                fontSize={props.canvasDetails.title_size}
+                align={props.canvasDetails.title_align}
+                width={props.canvasDetails.title_width}
+                height={props.canvasDetails.title_height}
                 x={props.canvasDetails.title_position_x}
                 y={props.canvasDetails.title_position_y}
-                drawBorder={true}
+                drawBorder={false}
                 draggable
                 fill={props.canvasDetails.title_color ? props.canvasDetails.title_color : 'black'}
                 onDragStart={() => {
                 }}
                 onDragEnd={(e) => {
-                  // y = (e.target.x())
                   props.dispatch(setTitlePositionX(e.target.x()))
                   console.log("x " + props.canvasDetails.title_position_x)
-                  // x = (e.target.x())
                   props.dispatch(setTitlePositionY(e.target.y()))
                 }}
-              />
+              /> */}
               <Text
                 text={title2}
                 fontSize="30"
@@ -349,30 +486,6 @@ const Canvas = (props) => {
                   // w = e.target.y();
                 }}
               />
-              {/* <Portal>
-                  <input
-                    style={{
-                      width: '200px',
-                      border: '0 solid'
-                    }}
-                    placeholder="Write your title here"
-                    onKeyPress={(e) => {
-                      setTitle(e.target.value);
-                    }}
-                    id="input_title"
-                  />
-                  <input
-                    style={{
-                      width: '200px',
-                      border: '0 solid'
-                    }}
-                    placeholder="Write your title here"
-                    onKeyPress={(e) => {
-                      setTitle2(e.target.value);
-                    }}
-                    id="input_title2"
-                  />
-                </Portal> */}
               {images.map((image, i) => {
                 return <URLImage
                   key={i}

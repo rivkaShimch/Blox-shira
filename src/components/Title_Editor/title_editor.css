@@ -19,7 +19,7 @@ body{
 }
   .sideTitles{
     color: white;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
     /* margin: 22px 0px 0px; */
   }
   ::placeholder {
@@ -92,7 +92,7 @@ body{
     border-top-width: initial;
     border-right-width: initial;
     border-left-width: initial;
-    font-size: 0.8rem;
+    font-size: 0.2rem;
     border-style: none none solid;
     border-color: initial;
     border-image: initial;

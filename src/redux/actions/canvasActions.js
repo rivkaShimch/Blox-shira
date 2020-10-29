@@ -12,11 +12,44 @@ export function setName(name) {
         payload: name
     };
 }
+
+
+export function setTitlesICanvas(i) {
+
+    return {
+        type: 'TITLES_I_CANVAS',
+        payload: i
+    };
+}
+export function setTitlesTextCanvas(title, id) {
+
+    return {
+        type: 'TITLES_TEXT_CANVAS',
+        payload: title,
+        id: id
+    };
+}
+export function setTitlesCanvasServer(title) {
+
+    return {
+        type: 'SET_TITLES_CANVAS',
+        payload: title
+    };
+}
+
 export function setTitlesCanvas(title) {
 
     return {
         type: 'TITLES_CANVAS',
         payload: title
+    };
+}
+export function setUpdateTitlesCanvas(title, i) {
+
+    return {
+        type: 'UPDATE_TITLES_CANVAS',
+        payload: title,
+        counter: i
     };
 }
 export function setDataUrl(url) {
@@ -54,18 +87,45 @@ export function setBackgroundImgPath(back_img_p) {
         payload: back_img_p
     };
 }
-export function setTitleSize(title_size) {
+export function setTitleAlign(title_align, i) {
+
+    return {
+        type: 'TITLE_ALIGN_CANVAS',
+        payload: title_align,
+        id: i
+    };
+}
+export function setTitleSize(title_size, i) {
 
     return {
         type: 'TITLE_SIZE_CANVAS',
-        payload: title_size
+        payload: title_size,
+        id: i
     };
 }
-export function setTitleColor(title_color) {
+export function setTitleWidth(title_width, i) {
+
+    return {
+        type: 'TITLE_WIDTH_CANVAS',
+        payload: title_width,
+        id: i
+    };
+}
+export function setTitleHeight(title_height, i) {
+
+    return {
+        type: 'TITLE_HEIGHT_CANVAS',
+        payload: title_height,
+        id: i
+    };
+}
+export function setTitleColor(title_color, i) {
 
     return {
         type: 'TITLE_COLOR_CANVAS',
-        payload: title_color
+        payload: title_color,
+        id: i
+
     };
 }
 export function setTitleType(title_type) {

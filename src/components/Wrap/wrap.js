@@ -535,7 +535,8 @@ class Wrap extends React.Component {
                     <span></span>
                 }
                 {this.props.displayComponents.display_main_option === 'cards' ?
-                    <div className="d-flex flex-row justify-content-between col-9" style={{ maxWidth: "900px" }}>
+                    <div className="d-flex flex-row justify-content-between col-9" style={{ padding: "70px", maxWidth: "900px" }}>
+
                         <TemplateCards />
                     </div>
                     :
@@ -546,7 +547,8 @@ class Wrap extends React.Component {
                 <Drawer anchor={'right'} classes={{ paper: clsx(classes.drawerPaper, { [classes.drawerPaperLight]: this.state.color === 'black', }) }} className={clsx(classes.configurator, {
                     [classes.configuratorOpen]: this.state.right,
                     [classes.configuratorClose]: !this.state.right,
-                })} className="col-1" open={this.state['right']} fullWidth="true" variant="persistent" onClose={this.toggleDrawer}>
+                })} className="col-1" open={this.state['right']} fullwidth="true" variant="persistent" onClose={this.toggleDrawer}>
+
                     {/* <AppBar position="static" style={{ background: '#3A405E 0% 0% no-repeat padding-box !important', backgroundColor: '#3A405E' }}>
             <Toolbar>
               <IconButton edge="start" color="inherit" aria-label="setting" >
@@ -628,7 +630,7 @@ class Wrap extends React.Component {
                                         color="primary"
                                         aria-label="add"
                                         className={classes.margin}
-                                        onClick={this.onClickSave}
+                                        onClick={this.OnClickSave}
 
 
                                     >
@@ -850,6 +852,7 @@ class Wrap extends React.Component {
         delete link.click;
     }
     OnClickSave = () => {
+        console.log("in OnClickSave")
         let dataURL = (this.props.canvasDetails.dataURL)
         let image_base64 = (dataURL.toDataURL())
         const newImageTemplate = {
@@ -865,16 +868,20 @@ class Wrap extends React.Component {
         debugger
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
-            canvas_width: this.props.canvasDetails.canvas_width,
-            canvas_height: this.props.canvasDetails.canvas_height,
-            background_img_name: this.props.canvasDetails.background_img_name,
-            background_img_path: this.props.canvasDetails.background_img_path,
+            // canvas_width: this.props.canvasDetails.canvas_width,
+            // canvas_height: this.props.canvasDetails.canvas_height,
+            // background_img_name: this.props.canvasDetails.background_img_name,
+            // background_img_path: this.props.canvasDetails.background_img_path,
             titles: this.props.canvasDetails.titles,
-            title_size: this.props.canvasDetails.title_size,
-            title_color: this.props.canvasDetails.title_color,
-            title_type: this.props.canvasDetails.title_type,
-            title_position_x: this.props.canvasDetails.title_position_x,
-            title_position_y: this.props.canvasDetails.title_position_y,
+            titles_i: this.props.canvasDetails.titles_i,
+            // title_align: this.props.canvasDetails.title_align,
+            // title_size: this.props.canvasDetails.title_size,
+            // title_width: this.props.canvasDetails.title_width,
+            // title_height: this.props.canvasDetails.title_height,
+            // title_color: this.props.canvasDetails.title_color,
+            // title_type: this.props.canvasDetails.title_type,
+            // title_position_x: this.props.canvasDetails.title_position_x,
+            // title_position_y: this.props.canvasDetails.title_position_y,
             element_img: this.props.canvasDetails.element_img,
             element_position_x: this.props.canvasDetails.element_position_x,
             element_position_y: this.props.canvasDetails.element_position_y,

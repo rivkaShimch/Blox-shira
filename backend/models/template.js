@@ -17,24 +17,47 @@ const templateSchema = new Schema({
     background_img_path: {
         type: String,
     },
-    titles: {
-        type: String
-    },
-    title_size: {
+    titles: [{
+        id: { type: Number },
+        x: { type: Number },
+        y: { type: Number },
+        width: { type: Number },
+        height: { type: Number },
+        text: { type: String },
+        align: { type: String },
+        fill: { type: String },
+        fontSize: { type: Number },
+    }]
+    ,
+    titles_i: {
         type: Number
     },
-    title_color: {
-        type: String
-    },
-    title_type: {
-        type: String
-    },
-    title_position_x: {
-        type: Number
-    },
-    title_position_y: {
-        type: Number
-    },
+    // title_align: {
+    //     type: Number
+
+    // },
+
+    // title_size: {
+    //     type: Number
+    // },
+    // title_width: {
+    //     type: Number
+    // },
+    // title_height: {
+    //     type: Number
+    // },
+    // title_color: {
+    //     type: String
+    // },
+    // title_type: {
+    //     type: String
+    // },
+    // title_position_x: {
+    //     type: Number
+    // },
+    // title_position_y: {
+    //     type: Number
+    // },
     element_img:
     {
         type: String

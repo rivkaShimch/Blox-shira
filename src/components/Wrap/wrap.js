@@ -536,6 +536,7 @@ class Wrap extends React.Component {
                 }
                 {this.props.displayComponents.display_main_option === 'cards' ?
                     <div className="d-flex flex-row justify-content-between col-9" style={{ padding: "70px", maxWidth: "900px" }}>
+
                         <TemplateCards />
                     </div>
                     :
@@ -547,6 +548,7 @@ class Wrap extends React.Component {
                     [classes.configuratorOpen]: this.state.right,
                     [classes.configuratorClose]: !this.state.right,
                 })} className="col-1" open={this.state['right']} fullwidth="true" variant="persistent" onClose={this.toggleDrawer}>
+
                     {/* <AppBar position="static" style={{ background: '#3A405E 0% 0% no-repeat padding-box !important', backgroundColor: '#3A405E' }}>
             <Toolbar>
               <IconButton edge="start" color="inherit" aria-label="setting" >
@@ -825,7 +827,7 @@ class Wrap extends React.Component {
             this.setState({
                 bringDataFromDB: true
             })
-            axios.get('http://localhost:9000/templateImages/')
+            axios.get('http://localhost:9001/templateImages/')
                 .then(res => {
                     console.log(res.data)
                     let data = res.data
@@ -857,7 +859,7 @@ class Wrap extends React.Component {
             image: image_base64,
             name: this.props.canvasDetails.name
         };
-        axios.post('http://localhost:9000/templateImages/add', newImageTemplate)
+        axios.post('http://localhost:9001/templateImages/add', newImageTemplate)
             .then(
                 res => console.log(res.data));
         // this.props.dispatch(addTemplateImage([image_base64, this.props.canvasDetails.name]))
@@ -888,7 +890,7 @@ class Wrap extends React.Component {
         };
         console.log(newTemplate);
         // save on mongodb
-        axios.post('http://localhost:9000/templates/add', newTemplate)
+        axios.post('http://localhost:9001/templates/add', newTemplate)
             .then(
                 res => console.log(res.data));
 

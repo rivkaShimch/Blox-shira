@@ -53,7 +53,7 @@ class TemplateCards extends Component {
 
     onClickTemplateCard = (name) => {
         console.log("in onClickTemplateCard " + name)
-        axios.get('http://localhost:9001/templates/find', { params: { template_name: name } })
+        axios.get('http://localhost:9000/templates/find', { params: { template_name: name } })
             .then(res => {
                 console.log(res.data)
                 let template_data = res.data[0]
@@ -143,7 +143,9 @@ class TemplateCards extends Component {
                                 <Card className="card_style" raised
                                     onClick={() => this.onClickTemplateCard(data["name"])}>
                                     {/* {this.setState({ name_of_temp: data[1] })} */}
-                                    <Image src={data["image"]} wrapped ui={false} />
+                                    {/* <Image src={data["image"]} wrapped ui={false} /> */}
+                                    <Image src={require('C:/Users/User/Documents/GitHub/Blox-shira/backend/api/uploads/' + data["name"] + '.png')} wrapped ui={false} />
+
                                     <Card.Content extra>
                                         <Card.Header className="d-flex justify-content-center">
                                             {data["name"]}

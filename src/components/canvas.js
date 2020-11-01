@@ -219,7 +219,7 @@ const Canvas = (props) => {
   props.dispatch(setDataUrl(stageRef.current))
 
   const LionImage = () => {
-    const [image] = useImage(require('../background_images/gray_bb.png'));
+    const [image] = useImage(require('../background_images/galim_b.jpg'));
     return <Image
       width={stageRef.current.width()}
       height={stageRef.current.height()}

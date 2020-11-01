@@ -837,7 +837,7 @@ class Wrap extends React.Component {
             this.setState({
                 bringDataFromDB: true
             })
-            axios.get('http://localhost:9001/templateImages/')
+            axios.get('http://localhost:9000/templateImages/')
                 .then(res => {
                     console.log(res.data)
                     let data = res.data
@@ -864,18 +864,19 @@ class Wrap extends React.Component {
     OnClickSave = () => {
         console.log("in OnClickSave")
         let dataURL = (this.props.canvasDetails.dataURL)
-        let image_base64 = (dataURL.toDataURL())
+        // let image_base64 = (dataURL.toDataURL())
         const newImageTemplate = {
-            image: image_base64,
+            // image: image_base64,
             name: this.props.canvasDetails.name
         };
-        axios.post('http://localhost:9001/templateImages/add', newImageTemplate)
+
+        //download the img to "download"
+        this.downloadURI(dataURL.toDataURL(), this.props.canvasDetails.name);
+        axios.post('http://localhost:9000/templateImages/add', newImageTemplate)
             .then(
                 res => console.log(res.data));
         // this.props.dispatch(addTemplateImage([image_base64, this.props.canvasDetails.name]))
         // console.log(this.props.canvasDetails.imageTemplates)
-        // this.downloadURI(dataURL.toDataURL(), 'my_template.png');
-        debugger
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
             // canvas_width: this.props.canvasDetails.canvas_width,
@@ -900,7 +901,7 @@ class Wrap extends React.Component {
         };
         console.log(newTemplate);
         // save on mongodb
-        axios.post('http://localhost:9001/templates/add', newTemplate)
+        axios.post('http://localhost:9000/templates/add', newTemplate)
             .then(
                 res => console.log(res.data));
 

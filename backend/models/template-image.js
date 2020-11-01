@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const templateImageSchema = new Schema({
     image: {
-        type: String,
-        required: true
+        type: String
     },
     name: {
         type: String,

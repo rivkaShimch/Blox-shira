@@ -1,0 +1,18 @@
+/* Style the buttons */
+.widget_button {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+    background-color: none;
+    padding: 0.8vh;
+  }
+  
+  /* Style the active class, and buttons on mouse-over */
+  .active, .widget_button:hover {
+    background-color: #666;
+    color: white;
+  }

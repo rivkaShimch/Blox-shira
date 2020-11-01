@@ -6,7 +6,7 @@ import Edit_choice from '../Edit_choice/edit_choice';
 import templates_page from './templates-page.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { connect } from 'react-redux';
-
+import searchIcon from '../img/searchSolid.svg';
 
 import {
     setName,
@@ -102,16 +102,27 @@ class TemplateCards extends Component {
                         <label type="label" className="bb" >Blog Cover 32</label>
                     </div>
                     <div class="md-form active-cyan active-cyan-2 mb-3">
-                        <i class="fas fa-search" aria-hidden="true"></i>
-                        <input className="form-control" type="text" placeholder="Search" aria-label="Search" style={{ width: "20vw" }} />
+
+
+                        <div className="d-flex justify-content-start searchIcon">
+                            <div className="mr-2 ml-2">
+                                <img src={searchIcon} />
+                            </div>
+                            <div className="d-flex justify-content-around">
+                                <input type="text" placeholder="Search" className="searchInput" />
+                            </div>
+
+                        </div>
+
+                        {/* <input className="form-control" type="text" placeholder="Search" aria-label="Search" style={{ width: "20vw" }} /> */}
                     </div>
                 </div>
 
 
-                <div className="d-flex flex-row wrapOverflow">
+                <div className="d-flex flex-row wrapOverflow ml-4">
 
                     <Card.Group itemsPerRow={4} >
-                        <Card raised
+                        <Card className="card_style" raised
                             onClick={this.onClickNewProject}
                         >
                             <Card.Content className="d-flex justify-content-center align-item-center" style={{ backgroundColor: "#A66DFF" }}>
@@ -119,10 +130,13 @@ class TemplateCards extends Component {
                             </Card.Content>
                             <Card.Content extra>
                                 <Card.Header className="d-flex justify-content-center">New Project</Card.Header>
+                                <a className="d-flex justify-content-center">
+                                    Create Your Blox                                </a>
                             </Card.Content>
                         </Card>
 
                         {//comment
+
                             this.props.canvasDetails.imageTemplates.map((data) => (
                                 <Card className="card_style" raised
                                     onClick={() => this.onClickTemplateCard(data["name"])}>

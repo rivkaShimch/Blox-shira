@@ -414,15 +414,17 @@ const Canvas = (props) => {
         >
           <Stage
             id="my_stage"
+
             width={props.canvasDetails.canvas_width}
             height={props.canvasDetails.canvas_height}
             style={{ border: '1px solid grey' }}
             style={background_color_stage ? {
               background: background_color_stage,
+              marginTop: "200px",
               borderStyle: 'dashed',
               borderColor: '#D6CBE3', border: '1px solid grey'
             } : {
-                background: "white", border: '1px solid grey', borderStyle: 'dashed',
+                // background: "white", border: '1px solid grey', borderStyle: 'dashed',
                 borderColor: '#D6CBE3'
               }}
             ref={stageRef}

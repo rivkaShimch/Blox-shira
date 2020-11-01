@@ -11,9 +11,9 @@
   justify-content: space-between;
   cursor: pointer;
   height: 2.5vh;
-  width: 4.8vh;
+  width: 2.5vw;
   background: #EFF3FE;
-  border-radius: 12vh;
+  border-radius: 10vh;
   position: relative;
   transition: background-color 0s;
 }
@@ -22,10 +22,10 @@
   content: '';
   position: absolute;
   top: 1.9px;
-  left: 18px;
-  right: 2px;
+  left: 25px;
+  right: 0px;
   height: 2vh;
-  width: 2vh;
+  width: 1vw;
   border-radius: 45px;
   transition: 0s;
   background: #fff;
@@ -33,7 +33,7 @@
 }
 
 .react-switch-checkbox:checked + .react-switch-label .react-switch-button {
-  right: calc(100% - 17px);
+  right: calc(100%);
   transform: translateX(-100%);
   background:#4B62D5;
 }

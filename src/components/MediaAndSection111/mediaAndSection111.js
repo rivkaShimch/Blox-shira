@@ -52,18 +52,23 @@ export default class MediaAndSection111 extends Component {
     render() {
         return (
             <div className="container-fluid d-flex flex-column justify-content-around">
-                <div className="d-flex flex-row justify-content-around navTitle">
-                    <Navbar style={{ paddingBottom: "unset" }} >
+                <div className="d-flex flex-row justify-content-around navTitle ">
+                    <Navbar className="topnav" >
 
                         <Nav className="mr-auto" >
 
-                            <Nav.Link className="navTitle" href="#media" onClick={this.mediaFunc} style={{ color: this.state.color_media }}>Media</Nav.Link>
-                            <Nav.Link className="navTitle" href="#section" onClick={this.sectionFunc} style={{ color: this.state.color_section }}>Section</Nav.Link><Divider />
+                            <Nav.Link className="navTitle a" href="#media" onClick={this.mediaFunc} style={{ color: this.state.color_media }}>Media</Nav.Link>
+                            <Nav.Link className="navTitle a" href="#section" onClick={this.sectionFunc} style={{ color: this.state.color_section }}>Section</Nav.Link><Divider />
                         </Nav>
 
                     </Navbar>
+
                 </div>
-                <Divider className="dividerStyle" />
+                {/* <div className="row tt">
+                    <div className="rr">dfdffg</div>
+                    <div className="rr2">ffdggxdg</div>
+                </div> */}
+                {/* <Divider className="dividerStyle" /> */}
                 <div className="d-flex flex-row justify-content-around wrap_flow">
                     {this.state.display_media ?
                         <div id="media" className="d-flex flex-column" >

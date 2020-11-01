@@ -424,7 +424,7 @@ const Canvas = (props) => {
               borderStyle: 'dashed',
               borderColor: '#D6CBE3', border: '1px solid grey'
             } : {
-                // background: "white", border: '1px solid grey', borderStyle: 'dashed',
+                background: "white", border: '1px solid grey', borderStyle: 'dashed',
                 borderColor: '#D6CBE3'
               }}
             ref={stageRef}
@@ -433,8 +433,8 @@ const Canvas = (props) => {
 
           >
             <Layer>
-              <LionImage
-              ></LionImage>
+              {/* <LionImage
+              ></LionImage> */}
               {props.canvasDetails.titles.map((text, i) => {
                 return (
                   <TextObj

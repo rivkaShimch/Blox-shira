@@ -11,7 +11,7 @@ const initialState = {
     dataURL: "",
     imageTemplates: [],
 
-    canvas_width: 600,
+    canvas_width: 500,
     canvas_height: 400,
     background_img_name: '',
     background_img_path: '',

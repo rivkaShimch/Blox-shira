@@ -74,9 +74,15 @@ class TemplateCards extends Component {
 
                 this.props.dispatch(setDisplayMainOption('canva'))
             });
-
-
     }
+    ImageExist = (url) => {
+        debugger
+        console.log("in ImageExist")
+        var img = new Image();
+        img.src = url;
+        return img.height != 0;
+    }
+
 
 
 
@@ -117,10 +123,7 @@ class TemplateCards extends Component {
                         {/* <input className="form-control" type="text" placeholder="Search" aria-label="Search" style={{ width: "20vw" }} /> */}
                     </div>
                 </div>
-
-
                 <div className="d-flex flex-row wrapOverflow ml-4">
-
                     <Card.Group itemsPerRow={4} >
                         <Card className="card_style" raised
                             onClick={this.onClickNewProject}
@@ -134,16 +137,14 @@ class TemplateCards extends Component {
                                     Create Your Blox                                </a>
                             </Card.Content>
                         </Card>
-
-                        {//comment
-
+                        {
                             this.props.canvasDetails.imageTemplates.map((data) => (
                                 <Card className="card_style" raised
                                     onClick={() => this.onClickTemplateCard(data["name"])}>
                                     {/* {this.setState({ name_of_temp: data[1] })} */}
                                     {/* <Image src={data["image"]} wrapped ui={false} /> */}
-                                    <Image src={require('C:/Users/User/Documents/GitHub/Blox-shira/backend/api/uploads/' + data["name"] + '.png')} wrapped ui={false} />
 
+                                    <Image src={require('C:/Users/User/Documents/GitHub/Blox-shira/backend/api/uploads/' + data["name"] + '.png')} wrapped ui={false} />
                                     <Card.Content extra>
                                         <Card.Header className="d-flex justify-content-center">
                                             {data["name"]}

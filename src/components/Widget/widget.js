@@ -13,6 +13,7 @@ import onOff from '../img/onOff.png';
 import imageButton from '../img/imageButton.png';
 import drawpolygonsolid from '../img/drawpolygonsolid.png';
 import sign from '../img/sign.png';
+// import style from './widget.css'
 
 import { connect } from 'react-redux';
 

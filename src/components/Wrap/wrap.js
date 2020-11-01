@@ -98,28 +98,29 @@ import {
 const drawerWidth = '15%';
 const useStyles = theme => ({
     // root: {
-    //   display: 'flex',
+    //     display: 'flex',
     // },
     // appBar: {
-    //   zIndex: theme.zIndex.drawer + 1,
+    //     zIndex: theme.zIndex.drawer + 1,
     // },
     // drawer: {
-    //   width: drawerWidth,
-    //   flexShrink: 0,
+    //     width: drawerWidth,
+    //     flexShrink: 0,
     // },
     // drawerPaper: {
-    //   width: drawerWidth,
+    //     width: drawerWidth,
     // },
     // drawerContainer: {
-    //   overflow: 'auto',
+    //     overflow: 'auto',
     // },
     // content: {
-    //   flexGrow: 1,
-    //   padding: theme.spacing(3),
+    //     flexGrow: 1,
+    //     padding: theme.spacing(3),
     // },
     root: {
         display: 'flex',
-        position: 'relative'
+        position: 'relative',
+
     },
     configurator: {
         zIndex: theme.zIndex.drawer + 10,
@@ -512,12 +513,18 @@ class Wrap extends React.Component {
 
                  */}
                 {this.props.displayComponents.display_main_option === '' ?
-                    <div className="d-flex flex-row justify-content-between col-9" style={{ maxWidth: "900px" }}>
-                        <div className="d-flex flex-column justify-content-between col-5 ">
-                            <Edit_choice />
-                        </div>
-                        <div className="d-flex flex-column justify-content-around col-6">
-                            <img src={require('./assets/tellYourStory.jpg')} />
+                    <div className="d-flex flex-column justify-content-center col-9" >
+                        <div className="d-flex flex-row justify-content-between " >
+                            <div className="col-4 ">
+                                <Edit_choice />
+                            </div>
+                            {/* <div className="d-flex flex-column justify-content-around col-5  " style={{ backgroundColor: "slateblue" }}> */}
+                            {/* <div className="d-flex flex-row justify-content-center style_dmoCanva" style={{ backgroundColor: "yellowgreen" }}> */}
+                            <div className="col-9" style={{ marginLeft: "10vw" }}>
+                                <img className="style_dmoCanva" src={require('./assets/tellYourStory.jpg')} style={{ border: "1px dashed #707070" }} />
+                            </div>
+
+
                         </div>
                     </div>
                     :
@@ -525,11 +532,11 @@ class Wrap extends React.Component {
                 }
 
                 {this.props.displayComponents.display_main_option === 'canva' ?
-                    <div className="d-flex flex-column justify-content-between col-9">
-                        <div className="d-flex flex-column justify-content-between col-5 ">
+                    <div className="d-flex flex-row justify-content-between ">
+                        <div className="col-4">
                             <Edit_choice />
                         </div>
-                        <div className="d-flex flex-column justify-content-around col-6">
+                        <div className="style_dmoCanva col-9" style={{ marginLeft: "10vw" }}>
                             <Canvas />
                         </div>
                     </div>
@@ -537,7 +544,7 @@ class Wrap extends React.Component {
                     <span></span>
                 }
                 {this.props.displayComponents.display_main_option === 'cards' ?
-                    <div className="d-flex flex-row justify-content-between col-9" style={{ padding: "70px", maxWidth: "900px" }}>
+                    <div className="d-flex flex-row justify-content-between " style={{ padding: "20px" }}>
 
                         <TemplateCards />
                     </div>

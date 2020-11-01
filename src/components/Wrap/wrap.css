@@ -48,3 +48,9 @@ body{
     color:red;
     opacity: 1; /* Firefox */
   }
+  .style_dmoCanva{
+    /* margin-right: 3vw; */
+    margin-top: 19vh;
+    height: 50vh;
+    
+     }

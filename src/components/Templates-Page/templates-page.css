@@ -1,7 +1,8 @@
 .wrapOverflow{
     
     overflow-y: scroll; /* Add the ability to scroll */
-    width: 100%;
+    /* width: 100%; */
+    
   }
   .wrapOverflow::-webkit-scrollbar {
     display: none;
@@ -17,8 +18,44 @@ border-radius: 8px;
 text-align: center;
 padding-top: 0.5vh;
 }
-.card_style{
-  width: 10vw;
-height: 9vh;
-border-radius: 8px;
+
+
+.ui.four.cards>.card {
+  border-radius: 11px;
+/*   
+  height: 26vh;
+  
+  margin:.75em;
+    width:17vw; */
+} 
+
+.searchInput{
+border: none;
+
+  /* border-left: none;
+  width: 20px !important; */
+  /* border-right: none; */
+}
+
+
+.searchIcon{
+  top: 177px;
+  left: 1256px;
+  width: 25vw;
+  height: 29px;
+  border: 1px solid #BDBDC9;
+  border-radius: 4px;
+  opacity: 1;
+}
+
+::placeholder{
+  color: #BDBDC9;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+  color: #BDBDC9;
 }

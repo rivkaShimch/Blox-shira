@@ -417,16 +417,19 @@ const Canvas = (props) => {
             width={props.canvasDetails.canvas_width}
             height={props.canvasDetails.canvas_height}
             style={{ border: '1px solid grey' }}
+
             style={{
               border: '1px solid #D6CBE3', borderStyle: 'dashed'
             }
             }
+
             ref={stageRef}
             onMouseDown={checkDeselect}
             onTouchStart={checkDeselect}
 
           >
             <Layer>
+
               <Rect
                 onMouseDown={checkDeselectBackground}
                 onTouchStart={checkDeselectBackground}

@@ -122,7 +122,7 @@ class TemplateCards extends Component {
                             </Card.Content>
                         </Card>
 
-                        {
+                        {//comment
                             this.props.canvasDetails.imageTemplates.map((data) => (
                                 <Card className="card_style" raised
                                     onClick={() => this.onClickTemplateCard(data["name"])}>

@@ -95,6 +95,7 @@ import {
     setName
 
 } from '../../redux/actions/canvasActions'
+import Background_Editor from '../Background_Editor/background_editor';
 const drawerWidth = '15%';
 const useStyles = theme => ({
     // root: {
@@ -513,20 +514,18 @@ class Wrap extends React.Component {
 
                  */}
                 {this.props.displayComponents.display_main_option === '' ?
-                    <div className="d-flex flex-column justify-content-center col-9" >
-                        <div className="d-flex flex-row justify-content-between " >
-                            <div className="col-4 ">
-                                <Edit_choice />
-                            </div>
-                            {/* <div className="d-flex flex-column justify-content-around col-5  " style={{ backgroundColor: "slateblue" }}> */}
-                            {/* <div className="d-flex flex-row justify-content-center style_dmoCanva" style={{ backgroundColor: "yellowgreen" }}> */}
-                            <div className="col-9" style={{ marginLeft: "10vw" }}>
-                                <img className="style_dmoCanva" src={require('./assets/tellYourStory.jpg')} style={{ border: "1px dashed #707070" }} />
-                            </div>
-
+                    <div className="d-flex flex-row justify-content-between ">
+                        <div className="col-4">
+                            <Edit_choice />
+                        </div>
+                        {/* <div className="d-flex flex-column justify-content-around col-5  " style={{ backgroundColor: "slateblue" }}> */}
+                        {/* <div className="d-flex flex-row justify-content-center style_dmoCanva" style={{ backgroundColor: "yellowgreen" }}> */}
+                        <div className="style_dmoCanva " style={{ marginLeft: "10vw" }}>
+                            <img src={require('./assets/tellYourStory.jpg')} style={{ width: "500px", height: "400", border: "1px dashed #707070" }} />
 
                         </div>
                     </div>
+
                     :
                     <span></span>
                 }
@@ -537,6 +536,7 @@ class Wrap extends React.Component {
                             <Edit_choice />
                         </div>
                         <div className="style_dmoCanva" style={{ marginLeft: "10vw" }}>
+
                             <Canvas />
                         </div>
                     </div>
@@ -602,6 +602,8 @@ class Wrap extends React.Component {
                     {this.props.displayComponents.display_editor == "title" ? <Title_Editor /> : <span></span>}
                     {this.props.displayComponents.display_editor == "image" ? <Image_Editor /> : <span></span>}
                     {this.props.displayComponents.display_editor == "shape" ? <Shape_Editor /> : <span></span>}
+                    {this.props.displayComponents.display_editor == "background" ? <Background_Editor /> : <span></span>}
+
                     {header_fashion_media ? <div>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Blank Page</Button>
                         <Button variant="outlined" size="large" className={classes.configuratorContent} endIcon={<svg style={{ fill: this.state.color }} xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124" viewBox="0 0 8.211 11.124"><path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z" transform="translate(-5.5 0)" /></svg>} style={{ color: this.state.color }} onClick={this.f}>Start With Template</Button>
@@ -837,7 +839,7 @@ class Wrap extends React.Component {
             this.setState({
                 bringDataFromDB: true
             })
-            axios.get('http://localhost:9000/templateImages/')
+            axios.get('http://localhost:9001/templateImages/')
                 .then(res => {
                     console.log(res.data)
                     let data = res.data
@@ -872,7 +874,7 @@ class Wrap extends React.Component {
 
         //download the img to "download"
         this.downloadURI(dataURL.toDataURL(), this.props.canvasDetails.name);
-        axios.post('http://localhost:9000/templateImages/add', newImageTemplate)
+        axios.post('http://localhost:9001/templateImages/add', newImageTemplate)
             .then(
                 res => console.log(res.data));
         // this.props.dispatch(addTemplateImage([image_base64, this.props.canvasDetails.name]))
@@ -901,7 +903,7 @@ class Wrap extends React.Component {
         };
         console.log(newTemplate);
         // save on mongodb
-        axios.post('http://localhost:9000/templates/add', newTemplate)
+        axios.post('http://localhost:9001/templates/add', newTemplate)
             .then(
                 res => console.log(res.data));
 

@@ -13,8 +13,8 @@ const initialState = {
 
     canvas_width: 500,
     canvas_height: 400,
-    background_img_name: '',
-    background_img_path: '',
+    background_color: '',
+    // background_img_path: '',
 
     title_align: '',
     title_size: '24',
@@ -75,6 +75,9 @@ export default produce((state, action) => {
       break;
     case 'BACKGROUND_IMG_NAME_CANVAS':
       state.canvasDetails.background_img_name = action.payload;
+      break;
+    case 'BACKGROUND_CANVAS':
+      state.canvasDetails.background_color = action.payload;
       break;
     case 'BACKGROUND_IMG_PATH_CANVAS':
       state.canvasDetails.background_img_path = action.payload;

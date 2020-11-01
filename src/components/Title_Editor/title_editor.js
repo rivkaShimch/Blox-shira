@@ -165,6 +165,7 @@ class Title_Editor extends Component {
                         onChange={this.onChangeTitleColor} value={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].fill} />
                 </div>
 
+
                 <div className="d-flex flex-row justify-content-between">
                     <div className="d-flex flex-column justify-content-between sideTitles">
                         <div className="d-flex flex-row sideTitles">Title Width</div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Stage, Layer, Image, Text, Transformer, Rectangle } from 'react-konva';
+import { Stage, Layer, Image, Text, Transformer, Rect } from 'react-konva';
 import useImage from 'use-image';
 import Portal from './portal';
 
@@ -218,7 +218,7 @@ const Canvas = (props) => {
 
   props.dispatch(setDataUrl(stageRef.current))
 
-  const LionImage = () => {
+  const BackgroundImage = () => {
     const [image] = useImage(require('../background_images/galim_b.jpg'));
     return <Image
       width={stageRef.current.width()}
@@ -414,27 +414,32 @@ const Canvas = (props) => {
         >
           <Stage
             id="my_stage"
-
             width={props.canvasDetails.canvas_width}
             height={props.canvasDetails.canvas_height}
             style={{ border: '1px solid grey' }}
-            style={background_color_stage ? {
-              background: background_color_stage,
-              marginTop: "200px",
-              borderStyle: 'dashed',
-              borderColor: '#D6CBE3', border: '1px solid grey'
-            } : {
-                // background: "white", border: '1px solid grey', borderStyle: 'dashed',
-                borderColor: '#D6CBE3'
-              }}
+            style={{
+              border: '1px solid #D6CBE3', borderStyle: 'dashed'
+            }
+            }
             ref={stageRef}
             onMouseDown={checkDeselect}
             onTouchStart={checkDeselect}
 
           >
             <Layer>
-              <LionImage
-              ></LionImage>
+              <Rect
+                onMouseDown={checkDeselectBackground}
+                onTouchStart={checkDeselectBackground}
+
+
+                width={props.canvasDetails.canvas_width}
+                height={props.canvasDetails.canvas_height}
+                fill={props.canvasDetails.background_color === '' ? 'white' : props.canvasDetails.background_color}
+              />
+              {/* {props.displayComponents.display_main_option == 'canva' ?
+                <span></span> :
+                <BackgroundImage />
+              } */}
               {props.canvasDetails.titles.map((text, i) => {
                 return (
                   <TextObj
@@ -506,20 +511,21 @@ const Canvas = (props) => {
                   // onDragEnd={handleDragEnd}
                   image={image} />;
               })}
-
             </Layer>
           </Stage>
 
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
 function mapStateToProps(state) {
   console.log("state canvas  " + state.canvasDetails.canvasDetails)
   return {
-    canvasDetails: state.canvasDetails.canvasDetails
+    canvasDetails: state.canvasDetails.canvasDetails,
+    displayComponents: state.displayComponents.displayComponents
+
   };
 }
 export default connect(mapStateToProps)(Canvas)

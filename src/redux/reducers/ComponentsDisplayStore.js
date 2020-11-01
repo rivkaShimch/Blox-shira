@@ -18,6 +18,7 @@ const initialState = {
 
 export default produce((state, action) => {
     switch (action.type) {
+
         case 'DISPLAY_IMAGE_EDITOR':
             state.displayComponents.display_image_editor = action.payload;
             break;

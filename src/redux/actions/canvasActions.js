@@ -73,6 +73,7 @@ export function setCanvasHeight(height) {
         payload: height
     };
 }
+
 export function setBackgroundImgName(back_img_n) {
 
     return {
@@ -183,5 +184,12 @@ export function setElementHeight(element_height) {
     return {
         type: 'ELEMENT_WIDTH_CANVAS',
         payload: element_height
+    };
+}
+export function setBackgroundColor(background_color) {
+
+    return {
+        type: 'BACKGROUND_CANVAS',
+        payload: background_color
     };
 }

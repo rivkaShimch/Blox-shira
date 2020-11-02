@@ -58,10 +58,19 @@ router.post('/add', (req, res) => {
         // image: image,
         name: name
     })
-    newImage.save()
-        .then(() => res.json({
+    newImage.save(
+        // function (err, result) {
+        //     if (err) {
+        //         response = { error: true, message: "Error adding data" };
+        //     } else {
+        //         response = { error: false, message: "Data added", id: result._id };
+        //     }
+        //     res.json(response);
+        // }
+    )
+        .then((result) => res.json({
             message: "Created image successfully",
-            // image: req.body.image
+            id: result._id
         }))
         .then((res) => {
             console.log(res)

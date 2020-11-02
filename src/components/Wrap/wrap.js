@@ -535,7 +535,8 @@ class Wrap extends React.Component {
                         <div className="col-4">
                             <Edit_choice />
                         </div>
-                        <div className="style_dmoCanva " style={{ marginLeft: "10vw" }}>
+                        <div className="style_dmoCanva" style={{ marginLeft: "10vw" }}>
+
                             <Canvas />
                         </div>
                     </div>

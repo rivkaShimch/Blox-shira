@@ -52,7 +52,7 @@ class Widget extends Component {
             x: this.props.canvasDetails.title_position_x,
             y: 10,
             width: 100,
-            height: 100,
+            height: 30,
             text: 'TITLE 0' + arr_length,
             align: 'left',
             fill: 'black',

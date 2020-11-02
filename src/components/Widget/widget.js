@@ -44,6 +44,7 @@ class Widget extends Component {
         this.openBackgroundEditor = this.openBackgroundEditor.bind(this)
 
     }
+    //commit
     openTitleEditor() {
         this.props.dispatch(setDisplayEditor("title"))
         let arr_length = (this.props.canvasDetails.titles).length

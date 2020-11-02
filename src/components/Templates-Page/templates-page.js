@@ -29,7 +29,8 @@ import {
     setElementImg,
     setTitleAlign,
     setTitlesICanvas,
-    setTitlesCanvasServer
+    setTitlesCanvasServer,
+    setBackgroundColor
 } from '../../redux/actions/canvasActions'
 import {
     setDisplayMainOption
@@ -64,6 +65,7 @@ class TemplateCards extends Component {
                 this.props.dispatch(setTitlesICanvas(template_data.titles_i))
                 this.props.dispatch(setCanvasWidth(template_data.canvas_width))
                 this.props.dispatch(setCanvasHeight(template_data.canvas_height))
+                this.props.dispatch(setBackgroundColor(template_data.background_color))
                 this.props.dispatch(setBackgroundImgName(template_data.background_img_name))
                 this.props.dispatch(setBackgroundImgPath(template_data.background_img_path))
                 this.props.dispatch(setElementImg(template_data.element_img))
@@ -75,21 +77,9 @@ class TemplateCards extends Component {
                 this.props.dispatch(setDisplayMainOption('canva'))
             });
     }
-    ImageExist = (url) => {
-        debugger
-        console.log("in ImageExist")
-        var img = new Image();
-        img.src = url;
-        return img.height != 0;
-    }
-
-
-
-
     render() {
         // let temp_name = ''
         return (
-
             <div className="d-flex flex-column justify-content-start white_circleborder_background mb-4  " style={{ marginTop: "6rem", width: "75vw", height: "87vh" }}>
                 <div className="d-flex flex-row justify-content-center" style={{ backgroundColor: "#F5F5FA66", marginTop: "4vh", width: "100%", padding: "1%" }}>
 

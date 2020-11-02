@@ -839,7 +839,7 @@ class Wrap extends React.Component {
             this.setState({
                 bringDataFromDB: true
             })
-            axios.get('http://localhost:9001/templateImages/')
+            axios.get('http://localhost:9000/templateImages/')
                 .then(res => {
                     console.log(res.data)
                     let data = res.data
@@ -874,13 +874,14 @@ class Wrap extends React.Component {
 
         //download the img to "download"
         this.downloadURI(dataURL.toDataURL(), this.props.canvasDetails.name);
-        axios.post('http://localhost:9001/templateImages/add', newImageTemplate)
+        axios.post('http://localhost:9000/templateImages/add', newImageTemplate)
             .then(
                 res => console.log(res.data));
         // this.props.dispatch(addTemplateImage([image_base64, this.props.canvasDetails.name]))
         // console.log(this.props.canvasDetails.imageTemplates)
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
+            background_color: this.props.canvasDetails.background_color,
             // canvas_width: this.props.canvasDetails.canvas_width,
             // canvas_height: this.props.canvasDetails.canvas_height,
             // background_img_name: this.props.canvasDetails.background_img_name,
@@ -903,7 +904,7 @@ class Wrap extends React.Component {
         };
         console.log(newTemplate);
         // save on mongodb
-        axios.post('http://localhost:9001/templates/add', newTemplate)
+        axios.post('http://localhost:9000/templates/add', newTemplate)
             .then(
                 res => console.log(res.data));
 

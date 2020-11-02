@@ -11,6 +11,9 @@ const templateSchema = new Schema({
     canvas_height: {
         type: Number,
     },
+    background_color: {
+        type: String
+    },
     background_img_name: {
         type: String,
     },

@@ -25,7 +25,8 @@ const initialState = {
     title_position_x: 200,
     title_position_y: 50,
 
-    element_img: '',
+    element_img: [],
+    element_img_i: 0,
     element_position_x: '',
     element_position_y: '',
     element_width: '',
@@ -42,6 +43,22 @@ export default produce((state, action) => {
       break;
     case 'NAME_CANVAS':
       state.canvasDetails.name = action.payload;
+      break;
+    case 'UPDATE_ELEMENTS_CANVAS':
+      const elements = state.canvasDetails.element_img.slice();
+      elements[action.counter] = action.payload;
+      console.log("newattrs " + action.payload)
+      state.canvasDetails.element_img = (elements);
+      break;
+    case 'SET_ELEMENTS_CANVAS':
+      state.canvasDetails.element_img = action.payload;
+      break;
+    case 'ADD_ELEMENTS_CANVAS':
+      state.canvasDetails.element_img = state.canvasDetails.element_img.slice();
+      state.canvasDetails.element_img.push(action.payload);
+      break;
+    case 'ELEMENTS_I_CANVAS':
+      state.canvasDetails.element_img_i = action.payload;
       break;
     case 'UPDATE_TITLES_CANVAS':
       const texts = state.canvasDetails.titles.slice();

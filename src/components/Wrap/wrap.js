@@ -520,10 +520,11 @@ class Wrap extends React.Component {
                         </div>
                         {/* <div className="d-flex flex-column justify-content-around col-5  " style={{ backgroundColor: "slateblue" }}> */}
                         {/* <div className="d-flex flex-row justify-content-center style_dmoCanva" style={{ backgroundColor: "yellowgreen" }}> */}
-                        <div className="style_dmoCanva " style={{ marginLeft: "10vw" }}>
+                        <div className="style_dmoCanva col-3" style={{ marginLeft: "10vw" }}>
                             <img src={require('./assets/tellYourStory.jpg')} style={{ width: "500px", height: "400", border: "1px dashed #707070" }} />
 
                         </div>
+                        <div className="col-5"></div>
                     </div>
 
                     :
@@ -539,6 +540,8 @@ class Wrap extends React.Component {
 
                             <Canvas />
                         </div>
+                        <div className="col-5"></div>
+
                     </div>
                     :
                     <span></span>
@@ -833,25 +836,23 @@ class Wrap extends React.Component {
             this.setState({ color: 'gray', fontColor: 'white', arrowColor: 'gray' });
     };
     onClickSetting = () => {
-        // console.log("in onClickSetting")
-
         if (!this.state.bringDataFromDB) {
             this.setState({
                 bringDataFromDB: true
             })
-            axios.get('http://localhost:9000/templateImages/')
+            axios.get('http://localhost:9000/templates/')
                 .then(res => {
-                    console.log(res.data)
+                    console.log("data  " + res.data[0].template_name)
                     let data = res.data
-                    data.map((image) => (
-                        this.props.dispatch(addTemplateImage(image))
+                    debugger
+                    data.map((template) => (
+                        this.props.dispatch(addTemplateImage(template.template_name))
                     ))
                     console.log("my array " + this.props.canvasDetails.imageTemplates)
                 })
         }
         this.props.dispatch(setDisplayMainOption('cards'))
         console.log("in onClickSetting " + this.props.displayComponents.display_main_option)
-
     };
 
     downloadURI = (uri, name) => {
@@ -867,35 +868,11 @@ class Wrap extends React.Component {
         console.log("in OnClickSave")
         let dataURL = (this.props.canvasDetails.dataURL)
         // let image_base64 = (dataURL.toDataURL())
-        const newImageTemplate = {
-            // image: image_base64,
-            name: this.props.canvasDetails.name
-        };
-
-        //download the img to "download"
-        this.downloadURI(dataURL.toDataURL(), this.props.canvasDetails.name);
-        axios.post('http://localhost:9000/templateImages/add', newImageTemplate)
-            .then(
-                res => console.log(res.data));
-        // this.props.dispatch(addTemplateImage([image_base64, this.props.canvasDetails.name]))
-        // console.log(this.props.canvasDetails.imageTemplates)
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
             background_color: this.props.canvasDetails.background_color,
-            // canvas_width: this.props.canvasDetails.canvas_width,
-            // canvas_height: this.props.canvasDetails.canvas_height,
-            // background_img_name: this.props.canvasDetails.background_img_name,
-            // background_img_path: this.props.canvasDetails.background_img_path,
             titles: this.props.canvasDetails.titles,
             titles_i: this.props.canvasDetails.titles_i,
-            // title_align: this.props.canvasDetails.title_align,
-            // title_size: this.props.canvasDetails.title_size,
-            // title_width: this.props.canvasDetails.title_width,
-            // title_height: this.props.canvasDetails.title_height,
-            // title_color: this.props.canvasDetails.title_color,
-            // title_type: this.props.canvasDetails.title_type,
-            // title_position_x: this.props.canvasDetails.title_position_x,
-            // title_position_y: this.props.canvasDetails.title_position_y,
             element_img: this.props.canvasDetails.element_img,
             element_position_x: this.props.canvasDetails.element_position_x,
             element_position_y: this.props.canvasDetails.element_position_y,
@@ -905,10 +882,15 @@ class Wrap extends React.Component {
         console.log(newTemplate);
         // save on mongodb
         axios.post('http://localhost:9000/templates/add', newTemplate)
-            .then(
-                res => console.log(res.data));
+            .then(res => console.log(res.data));
 
+        // const newImageTemplate = {
+        //     // image: image_base64,
+        //     name: this.props.canvasDetails.name
+        // };
 
+        //download the img to "download"
+        this.downloadURI(dataURL.toDataURL(), newTemplate.template_name);
     };
     handleClose = () => {
         this.setState({ openSpeedDial: false });

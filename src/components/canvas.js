@@ -8,12 +8,11 @@ import { connect } from 'react-redux';
 
 import {
   setDataUrl,
-  setTitlePositionX,
-  setTitlePositionY,
-  setTitlesCanvas,
   setUpdateTitlesCanvas,
   setTitlesICanvas,
-  setTitlesTextCanvas
+  setTitlesTextCanvas,
+  updateElementsCanvas,
+  setElementsICanvas
 
 } from '../redux/actions/canvasActions'
 import {
@@ -48,6 +47,7 @@ const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onCha
         offsetY={img ? img.height / 2 : 0}
         onClick={onSelect}
         onTap={onSelect}
+        onMouseEnter={onSelect}
         ref={shapeRef}
         {...shapeProps}
         draggable
@@ -117,6 +117,7 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange }) => {
       <Text
         onClick={onSelect}
         onTap={onSelect}
+        onMouseEnter={onSelect}
         ref={TextRef}
         {...shapeProps}
         draggable
@@ -166,39 +167,6 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange }) => {
 
 
 const Canvas = (props) => {
-  const initialTextArray = props.canvasDetails.titles
-  //               fontStyle={fontStyleTitle}
-  //               fontSize={props.canvasDetails.title_size}
-  //               align={props.canvasDetails.title_align}
-  //               width={props.canvasDetails.title_width}
-  //               height={props.canvasDetails.title_height}
-  //               x={props.canvasDetails.title_position_x}
-  //               y={props.canvasDetails.title_position_y}
-  //               drawBorder={false}
-  //               draggable
-  //               fill={props.canvasDetails.title_color ? props.canvasDetails.title_color : 'black'}
-
-  //   {
-  //     x: 10,
-  //     y: 10,
-  //     width: 100,
-  //     height: 100,
-  //     id: 'rect1',
-  //     text: '1111',
-  //     align: 'left'
-  //   },
-  //   {
-  //     x: 150,
-  //     y: 150,
-  //     width: 100,
-  //     height: 100,
-  //     fill: 'green',
-  //     id: 'rect2',
-  //     text: '2222'
-  //   },
-
-
-
   const dragUrl = React.useRef();
   const stageRef = React.useRef();
   const [images, setImages] = React.useState([]);
@@ -210,8 +178,6 @@ const Canvas = (props) => {
   const [textColor, setTextColor] = React.useState(null)
   const [background_color_stage, setBackground_color_stage] = React.useState(null)
   const [background_image, setBackground_image] = React.useState(null)
-  // const [textArray, setTextArray] = React.useState(props.canvasDetails.titles);
-  // const [textArray, setTextArray] = React.useState(initialTextArray);
 
   const [selectedTextId, selectText] = React.useState(null);
 
@@ -439,10 +405,6 @@ const Canvas = (props) => {
                 height={props.canvasDetails.canvas_height}
                 fill={props.canvasDetails.background_color === '' ? 'white' : props.canvasDetails.background_color}
               />
-              {/* {props.displayComponents.display_main_option == 'canva' ?
-                <span></span> :
-                <BackgroundImage />
-              } */}
               {props.canvasDetails.titles.map((text, i) => {
                 return (
                   <TextObj
@@ -462,52 +424,19 @@ const Canvas = (props) => {
                 );
               })}
 
-              {/* <Text
-                text={props.canvasDetails.titles[0].text}
-                fontStyle={fontStyleTitle}
-                fontSize={props.canvasDetails.title_size}
-                align={props.canvasDetails.title_align}
-                width={props.canvasDetails.title_width}
-                height={props.canvasDetails.title_height}
-                x={props.canvasDetails.title_position_x}
-                y={props.canvasDetails.title_position_y}
-                drawBorder={false}
-                draggable
-                fill={props.canvasDetails.title_color ? props.canvasDetails.title_color : 'black'}
-                onDragStart={() => {
-                }}
-                onDragEnd={(e) => {
-                  props.dispatch(setTitlePositionX(e.target.x()))
-                  console.log("x " + props.canvasDetails.title_position_x)
-                  props.dispatch(setTitlePositionY(e.target.y()))
-                }}
-              /> */}
-              <Text
-                text={title2}
-                fontSize="30"
-                // x={z}
-                // y={w}
-                draggable
-                fill={'black'}
-                onDragStart={() => {
-                }}
-                onDragEnd={(e) => {
-                  // z = e.target.x();
-                  // w = e.target.y();
-                }}
-              />
-              {images.map((image, i) => {
+              {props.canvasDetails.element_img.map((image, i) => {
                 return <URLImage
                   key={i}
                   shapeProps={image}
                   isSelected={image.id === selectedId}
                   onSelect={() => {
                     selectImage(image.id);
+                    props.dispatch(setElementsICanvas(image.id))
+                    // props.dispatch(setTitlesTextCanvas(text.text, text.id))
+                    props.dispatch(setDisplayEditor('image'))
                   }}
                   onChange={(newAttrs) => {
-                    const image_arr = images.slice();
-                    image_arr[i] = newAttrs;
-                    setImages(image_arr);
+                    props.dispatch(updateElementsCanvas(newAttrs, i))
                   }}
                   image_change={image}
                   // onDragStart={handleDragStart}

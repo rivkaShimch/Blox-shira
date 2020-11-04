@@ -45,7 +45,7 @@ class Image_Editor extends Component {
             <div className="col-12 d-flex flex-column justify-content-start">
 
 
-                <div className="d-flex flex-column justify-content-between" style={{ height: "500px", marginLeft: "20px", marginRight: "20px" }}>
+                <div className="d-flex flex-column justify-content-between" style={{ marginLeft: "20px", marginRight: "20px" }}>
                     <div className="d-flex flex-column justify-content-start">
                         <div className="d-flex flex-row justify-content-between">
                             <div className="col sideLittleTitles  ">Image Details</div>
@@ -55,9 +55,9 @@ class Image_Editor extends Component {
 
                     </div>
 
-
+                    {console.log("the img " + this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i])}
                     <div className="d-flex flex-row justify-content-center">
-                        <img style={{ height: "90px", width: "100px" }} src={logo} alt="image" />
+                        <img style={{ height: "90px", width: "100px" }} src={this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i].src} alt="image" />
                     </div>
 
 
@@ -75,7 +75,7 @@ class Image_Editor extends Component {
                         </div>
                     </div>
 
-
+                    {/* 
 
                     <div className="d-flex flex-row justify-content-between">
                         <div className="d-flex flex-column justify-content-between sideTitles">
@@ -110,7 +110,7 @@ class Image_Editor extends Component {
 
 
                     </div>
-
+ */}
 
 
                     <div className="d-flex flex-row justify-content-between">

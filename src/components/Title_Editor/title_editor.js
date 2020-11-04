@@ -133,7 +133,7 @@ class Title_Editor extends Component {
 
                 <div className="d-flex flex-column justify-content-start  mb-1">
                     <input className="w3-input  mb-2" id="title_input" style={{ color: "white", backgroundColor: "#3A405E" }}
-                        onKeyUp={this.onChangeTitleInput} onClick={() => document.getElementById('title_input').value = ''} placeholder={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].text} />
+                        onKeyUp={this.onChangeTitleInput} onClick={() => document.getElementById('title_input').value = ''} placeholder={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i] === undefined ? '' : this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].text} />
                 </div>
 
                 <div className="d-flex flex-row justify-content-between">
@@ -162,7 +162,7 @@ class Title_Editor extends Component {
                 <div className="d-flex flex-row justify-content-between mt-4 mb-1">
                     <div className="d-flex flex-column sideTitles">Title Fill</div>
                     <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
-                        onChange={this.onChangeTitleColor} value={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].fill} />
+                        onChange={this.onChangeTitleColor} value={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i] == undefined ? '' : this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].fill} />
                 </div>
 
 

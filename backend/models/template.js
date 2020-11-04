@@ -35,35 +35,17 @@ const templateSchema = new Schema({
     titles_i: {
         type: Number
     },
-    // title_align: {
-    //     type: Number
 
-    // },
-
-    // title_size: {
-    //     type: Number
-    // },
-    // title_width: {
-    //     type: Number
-    // },
-    // title_height: {
-    //     type: Number
-    // },
-    // title_color: {
-    //     type: String
-    // },
-    // title_type: {
-    //     type: String
-    // },
-    // title_position_x: {
-    //     type: Number
-    // },
-    // title_position_y: {
-    //     type: Number
-    // },
-    element_img:
-    {
-        type: String
+    element_img: [{
+        id: { type: Number },
+        x: { type: Number },
+        y: { type: Number },
+        width: { type: Number },
+        height: { type: Number },
+        src: { type: String }
+    }],
+    element_img_i: {
+        type: Number
     },
     element_position_x: {
         type: Number

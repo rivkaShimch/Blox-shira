@@ -14,6 +14,37 @@ export function setName(name) {
 }
 
 
+
+export function setElementsICanvas(i) {
+
+    return {
+        type: 'ELEMENTS_I_CANVAS',
+        payload: i
+    };
+}
+export function setElementsCanvasServer(element) {
+
+    return {
+        type: 'SET_ELEMENTS_CANVAS',
+        payload: element
+    };
+}
+
+export function addElementsCanvas(element) {
+
+    return {
+        type: 'ADD_ELEMENTS_CANVAS',
+        payload: element
+    };
+}
+export function updateElementsCanvas(element, i) {
+
+    return {
+        type: 'UPDATE_ELEMENTS_CANVAS',
+        payload: element,
+        counter: i
+    };
+}
 export function setTitlesICanvas(i) {
 
     return {

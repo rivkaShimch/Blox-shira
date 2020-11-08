@@ -121,9 +121,12 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu
         onTap={onSelect}
         onMouseEnter={onSelect}
         onContextMenu={handleContextMenu}
+
         ref={TextRef}
         {...shapeProps}
+
         draggable
+        drawBorder={true}
         onDragEnd={(e) => {
           onChange({
             ...shapeProps,
@@ -357,6 +360,7 @@ const Canvas = (props) => {
               <Rect
                 onMouseDown={checkDeselectBackground}
                 onTouchStart={checkDeselectBackground}
+                // onMouseEnter={checkDeselectBackground}
 
 
                 width={props.canvasDetails.canvas_width}

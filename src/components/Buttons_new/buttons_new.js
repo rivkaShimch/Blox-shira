@@ -8,6 +8,12 @@ import arow from '../img/arow.png';
 
 import { connect } from 'react-redux';
 
+import {
+    setTitlesCanvasServer,
+    setElementsCanvasServer,
+    setBackgroundColor
+} from '../../redux/actions/canvasActions'
+
 
 import {
     setDisplayMainOption
@@ -22,6 +28,9 @@ class Buttons_new extends Component {
         this.onClickNewFunc = this.onClickNewFunc.bind(this)
     }
     onClickNewFunc() {
+        this.props.dispatch(setTitlesCanvasServer([]))
+        this.props.dispatch(setElementsCanvasServer([]))
+        this.props.dispatch(setBackgroundColor('white'))
         this.props.dispatch(setDisplayMainOption('canva'))
     }
 

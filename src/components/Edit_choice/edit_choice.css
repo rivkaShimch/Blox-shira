@@ -99,22 +99,31 @@ align-items:center;
     background-color: none;
     padding: 0.8vh;
     
-
 } 
 .widget_button:hover{
     display: block;
     background-color: #f6f7f8;
-
 } 
 
 .wrap_flow {
     
-    width: 250px;
-    height: 150px;
+    width: 25vw;
+    height: 25vh;
  
     overflow-y: scroll; /* Add the ability to scroll */
   }
   .wrap_flow::-webkit-scrollbar {
+    display: none;
+}
+
+.wrap_flow_widget {
+    
+    width: 25vw;
+    height: 35vh;
+ 
+    overflow-y: scroll; /* Add the ability to scroll */
+  }
+  .wrap_flow_widget::-webkit-scrollbar {
     display: none;
 }
 

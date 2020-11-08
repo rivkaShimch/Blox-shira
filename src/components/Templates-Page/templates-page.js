@@ -10,27 +10,18 @@ import searchIcon from '../img/searchSolid.svg';
 
 import {
     setName,
-    setTitlesCanvas,
     setCanvasWidth,
     setCanvasHeight,
-    setTitlePositionX,
-    setTitlePositionY,
-    setTitleColor,
-    setTitleSize,
-    setTitleWidth,
-    setTitleHeight,
-    setBackgroundImgName,
-    setBackgroundImgPath,
     setElementPositionX,
     setElementPositionY,
     setElementWidth,
     setElementHeight,
-    setTitleType,
-    setElementImg,
-    setTitleAlign,
     setTitlesICanvas,
     setTitlesCanvasServer,
-    setBackgroundColor
+    setBackgroundColor,
+    setElementsCanvasServer,
+    setElementsICanvas,
+    setBackgroundImgName
 } from '../../redux/actions/canvasActions'
 import {
     setDisplayMainOption
@@ -48,7 +39,8 @@ class TemplateCards extends Component {
 
     onClickNewProject() {
         this.props.dispatch(setTitlesCanvasServer([]))
-        console.log("onClickNewProject setTitlesCanvas " + this.props.canvasDetails.titles)
+        this.props.dispatch(setElementsCanvasServer([]))
+        this.props.dispatch(setBackgroundColor('white'))
         this.props.dispatch(setDisplayMainOption('canva'))
     }
 
@@ -58,7 +50,6 @@ class TemplateCards extends Component {
             .then(res => {
                 console.log(res.data)
                 let template_data = res.data[0]
-
                 //update all the variable of the canvas
                 let title_array = template_data.titles
                 this.props.dispatch(setTitlesCanvasServer(title_array))
@@ -66,9 +57,8 @@ class TemplateCards extends Component {
                 this.props.dispatch(setCanvasWidth(template_data.canvas_width))
                 this.props.dispatch(setCanvasHeight(template_data.canvas_height))
                 this.props.dispatch(setBackgroundColor(template_data.background_color))
-                this.props.dispatch(setBackgroundImgName(template_data.background_img_name))
-                this.props.dispatch(setBackgroundImgPath(template_data.background_img_path))
-                this.props.dispatch(setElementImg(template_data.element_img))
+                this.props.dispatch(setElementsCanvasServer(template_data.element_img))
+                this.props.dispatch(setElementsICanvas(template_data.element_img_i))
                 this.props.dispatch(setElementPositionX(template_data.element_position_x))
                 this.props.dispatch(setElementPositionY(template_data.element_position_y))
                 this.props.dispatch(setElementWidth(template_data.element_width))
@@ -128,17 +118,13 @@ class TemplateCards extends Component {
                             </Card.Content>
                         </Card>
                         {
-                            this.props.canvasDetails.imageTemplates.map((data) => (
+                            this.props.canvasDetails.imageTemplates.map((name_of_template) => (
                                 <Card className="card_style" raised
-                                    onClick={() => this.onClickTemplateCard(data["name"])}>
-                                    {/* {this.setState({ name_of_temp: data[1] })} */}
-                                    {/* <Image src={data["image"]} wrapped ui={false} /> */}
-
-                                    <Image src={require('C:/Users/User/Documents/GitHub/Blox-shira/backend/api/uploads/' + data["name"] + '.png')} wrapped ui={false} />
+                                    onClick={() => this.onClickTemplateCard(name_of_template)}>
+                                    <Image src={require('C:/Users/User/Documents/GitHub/Blox-shira/backend/api/uploads/' + name_of_template + '.png')} wrapped ui={false} />
                                     <Card.Content extra>
                                         <Card.Header className="d-flex justify-content-center">
-                                            {data["name"]}
-                                            {/* {{temp_name = data[1]} } */}
+                                            {name_of_template}
                                         </Card.Header>
                                         <a className="d-flex justify-content-center">
                                             <Icon name='heart' />

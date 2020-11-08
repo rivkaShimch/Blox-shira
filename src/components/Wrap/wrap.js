@@ -1,76 +1,37 @@
 
 import React from 'react';
-// import logo from './logo.svg';
-// import './App.css';
 import clsx from 'clsx';
-import { ThemeProvider } from "@material-ui/styles";
-import { makeStyles } from '@material-ui/core/styles';
 import { withStyles } from '@material-ui/core/styles';
-//import { Router, Route, Link } from "react-router-dom";
-//import lastFiles from './lastFiles';
 import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Fab from '@material-ui/core/Fab';
-import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import FormLabel from '@material-ui/core/FormLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
-import Icon from '@material-ui/core/Icon';
-import Switch from '@material-ui/core/Switch';
 import Avatar from '@material-ui/core/Avatar';
 import MenuIcon from '@material-ui/icons/Menu';
-import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
-import CloseIcon from '@material-ui/icons/Close';
-import ListAltIcon from '@material-ui/icons/ListAlt';
-import SearchIcon from '@material-ui/icons/Search';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import InvertColorsIcon from '@material-ui/icons/InvertColors';
 import InvertDesktopWindows from '@material-ui/icons/DesktopWindows';
-import TabletMacIcon from '@material-ui/icons/TabletMac';
-import PhoneIphoneIcon from '@material-ui/icons/PhoneIphone';
-import EventNoteIcon from '@material-ui/icons/EventNote';
-import NavigationIcon from '@material-ui/icons/Navigation';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import Drawer from '@material-ui/core/Drawer';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
 import Popover from '@material-ui/core/Popover';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import { TextField, createMuiTheme } from '@material-ui/core';
 import axios from 'axios';
 
 import './wrap.css';
-import quote from './assets/quote.png';
 import profil from './assets/profil.png';
 import logo from './assets/logo.png';
 
@@ -79,45 +40,21 @@ import Edit_choice from '../Edit_choice/edit_choice';
 import Title_Editor from '../Title_Editor/title_editor';
 import Image_Editor from '../Image_Editor/image_editor';
 import Shape_Editor from '../Shape_Editor/shape_editor';
-import TemplateCards from '../Templates-Page/templates-page'
+import TemplateCards from '../Templates-Page/templates-page';
+import Background_Editor from '../Background_Editor/background_editor';
 import 'semantic-ui-css/semantic.min.css'
 import { connect } from 'react-redux';
 
 import {
-    setDisplayTitleEditor,
-    setDisplaySettingPage,
     setDisplayMainOption,
-    setDisplayShapeEditor,
 
 } from '../../redux/actions/componentsActions'
 import {
     addTemplateImage,
     setName
-
 } from '../../redux/actions/canvasActions'
-import Background_Editor from '../Background_Editor/background_editor';
 const drawerWidth = '15%';
 const useStyles = theme => ({
-    // root: {
-    //     display: 'flex',
-    // },
-    // appBar: {
-    //     zIndex: theme.zIndex.drawer + 1,
-    // },
-    // drawer: {
-    //     width: drawerWidth,
-    //     flexShrink: 0,
-    // },
-    // drawerPaper: {
-    //     width: drawerWidth,
-    // },
-    // drawerContainer: {
-    //     overflow: 'auto',
-    // },
-    // content: {
-    //     flexGrow: 1,
-    //     padding: theme.spacing(3),
-    // },
     root: {
         display: 'flex',
         position: 'relative',
@@ -130,8 +67,6 @@ const useStyles = theme => ({
         height: 'calc(100% - 64px)',
         top: 64,
         flexShrink: 0,
-        //zIndex:1305
-
     },
     configuratorOpen: {
         height: 'calc(100% - 64px)',
@@ -155,8 +90,6 @@ const useStyles = theme => ({
         },
     },
     appBar: {
-        //alignItems: 'center',
-        // justify:'space-between',
         zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
@@ -164,12 +97,6 @@ const useStyles = theme => ({
         }),
     },
     appBarShift: {
-        // marginLeft: drawerWidth,
-        // width: `calc(100% - ${drawerWidth}px)`,//change delete
-        // transition: theme.transitions.create(['width', 'margin'], {
-        //   easing: theme.transitions.easing.sharp,
-        //   duration: theme.transitions.duration.enteringScreen,
-        // }),
     },
     menuButton: {
         marginRight: 36,
@@ -241,12 +168,6 @@ const useStyles = theme => ({
     row: {
         display: 'flex',
         alignItems: 'center',
-
-        // justify-content-between
-        //   display: 'inline-block',
-        //   flexGrow: 1,
-        //   display: 'flex',
-        // flexDirection: 'row',
         justifyContent: 'space-between',
     },
     margin: {
@@ -303,7 +224,6 @@ const useStyles = theme => ({
     },
 });
 
-
 class Wrap extends React.Component {
     constructor(prop) {
         super(prop);
@@ -322,7 +242,6 @@ class Wrap extends React.Component {
             bringDataFromDB: false,
         };
         this.onKeyTemplateName = this.onKeyTemplateName.bind(this)
-
     }
 
     onKeyTemplateName(e) {
@@ -331,20 +250,11 @@ class Wrap extends React.Component {
     }
     render() {
         const { classes } = this.props;
-        const { theme } = this.props;
-        //const history = createBrowserHistory();
         const open = Boolean(this.state.anchorEl)
         const header_fashion_media = false
-        const page_setting_button = true
-        // const title_editor_option = this.props.displayComponents.display_title_editor
-        // console.log("open title editor in wrap " + this.props.displayComponents.display_title_editor)
-        // const new_button = false
 
         return (
             <div className="d-flex " style={{ backgroundColor: "#f1f1f1" }}>
-                {/* <Router> */}
-                {/* <CssBaseline /> */}
-
                 <AppBar
                     position="fixed"
                     className={clsx(classes.appBar, {
@@ -356,29 +266,14 @@ class Wrap extends React.Component {
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
-                            onClick={this.handleDrawerOpen}
-                        //edge="start"
-                        >
+                            onClick={this.handleDrawerOpen}>
                             <MenuIcon />
                         </IconButton>
 
                         <img src={logo} alt={"logo"} width="35px" />
-                        {/* <Toolbar>
-    <IconButton
-      color="inherit"
-      aria-label="open drawer"
-      onClick={this.handleDrawerOpen}
-      edge="start"
-    >
-      <MenuIcon />
-    </IconButton>
-    <Typography variant="h6" noWrap>
-      Mini variant drawer
-    </Typography>
-  </Toolbar> */}
+
                         <Tabs value={this.state.valueTab} onChange={this.handleChange} variant="fullWidth" aria-label="simple tabs example" style={{ width: '80%' }} centered={true}>
                             <Tab label={<div> Post {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between' }} />
-                            {/* {this.state.openCollapse ? <ExpandLess /> : <ExpandMore />} */}
                             <Tab label={<div> Form {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between' }} />
                             <div onMouseLeave={this.handlePopoverClose}>
                                 <Tab label={<div>10 Tips in fashion media {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between' }} onMouseOver={this.handlePopoverOpen} />
@@ -391,21 +286,12 @@ class Wrap extends React.Component {
                                     open={open}
                                     anchorEl={this.state.anchorEl}
                                     anchorReference='anchorPosition'
-                                    // anchorOrigin={{
-                                    //   vertical: 'bottom',
-                                    //   horizontal: 'left',
-                                    // }}
-                                    // transformOrigin={{
-                                    //   vertical: 'top',
-                                    //   horizontal: 'left',
-                                    // }}
                                     anchorPosition={{
                                         top: 145,
                                         left: 145
                                     }}
                                     onClose={this.handlePopoverClose}
                                     disableRestoreFocus
-                                // onMouseLeave={this.handlePopoverClose}
                                 >
                                     {this.showTips()}
 
@@ -419,7 +305,6 @@ class Wrap extends React.Component {
                             color="inherit"
                             aria-label="open drawer"
                             onClick={this.toggleDrawer}
-                            //edge="end"
                             style={{ right: 0 }}
                         >
                             <MenuIcon />
@@ -440,17 +325,12 @@ class Wrap extends React.Component {
                         }),
                     }}
                 >
-                    {/* <div className={classes.toolbar}></div> */}
-                    {/* <IconButton onClick={this.handleDrawerClose}></IconButton> */}
-
-
                     <List>
                         <ListItem button>
                             <ListItemIcon style={{ alignSelf: 'center', textAlign: 'center', alignItems: 'center', justifyItems: 'center' }}>{<svg xmlns="http://www.w3.org/2000/svg" style={{ fill: "#45AFFF" }} width="27.497" height="21.998" viewBox="0 0 27.497 21.998"><defs></defs><path class="a" d="M27.5,11.343v-.687a.687.687,0,0,0-.687-.687H14.78V8.249h3.093a1.375,1.375,0,0,0,1.375-1.375v-5.5A1.375,1.375,0,0,0,17.873,0H9.624A1.375,1.375,0,0,0,8.249,1.375v5.5A1.375,1.375,0,0,0,9.624,8.249h3.093V9.968H.687A.687.687,0,0,0,0,10.655v.687a.687.687,0,0,0,.687.687H5.156v1.719H2.75a1.375,1.375,0,0,0-1.375,1.375v5.5A1.375,1.375,0,0,0,2.75,22H9.624A1.375,1.375,0,0,0,11,20.623v-5.5a1.375,1.375,0,0,0-1.375-1.375H7.218V12.03H20.279v1.719H17.873A1.375,1.375,0,0,0,16.5,15.124v5.5A1.375,1.375,0,0,0,17.873,22h6.874a1.375,1.375,0,0,0,1.375-1.375v-5.5a1.375,1.375,0,0,0-1.375-1.375H22.342V12.03H26.81A.687.687,0,0,0,27.5,11.343ZM11,5.5V2.75h5.5V5.5ZM8.249,19.248H4.125V16.5H8.249Zm15.124,0H19.248V16.5h4.125Z" /></svg>}</ListItemIcon>
                             <ListItemText
                                 style={{ color: "#45AFFF" }}
                                 primary="Leader Box"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
                         <ListItem button>
@@ -458,7 +338,6 @@ class Wrap extends React.Component {
                             <ListItemText
                                 style={{ color: "#44D7B6" }}
                                 primary="Leader Funnel"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
                         <ListItem button>
@@ -466,7 +345,6 @@ class Wrap extends React.Component {
                             <ListItemText
                                 style={{ color: "#6DD400" }}
                                 primary="Leader Hub"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
 
@@ -475,7 +353,6 @@ class Wrap extends React.Component {
                             <ListItemText
                                 style={{ color: "#B620E0" }}
                                 primary="Leader Time"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
                         <ListItem button>
@@ -483,7 +360,6 @@ class Wrap extends React.Component {
                             <ListItemText
                                 style={{ color: "#FF808B" }}
                                 primary="Leader Stories"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
 
@@ -492,7 +368,6 @@ class Wrap extends React.Component {
                             <ListItemText
                                 style={{ color: "#F7B500" }}
                                 primary="Leader Forms"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
 
@@ -501,34 +376,23 @@ class Wrap extends React.Component {
                             <ListItemText
                                 style={{ color: "#6236FF" }}
                                 primary="Leader Quote"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
 
                     </List>
                 </Drawer>
-                {/* {this.props.displayComponents.display_setting_page ?
-                    <div className="d-flex justify-content-center" style={{ marginTop: "100px" }}>
-                        
-                    </div> : <span></span>}
-
-                 */}
                 {this.props.displayComponents.display_main_option === '' ?
                     <div className="d-flex flex-row justify-content-between ">
                         <div className="col-4">
                             <Edit_choice />
                         </div>
-                        {/* <div className="d-flex flex-column justify-content-around col-5  " style={{ backgroundColor: "slateblue" }}> */}
-                        {/* <div className="d-flex flex-row justify-content-center style_dmoCanva" style={{ backgroundColor: "yellowgreen" }}> */}
                         <div className="style_dmoCanva col-3" style={{ marginLeft: "10vw" }}>
                             <img src={require('./assets/tellYourStory.jpg')} style={{ width: "500px", height: "400", border: "1px dashed #707070" }} />
 
                         </div>
                         <div className="col-5"></div>
                     </div>
-
-                    :
-                    <span></span>
+                    : <span></span>
                 }
 
                 {this.props.displayComponents.display_main_option === 'canva' ?
@@ -537,22 +401,18 @@ class Wrap extends React.Component {
                             <Edit_choice />
                         </div>
                         <div className="style_dmoCanva" style={{ marginLeft: "10vw" }}>
-
                             <Canvas />
                         </div>
                         <div className="col-5"></div>
 
                     </div>
-                    :
-                    <span></span>
+                    : <span></span>
                 }
                 {this.props.displayComponents.display_main_option === 'cards' ?
                     <div className="d-flex flex-row justify-content-between " style={{ padding: "20px" }}>
-
                         <TemplateCards />
                     </div>
-                    :
-                    <span></span>
+                    : <span></span>
                 }
 
 
@@ -560,25 +420,8 @@ class Wrap extends React.Component {
                     [classes.configuratorOpen]: this.state.right,
                     [classes.configuratorClose]: !this.state.right,
                 })} className="col-1" open={this.state['right']} fullwidth="true" variant="persistent" onClose={this.toggleDrawer}>
-
-                    {/* <AppBar position="static" style={{ background: '#3A405E 0% 0% no-repeat padding-box !important', backgroundColor: '#3A405E' }}>
-            <Toolbar>
-              <IconButton edge="start" color="inherit" aria-label="setting" >
-                <SettingsIcon />
-              </IconButton>
-              <Typography variant="h6" style={{ flexGrow: 5 }}>
-                Create New Event
-  </Typography>
-              <IconButton edge="start" color="inherit" aria-label="menu" onClick={this.toggleDrawer('right', false)}>
-                <CloseIcon />
-              </IconButton>
-            </Toolbar>
-          </AppBar> */}
-
-
                     <div className={classes.row} style={{ position: 'static', marginTop: '5vh', marginBottom: '2vh' }}>
                         <IconButton edge="end" color="inherit" aria-label="setting" onClick={this.onClickSetting} >
-                            {/* component={Link} to="/lastFiles" */}
                             <SettingsIcon style={{ color: this.state.color }} />
                         </IconButton>
                         <Typography variant="h6" style={{ flexGrow: 5, color: this.state.fontColor, textAlign: 'center' }}>
@@ -616,23 +459,14 @@ class Wrap extends React.Component {
                     <AppBar position="absolute" color="primary" className={classes.appBarBottom} style={{ width: "17vw", position: "fixed" }}>
                         <Toolbar style={{ minHeight: '40px' }}>
 
-                            {/* <IconButton edge="start" color="inherit" aria-label="open drawer">
-            <MenuIcon />
-          </IconButton>
-          <Fab color="secondary" aria-label="add" className={classes.fabButton}>
-            <AddIcon />
-          </Fab> */}
                             <div className={classes.grow} />
                             <div className="d-flex flex-column ">
                                 <div className="d-flex flex-row">
-                                    <input className="w3-input" style={{ color: "white", backgroundColor: " black" }}
+                                    <input className="w3-input" style={{ color: "white", backgroundColor: " #0A0E1B" }}
                                         placeholder={this.props.canvasDetails.name}
                                         onKeyUp={this.onKeyTemplateName}
                                     >
                                     </input>
-                                    {/* <IconButton edge="end" color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
-          <svg style={{ fill: this.state.arrowColor }} xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><defs></defs><path class="a" d="M38,23A15,15,0,1,0,23,38,15,15,0,0,0,38,23ZM10.9,23A12.1,12.1,0,1,1,23,35.1,12.093,12.093,0,0,1,10.9,23Zm4.355,1.21V21.79a.728.728,0,0,1,.726-.726H23V17.012a.727.727,0,0,1,1.24-.514l5.988,5.988a.726.726,0,0,1,0,1.028L24.24,29.5A.726.726,0,0,1,23,28.988V24.935H15.984A.728.728,0,0,1,15.258,24.21Z" transform="translate(-8 -8)" /></svg>        
-            </IconButton> */}
                                 </div>
                                 <div className="d-flex flex-row">
                                     <IconButton color="inherit" style={{ paddingLeft: '0px', paddingRight: '12px' }}>
@@ -646,8 +480,6 @@ class Wrap extends React.Component {
                                         aria-label="add"
                                         className={classes.margin}
                                         onClick={this.OnClickSave}
-
-
                                     >
                                         <svg style={{ fill: "white", flexShrink: 0, margin: '5px' }}
                                             xmlns="http://www.w3.org/2000/svg" width="8.211" height="11.124"
@@ -661,7 +493,6 @@ class Wrap extends React.Component {
                         </Toolbar>
                     </AppBar>
                 </Drawer>
-                {/* </Router> */}
             </div >
         )
     };
@@ -687,7 +518,6 @@ class Wrap extends React.Component {
                             </ListItemAvatar>
                             <ListItemText
                                 primary="New Quote"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
                         <ListItem>
@@ -698,7 +528,6 @@ class Wrap extends React.Component {
                             </ListItemAvatar>
                             <ListItemText
                                 primary="New Event"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
 
@@ -710,7 +539,6 @@ class Wrap extends React.Component {
                             </ListItemAvatar>
                             <ListItemText
                                 primary="New Time"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
                         <ListItem>
@@ -721,7 +549,6 @@ class Wrap extends React.Component {
                             </ListItemAvatar>
                             <ListItemText
                                 primary="New Stories"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
 
@@ -733,7 +560,6 @@ class Wrap extends React.Component {
                             </ListItemAvatar>
                             <ListItemText
                                 primary="New Contact"
-                            //secondary={secondary ? 'Secondary text' : null}
                             />
                         </ListItem>
                     </List>
@@ -743,28 +569,7 @@ class Wrap extends React.Component {
                 </div>
 
             </Grid>
-            //  <SpeedDial
-            //     ariaLabel="SpeedDial example"
-            //     className={classes.speedDial}
-            //     //hidden={hidden}
-            //     icon={<SpeedDialIcon />}
-            //     onClose={this.handleClose}
-            //     onOpen={this.handleOpen}
-            //     open={this.state.openSpeedDial}
-            //     direction="up"
-            //   >
-            //     {actions.map((action) => (
 
-            //       <SpeedDialAction
-            //         key={action.name}
-            //         icon={action.icon}
-            //         tooltipTitle={action.name}
-            //         onClick={this.handleClose}
-            //         style={{backgroundColor:"red"}}
-            //       />
-
-            //     ))}
-            //   </SpeedDial>
         )
     }
 
@@ -785,14 +590,6 @@ class Wrap extends React.Component {
             </Grid>
         )
     }
-    // toggleDrawer = (anchor, open) => (event) => {
-    //   const show = this.state.right
-    //   this.setState({right: !show});
-    //   this.setState({
-    //     // right:open;
-    //     [anchor]: open
-    //   });
-    //   setState({ ...state, [anchor]: open });
 
     toggleDrawer = () => {
         const show = this.state.right
@@ -802,7 +599,6 @@ class Wrap extends React.Component {
     handleDrawerOpen = () => {
         const show = this.state.openDrawer
         this.setState({ openDrawer: !show });
-        //this.setState({openDrawer:true})
     };
 
     handleDrawerClose = () => {
@@ -867,7 +663,6 @@ class Wrap extends React.Component {
     OnClickSave = () => {
         console.log("in OnClickSave")
         let dataURL = (this.props.canvasDetails.dataURL)
-        // let image_base64 = (dataURL.toDataURL())
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
             background_color: this.props.canvasDetails.background_color,
@@ -883,12 +678,6 @@ class Wrap extends React.Component {
         // save on mongodb
         axios.post('http://localhost:9000/templates/add', newTemplate)
             .then(res => console.log(res.data));
-
-        // const newImageTemplate = {
-        //     // image: image_base64,
-        //     name: this.props.canvasDetails.name
-        // };
-
         //download the img to "download"
         this.downloadURI(dataURL.toDataURL(), newTemplate.template_name);
     };
@@ -899,11 +688,9 @@ class Wrap extends React.Component {
     handleOpen = () => {
         this.setState({ openSpeedDial: true });
     };
-    // changeToLightColor=()=>{
     f = () => {
 
     }
-    // }
 }
 
 function mapStateToProps(state) {
@@ -911,8 +698,6 @@ function mapStateToProps(state) {
     return {
         displayComponents: state.displayComponents.displayComponents,
         canvasDetails: state.canvasDetails.canvasDetails
-
     };
 }
 export default connect(mapStateToProps)((withStyles(useStyles))(Wrap))
-//export default Wrap;

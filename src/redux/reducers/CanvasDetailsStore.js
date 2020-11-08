@@ -10,6 +10,7 @@ const initialState = {
     titles_i: 0,
     dataURL: "",
     imageTemplates: [],
+    removed_titles: [],
 
     canvas_width: 500,
     canvas_height: 400,
@@ -60,6 +61,17 @@ export default produce((state, action) => {
     case 'ELEMENTS_I_CANVAS':
       state.canvasDetails.element_img_i = action.payload;
       break;
+    case 'REMOVE_TITLES_CANVAS':
+      const titles = state.canvasDetails.titles.slice();
+      const removed_item = titles.splice(action.counter, 1);
+      state.canvasDetails.removed_titles = state.canvasDetails.removed_titles.slice()
+      state.canvasDetails.removed_titles.push(removed_item);
+      state.canvasDetails.titles_i -= state.canvasDetails.titles_i
+      state.canvasDetails.titles = (titles);
+      debugger
+      console.log("removed array" + state.canvasDetails.removed_titles)
+      console.log("new array" + state.canvasDetails.titles)
+      break;
     case 'UPDATE_TITLES_CANVAS':
       const texts = state.canvasDetails.titles.slice();
       texts[action.counter] = action.payload;
@@ -78,6 +90,8 @@ export default produce((state, action) => {
       state.canvasDetails.titles_i = action.payload;
       break;
     case 'TITLES_TEXT_CANVAS':
+      // debugger
+      console.log("text id " + action.id)
       state.canvasDetails.titles[action.id].text = action.payload;
       break;
     case 'DATA_URL_CANVAS':

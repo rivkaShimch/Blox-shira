@@ -2,7 +2,8 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Stage, Layer, Image, Text, Transformer, Rect } from 'react-konva';
 import useImage from 'use-image';
-import Portal from './portal';
+import Portal from './Portal';
+import ContextMenu from "./ContextMenu";
 
 import { connect } from 'react-redux';
 
@@ -12,7 +13,8 @@ import {
   setTitlesICanvas,
   setTitlesTextCanvas,
   updateElementsCanvas,
-  setElementsICanvas
+  setElementsICanvas,
+  removedTitlesCanvas
 
 } from '../redux/actions/canvasActions'
 import {
@@ -100,7 +102,7 @@ const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onCha
 };
 
 
-const TextObj = ({ shapeProps, isSelected, onSelect, onChange }) => {
+const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu }) => {
   const TextRef = React.useRef();
   const trRefText = React.useRef();
 
@@ -118,6 +120,7 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange }) => {
         onClick={onSelect}
         onTap={onSelect}
         onMouseEnter={onSelect}
+        onContextMenu={handleContextMenu}
         ref={TextRef}
         {...shapeProps}
         draggable
@@ -178,11 +181,37 @@ const Canvas = (props) => {
   const [textColor, setTextColor] = React.useState(null)
   const [background_color_stage, setBackground_color_stage] = React.useState(null)
   const [background_image, setBackground_image] = React.useState(null)
-
   const [selectedTextId, selectText] = React.useState(null);
-
+  const inputRef = React.useRef();
 
   props.dispatch(setDataUrl(stageRef.current))
+
+  const [selectedContextMenu, setSelectedContextMenu] = React.useState(null)
+  const [position_div_x, setPosition_div_x] = React.useState(null)
+  const [position_div_y, setPosition_div_y] = React.useState(null)
+
+
+
+  const handleOptionSelected = (option) => {
+    console.log(stageRef.current);
+
+    if (option === 'Delete') {
+      props.dispatch(removedTitlesCanvas(selectedTextId))
+    }
+    console.log(option);
+    setSelectedContextMenu(null);
+  };
+  const handleContextMenu = (e) => {
+    e.evt.preventDefault(true); // NB!!!! Remember the ***TRUE***
+    const mousePosition = e.target.getStage().getPointerPosition();
+
+    setSelectedContextMenu({
+      type: "START",
+      position: mousePosition
+    }
+    );
+  };
+
 
   const BackgroundImage = () => {
     const [image] = useImage(require('../background_images/galim_b.jpg'));
@@ -288,81 +317,10 @@ const Canvas = (props) => {
       <div>
 
         <br />
-        {/* <img
-          alt="lion"
-          src={require('./img/lion.png')}
-          draggable="true"
-          onDragStart={e => {
-            dragUrl.current = e.target.src;
-
-          }}
-          style={{ width: "100px" }}
-          id="image1"
-        />
-
-        <img
-          alt="coffee"
-          src={require('./img/coffee.jpg')}
-          draggable="true"
-          onDragStart={e => {
-            dragUrl.current = e.target.src;
-
-          }}
-          style={{ width: "100px" }}
-          id="image2"
-        />
-        <img
-          alt="smaily"
-          src={require('./img/smaily.jpg')}
-          draggable="true"
-          onDragStart={e => {
-            dragUrl.current = e.target.src;
-          }}
-          style={{ width: "100px" }}
-          id="image3"
-        />
-        <img
-          alt="ok_pu"
-          src={require('./img/ok_pu.jpg')}
-          draggable="true"
-          onDragStart={e => {
-            dragUrl.current = e.target.src;
-          }}
-          style={{ width: "100px" }}
-          id="image4"
-        />
-        <img
-          alt="flowers"
-          src={require('./img/flowers.jpg')}
-          onDragStart={e => {
-            dragUrl.current = e.target.src;
-          }}
-          style={{ width: "100px" }}
-          id="image5"
-
-        />
-        <img
-          alt="cool"
-          src={require('./img/cool.jpg')}
-          draggable="true"
-          onDragStart={e => {
-            dragUrl.current = e.target.src;
-          }}
-          style={{ width: "100px" }}
-          id="image6"
-        />
-        <img
-          alt="clock"
-          src={require('./img/clock5.png')}
-          draggable="true"
-          onDragStart={e => {
-            dragUrl.current = e.target.src;
-
-          }}
-          style={{ width: "100px" }}
-          id="image7"
-        /> */}
-        <div
+        <div ref={inputRef} onMouseEnter={() => {
+          setPosition_div_x(inputRef.current.getBoundingClientRect().x);
+          setPosition_div_y(inputRef.current.getBoundingClientRect().y); console.log(inputRef.current.getBoundingClientRect())
+        }}
           onDrop={e => {
             // register event position
             stageRef.current.setPointersPositions(e);
@@ -406,11 +364,15 @@ const Canvas = (props) => {
                 fill={props.canvasDetails.background_color === '' ? 'white' : props.canvasDetails.background_color}
               />
               {props.canvasDetails.titles.map((text, i) => {
+                debugger
+                // if (props.canvasDetails.removed_titles.length === 0 || props.canvasDetails.removed_titles[0].id !== i)
                 return (
                   <TextObj
                     key={i}
                     shapeProps={text}
                     isSelected={text.id === selectedTextId}
+                    handleContextMenu={handleContextMenu}
+
                     onSelect={() => {
                       selectText(text.id);
                       props.dispatch(setTitlesICanvas(text.id))
@@ -418,7 +380,7 @@ const Canvas = (props) => {
                       props.dispatch(setDisplayEditor('title'))
                     }}
                     onChange={(newAttrs) => {
-                      props.dispatch(setUpdateTitlesCanvas(newAttrs, i))
+                      props.dispatch(setUpdateTitlesCanvas(newAttrs, text.id))
                     }}
                   />
                 );
@@ -443,6 +405,17 @@ const Canvas = (props) => {
                   // onDragEnd={handleDragEnd}
                   image={image} />;
               })}
+              {selectedContextMenu && (
+                <Portal>
+                  <ContextMenu
+                    {...selectedContextMenu}
+                    onOptionSelected={handleOptionSelected}
+                    position_div_x={position_div_x}
+                    position_div_y={position_div_y}
+
+                  />
+                </Portal>
+              )}
             </Layer>
           </Stage>
 

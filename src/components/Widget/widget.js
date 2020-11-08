@@ -1,44 +1,28 @@
 import React, { Component } from 'react';
-
 import "bootstrap/dist/css/bootstrap.min.css"
-import { Link } from 'react-router-dom';
-import Edit_choice from '../Edit_choice/edit_choice';
-// import { FaRocket } from 'react-icons/fa';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Scrollspy from 'react-scrollspy';
 import lines from '../img/lines.png';
 import Text from '../img/text.png';
-// import { Circle } from 'react-konva';
 import onOff from '../img/onOff.png';
 import imageButton from '../img/imageButton.png';
 import drawpolygonsolid from '../img/drawpolygonsolid.png';
 import sign from '../img/sign.png';
-import backgroundIcon from '../img/flowers.jpg';
-// import style from './widget.css'
 
 import { connect } from 'react-redux';
 
 
 import {
-    setDisplayTitleEditor,
     setDisplayEditor,
-    setDisplayImageEditor,
-    setDisplayShapeEditor,
-    setDisplayBackgroundColorEditor
 } from '../../redux/actions/componentsActions';
 
 import {
     setTitlesCanvas,
     addElementsCanvas
 } from '../../redux/actions/canvasActions'
-import zIndex from '@material-ui/core/styles/zIndex';
-
 class Widget extends Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
         this.state = {
-            file: null
         };
         this.openTitleEditor = this.openTitleEditor.bind(this)
         this.openImageEditor = this.openImageEditor.bind(this)
@@ -48,7 +32,7 @@ class Widget extends Component {
     }
     openTitleEditor() {
         this.props.dispatch(setDisplayEditor("title"))
-        let arr_length = (this.props.canvasDetails.titles).length
+        let arr_length = (this.props.canvasDetails.titles).length + (this.props.canvasDetails.removed_titles).length
         const newTitle = {
             id: arr_length,
             x: this.props.canvasDetails.title_position_x,
@@ -67,12 +51,7 @@ class Widget extends Component {
     }
 
     openImageEditor(e) {
-        let file_input = document.getElementById("element_img").files[0]
-        console.log("file_input " + file_input)
         this.props.dispatch(setDisplayEditor("image"))
-        this.setState({
-            file: URL.createObjectURL(e.target.files[0])
-        })
         let arr_length = (this.props.canvasDetails.element_img).length
         const newImage = {
             src: URL.createObjectURL(e.target.files[0]),
@@ -82,20 +61,13 @@ class Widget extends Component {
             width: 100,
             height: 100
         }
-        debugger
         this.props.dispatch(addElementsCanvas(newImage))
-        console.log("arr image " + this.props.canvasDetails.element_img)
     }
     openShapeEditor() {
         this.props.dispatch(setDisplayEditor("shape"))
     }
     openBackgroundEditor() {
         this.props.dispatch(setDisplayEditor("background"))
-    }
-    sectionFunc() {
-
-
-
     }
 
     render() {
@@ -107,7 +79,7 @@ class Widget extends Component {
                 <p className="d-flex ml-3 mt-4"><b>Widget</b></p>
                 <div className="wrap_flow_widget">
                     <div className="d-flex flex-row  widget_button" onClick={this.openTitleEditor}>
-                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 "> <img className="imgDetails" src={Text} alt="icon" /></div>
+                        <div className="d-flex flex-column justify-content-center ml-4 "> <img className="imgDetails" src={Text} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Title </div>
                     </div>
                     <div className="d-flex flex-row  widget_button " onClick={this.openImageEditor}>
@@ -115,7 +87,8 @@ class Widget extends Component {
                         <div className="d-flex flex-col justify-content-between icon_text"> Paragraph </div>
                     </div>
                     <div className="d-flex flex-row  widget_button ">
-                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "17px", width: "17px" }} src={imageButton} alt="icon" /></div>
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style" style={{ width: "50px" }}>
+                            <img style={{ height: "17px", width: "17px" }} src={imageButton} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
                         <input type="file" class="form-control-file" id="element_img" onChange={this.openImageEditor} style={{ opacity: 0, zIndex: 2 }} />
 

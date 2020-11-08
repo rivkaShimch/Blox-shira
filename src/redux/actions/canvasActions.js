@@ -75,6 +75,15 @@ export function setTitlesCanvas(title) {
         payload: title
     };
 }
+
+export function removedTitlesCanvas(i) {
+
+    return {
+        type: 'REMOVE_TITLES_CANVAS',
+        // payload: title,
+        counter: i
+    };
+}
 export function setUpdateTitlesCanvas(title, i) {
 
     return {

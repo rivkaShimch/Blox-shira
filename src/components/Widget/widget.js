@@ -38,26 +38,27 @@ class Widget extends Component {
     }
     openTitleEditor() {
         if (this.props.displayComponents.display_main_option !== '') {
-        this.props.dispatch(setDisplayEditor("title"))
-        debugger
-        // let arr_length = (this.props.canvasDetails.titles).length + (this.props.canvasDetails.removed_titles).length
-        const newTitle = {
-            id: this.props.canvasDetails.counter_titles,
-            x: this.props.canvasDetails.title_position_x,
-            y: 10,
-            width: 100,
-            height: 30,
-            text: 'TITLE 0' + this.props.canvasDetails.counter_titles,
-            align: 'left',
-            fill: 'black',
-            fontSize: 24
+            this.props.dispatch(setDisplayEditor("title"))
+            debugger
+            // let arr_length = (this.props.canvasDetails.titles).length + (this.props.canvasDetails.removed_titles).length
+            const newTitle = {
+                id: this.props.canvasDetails.counter_titles,
+                x: this.props.canvasDetails.title_position_x,
+                y: 10,
+                width: 100,
+                height: 30,
+                text: 'TITLE 0' + this.props.canvasDetails.counter_titles,
+                align: 'left',
+                fill: 'black',
+                fontSize: 24,
+                display: true
+            }
+            let tempCount = this.props.canvasDetails.counter_titles + 1
+            this.props.dispatch(setCounterTitles(tempCount))
+            this.props.dispatch(setTitlesCanvas(newTitle))
         }
-        let tempCount = this.props.canvasDetails.counter_titles + 1
-        this.props.dispatch(setCounterTitles(tempCount))
-        this.props.dispatch(setTitlesCanvas(newTitle))
-        }
-       
 
+    }
     // openImageEditor(e) {
     //     this.props.dispatch(setDisplayEditor("image"))
     //     let arr_length = (this.props.canvasDetails.element_img).length
@@ -164,7 +165,7 @@ class Widget extends Component {
                         <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
                         {
                             this.props.displayComponents.display_main_option !== '' ?
-                                <input type="file" class="form-control-file" id="element_img" style={{ width: "80vw", position: "absolute", zIndex: 0, opacity: 1 }} />
+                                <input type="file" class="form-control-file" id="element_img" style={{ width: "80vw", position: "absolute", zIndex: 0, opacity: 0 }} />
 
                                 : <span></span>
                         }

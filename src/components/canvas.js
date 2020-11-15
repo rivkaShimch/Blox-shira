@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import { Stage, Layer, Image, Text, Transformer, Rect } from 'react-konva';
 import useImage from 'use-image';
-import './canvas.css'
-import Portal from './portal.js'
+// import './canvas.css'
+import Portal from './Portal.js'
 import ContextMenu from "./ContextMenu";
 import axios from 'axios'
 import { connect } from 'react-redux';
@@ -229,6 +229,7 @@ const Canvas = (props) => {
 
     if (option === 'Delete') {
       props.dispatch(removedTitlesCanvas(selectedTextId))
+      props.dispatch(setDisplayEditor(''))
     }
     setSelectedContextMenu(null);
   };
@@ -450,28 +451,29 @@ const Canvas = (props) => {
                 fill={props.canvasDetails.background_color === '' ? 'white' : props.canvasDetails.background_color}
               />
               {props.canvasDetails.titles.map((text, i) => {
+                if (props.canvasDetails.titles[i].display === true) {
+                  // if (props.canvasDetails.removed_titles.length === 0 || props.canvasDetails.removed_titles[0].id !== i)
+                  return (
+                    <TextObj
+                      key={i}
+                      shapeProps={text}
+                      isSelected={text.id === selectedTextId}
+                      handleContextMenu={handleContextMenu}
 
-                // if (props.canvasDetails.removed_titles.length === 0 || props.canvasDetails.removed_titles[0].id !== i)
-                return (
-                  <TextObj
-                    key={i}
-                    shapeProps={text}
-                    isSelected={text.id === selectedTextId}
-                    handleContextMenu={handleContextMenu}
-
-                    onSelect={() => {
-                      debugger
-                      selectText(text.id);
-                      props.dispatch(setTitlesICanvas(text.id - (props.canvasDetails.removed_titles).length))
-                      props.dispatch(setTitlesTextCanvas(text.text, text.id - (props.canvasDetails.removed_titles).length))
-                      props.dispatch(setDisplayEditor('title'))
-                    }}
-                    onChange={(newAttrs) => {
-                      props.dispatch(setUpdateTitlesCanvas(newAttrs, text.id))
-                    }}
-                  />
-                );
+                      onSelect={() => {
+                        selectText(text.id);
+                        props.dispatch(setTitlesICanvas(text.id - (props.canvasDetails.removed_titles).length))
+                        props.dispatch(setTitlesTextCanvas(text.text, text.id - (props.canvasDetails.removed_titles).length))
+                        props.dispatch(setDisplayEditor('title'))
+                      }}
+                      onChange={(newAttrs) => {
+                        props.dispatch(setUpdateTitlesCanvas(newAttrs, text.id))
+                      }}
+                    />
+                  );
+                }
               })}
+
               {props.canvasDetails.element_img.map((image, i) => {
                 return <URLImage
                   key={i}

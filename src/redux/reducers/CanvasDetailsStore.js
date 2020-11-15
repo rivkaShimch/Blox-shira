@@ -74,14 +74,17 @@ export default produce((state, action) => {
       state.canvasDetails.element_img_i = action.payload;
       break;
     case 'REMOVE_TITLES_CANVAS':
-      const titles = state.canvasDetails.titles.slice();
-      const removed_item = titles.splice(action.counter, 1);
+      // const titles = state.canvasDetails.titles.slice();
+      // const removed_item = titles.splice(action.counter, 1);
       debugger
-      // state.canvasDetails.removed_titles = state.canvasDetails.removed_titles.slice()
-      state.canvasDetails.removed_titles.push(removed_item[0]);
-      state.canvasDetails.titles_i -= state.canvasDetails.titles_i
+      // // state.canvasDetails.removed_titles = state.canvasDetails.removed_titles.slice()
+      // state.canvasDetails.removed_titles.push(removed_item[0]);
+      // state.canvasDetails.titles_i -= state.canvasDetails.titles_i
+      // state.canvasDetails.titles = (titles);
+      // console.log("removed array" + state.canvasDetails.removed_titles)
+      const titles = state.canvasDetails.titles.slice();
+      titles[action.counter].display = false;
       state.canvasDetails.titles = (titles);
-      console.log("removed array" + state.canvasDetails.removed_titles)
       console.log("new array" + state.canvasDetails.titles)
       break;
     case 'UPDATE_TITLES_CANVAS':

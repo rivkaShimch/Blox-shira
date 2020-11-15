@@ -133,7 +133,7 @@ class Title_Editor extends Component {
 
                 <div className="d-flex flex-column justify-content-start  mb-1" style={{ color: this.props.color }}>
                     <input className="w3-input  mb-2" id="title_input" style={{ color: "white", backgroundColor: "transparent" }}
-                        onKeyUp={this.onChangeTitleInput} onClick={() => document.getElementById('title_input').value = ''} placeholder={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i] === undefined ? '' : this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].text} />
+                        onKeyUp={this.onChangeTitleInput} onClick={() => document.getElementById('title_input').value = this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].text} placeholder={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i] === undefined ? '' : this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].text} />
                 </div>
 
                 <div className="d-flex flex-row justify-content-between" >

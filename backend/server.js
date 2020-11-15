@@ -7,10 +7,22 @@ const app = express();
 require('./database');
 app.use(express.json());
 
+
+app.use(express.static(path.join(__dirname, 'build')));
+
+
 app.use(cors())
+
+const fileupload = require('express-fileupload');
+app.use(fileupload({ createParentPath: true }))
 
 
 // API
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
+
 const users = require('./api/users');
 app.use('/users', users);
 

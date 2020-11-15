@@ -8,6 +8,7 @@ const initialState = {
     name: "",
     titles: [],
     titles_i: 0,
+    counter_titles: 0,
     dataURL: "",
     imageTemplates: [],
     removed_titles: [],
@@ -15,6 +16,8 @@ const initialState = {
     canvas_width: 500,
     canvas_height: 400,
     background_color: '',
+    temp_element_img: '',
+    temp_fd: '',
     // background_img_path: '',
 
     title_align: '',
@@ -38,9 +41,18 @@ const initialState = {
 
 export default produce((state, action) => {
   switch (action.type) {
+    case 'TEMP_FD':
+      state.canvasDetails.temp_fd = action.payload;
+      break;
+    case 'TEMP_ELEMENT_IMG':
+      state.canvasDetails.temp_element_img = action.payload;
+      break;
     case 'IMAGE_TEMPLATE':
       state.canvasDetails.imageTemplates = state.canvasDetails.imageTemplates.slice();
       state.canvasDetails.imageTemplates.push(action.payload);
+      break;
+    case 'COUNTER_TITELS':
+      state.canvasDetails.counter_titles = action.payload;
       break;
     case 'NAME_CANVAS':
       state.canvasDetails.name = action.payload;
@@ -64,11 +76,11 @@ export default produce((state, action) => {
     case 'REMOVE_TITLES_CANVAS':
       const titles = state.canvasDetails.titles.slice();
       const removed_item = titles.splice(action.counter, 1);
-      state.canvasDetails.removed_titles = state.canvasDetails.removed_titles.slice()
-      state.canvasDetails.removed_titles.push(removed_item);
+      debugger
+      // state.canvasDetails.removed_titles = state.canvasDetails.removed_titles.slice()
+      state.canvasDetails.removed_titles.push(removed_item[0]);
       state.canvasDetails.titles_i -= state.canvasDetails.titles_i
       state.canvasDetails.titles = (titles);
-      debugger
       console.log("removed array" + state.canvasDetails.removed_titles)
       console.log("new array" + state.canvasDetails.titles)
       break;
@@ -91,8 +103,8 @@ export default produce((state, action) => {
       break;
     case 'TITLES_TEXT_CANVAS':
       // debugger
-      console.log("text id " + action.id)
-      state.canvasDetails.titles[action.id].text = action.payload;
+      console.log("text id " + action.i)
+      state.canvasDetails.titles[action.i].text = action.payload;
       break;
     case 'DATA_URL_CANVAS':
       state.canvasDetails.dataURL = action.payload;

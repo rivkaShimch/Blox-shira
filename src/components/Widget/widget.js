@@ -6,6 +6,8 @@ import onOff from '../img/onOff.png';
 import imageButton from '../img/imageButton.png';
 import drawpolygonsolid from '../img/drawpolygonsolid.png';
 import sign from '../img/sign.png';
+import $ from 'jquery'
+
 
 import { connect } from 'react-redux';
 
@@ -16,13 +18,18 @@ import {
 
 import {
     setTitlesCanvas,
-    addElementsCanvas
+    addElementsCanvas,
+    setElementWidth,
+    setTempElementImg,
+    setTempFd,
+    setCounterTitles
 } from '../../redux/actions/canvasActions'
 class Widget extends Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
         this.state = {
+            img: ''
         };
         this.openTitleEditor = this.openTitleEditor.bind(this)
         this.openImageEditor = this.openImageEditor.bind(this)
@@ -32,37 +39,111 @@ class Widget extends Component {
     }
     openTitleEditor() {
         this.props.dispatch(setDisplayEditor("title"))
-        let arr_length = (this.props.canvasDetails.titles).length + (this.props.canvasDetails.removed_titles).length
+        debugger
+        // let arr_length = (this.props.canvasDetails.titles).length + (this.props.canvasDetails.removed_titles).length
         const newTitle = {
-            id: arr_length,
+            id: this.props.canvasDetails.counter_titles,
             x: this.props.canvasDetails.title_position_x,
             y: 10,
             width: 100,
             height: 30,
-            text: 'TITLE 0' + arr_length,
+            text: 'TITLE 0' + this.props.canvasDetails.counter_titles,
             align: 'left',
             fill: 'black',
             fontSize: 24
         }
+        let tempCount = this.props.canvasDetails.counter_titles + 1
+        this.props.dispatch(setCounterTitles(tempCount))
         this.props.dispatch(setTitlesCanvas(newTitle))
 
 
         console.log("open title editor " + this.props.displayComponents.display_title_editor)
     }
 
-    openImageEditor(e) {
+    // openImageEditor(e) {
+    //     this.props.dispatch(setDisplayEditor("image"))
+    //     let arr_length = (this.props.canvasDetails.element_img).length
+    //     const newImage = {
+    //         src: URL.createObjectURL(e.target.files[0]),
+    //         id: arr_length,
+    //         x: 100,
+    //         y: 100,
+    //         width: 100,
+    //         height: 100
+    //     }
+    //     this.props.dispatch(addElementsCanvas(newImage))
+    // }
+
+
+
+    // addNewImage = (fd, props) => {
+    //     // debugger
+    //     $.ajax({
+    //         // "url": 'https://lobby.leader.codes/api/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
+    //         "url": 'http://localhost:9000/templates/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
+    //         "method": "POST",
+    //         "processData": false,
+    //         "mimeType": "multipart/form-data",
+    //         "contentType": false,
+    //         "headers": {
+    //             //בauthorization יש לשים jwt אחר!!!!!!!      
+    //             "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJzaW1kc01ycmNKZHBRZ3RhOGtnWHlRQmRERnkyIiwiZW1haWwiOiJjdG9AbGVhZGVyLmNvZGVzIiwiaXAiOiI1LjEwMi4yNDYuMjAyIiwiaWF0IjoxNjA0NDgyOTc0fQ.Nn2IC7j_VCDOFIkbwzT3nao0l7OcqbNqDUKkcL0Aoik"
+
+    //         },
+    //         "data": fd,
+    //         "async": false,
+    //         success: function (data1) {
+
+    //             console.log("success")
+    //             console.log(data1)
+    //             debugger
+    //             //חוזר הurl של התמונה.     console.log(data1);
+    //             props.dispatch(setElementWidth(data1))
+    //         },
+    //         error: function (err) {
+    //             console.log(err)
+    //         }
+    //     });
+    // }
+
+
+
+
+
+    openImageEditor = (event) => {
         this.props.dispatch(setDisplayEditor("image"))
-        let arr_length = (this.props.canvasDetails.element_img).length
-        const newImage = {
-            src: URL.createObjectURL(e.target.files[0]),
-            id: arr_length,
-            x: 100,
-            y: 100,
-            width: 100,
-            height: 100
-        }
-        this.props.dispatch(addElementsCanvas(newImage))
+        // שימוש בFileReader לצורך הצגה מקומית של התמונה, היות ולוקח כמה שניות עד שחוזר url מהשרת.
+        const reader1 = new FileReader();
+        const file = event;
+        reader1.onloadend = () => {
+            this.props.dispatch(setTempElementImg(reader1.result));
+            debugger
+            let arr_length = (this.props.canvasDetails.element_img).length
+            const newImage = {
+                src: 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png',
+                // src: this.props.canvasDetails.temp_element_img,
+                id: arr_length,
+                x: 100,
+                y: 100,
+                width: 100,
+                height: 100
+            }
+            this.props.dispatch(addElementsCanvas(newImage, myFile))
+        };
+        reader1.readAsDataURL(file);
+
+        console.log("event", event)
+        var fileToUpload = event
+        //שימוש בformdata כדי להעביר את התמונה בקריאת הpost.      
+        var myFile = new FormData();
+        myFile.append("file", fileToUpload);
+        this.props.dispatch(setTempFd(myFile))
+        // this.addNewImage(myFile, this.props);
+
+
     }
+
+
     openShapeEditor() {
         this.props.dispatch(setDisplayEditor("shape"))
     }
@@ -90,7 +171,7 @@ class Widget extends Component {
                         <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style" style={{ width: "50px" }}>
                             <img style={{ height: "17px", width: "17px" }} src={imageButton} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
-                        <input type="file" class="form-control-file" id="element_img" onChange={this.openImageEditor} style={{ opacity: 0, zIndex: 2 }} />
+                        <input type="file" class="form-control-file" id="element_img" onChange={(e) => this.openImageEditor(e.target.files[0])} style={{ opacity: 0, zIndex: 2 }} />
 
                     </div>
                     <div className="d-flex flex-row  widget_button " onClick={this.openBackgroundEditor}>

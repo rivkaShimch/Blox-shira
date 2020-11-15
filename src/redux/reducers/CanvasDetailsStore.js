@@ -12,8 +12,8 @@ const initialState = {
     imageTemplates: [],
     removed_titles: [],
 
-    canvas_width: 500,
-    canvas_height: 400,
+    canvas_width: 630,
+    canvas_height: 394,
     background_color: '',
     // background_img_path: '',
 
@@ -68,7 +68,7 @@ export default produce((state, action) => {
       state.canvasDetails.removed_titles.push(removed_item);
       state.canvasDetails.titles_i -= state.canvasDetails.titles_i
       state.canvasDetails.titles = (titles);
-      debugger
+
       console.log("removed array" + state.canvasDetails.removed_titles)
       console.log("new array" + state.canvasDetails.titles)
       break;
@@ -90,7 +90,7 @@ export default produce((state, action) => {
       state.canvasDetails.titles_i = action.payload;
       break;
     case 'TITLES_TEXT_CANVAS':
-      // debugger
+
       console.log("text id " + action.id)
       state.canvasDetails.titles[action.id].text = action.payload;
       break;

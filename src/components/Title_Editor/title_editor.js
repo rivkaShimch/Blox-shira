@@ -122,36 +122,36 @@ class Title_Editor extends Component {
             <div className="d-flex flex-column justify-content-around" style={{ marginLeft: "20px", marginRight: "20px" }}>
                 <div className="d-flex flex-column justify-content-start">
                     <div className="d-flex flex-row justify-content-between">
-                        <div className="sideLittleTitles">Title Setting</div>
+                        <div className="sideLittleTitles" style={{ color: this.props.color }}>Title Setting</div>
                     </div>
                 </div>
 
                 <div className="d-flex flex-row justify-content-between">
-                    <div className="d-flex flex-column  sideTitles">Title Name</div>
+                    <div className="d-flex flex-column  sideTitles " style={{ color: this.props.color }}>Title Name</div>
                     <div className="d-flex flex-row  ">  <Switch /></div>
                 </div>
 
-                <div className="d-flex flex-column justify-content-start  mb-1">
-                    <input className="w3-input  mb-2" id="title_input" style={{ color: "white", backgroundColor: "#3A405E" }}
+                <div className="d-flex flex-column justify-content-start  mb-1" style={{ color: this.props.color }}>
+                    <input className="w3-input  mb-2" id="title_input" style={{ color: "white", backgroundColor: "transparent" }}
                         onKeyUp={this.onChangeTitleInput} onClick={() => document.getElementById('title_input').value = ''} placeholder={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i] === undefined ? '' : this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].text} />
                 </div>
 
-                <div className="d-flex flex-row justify-content-between">
+                <div className="d-flex flex-row justify-content-between" >
                     <div className="d-flex flex-column justify-content-between sideTitles">
-                        <div className="d-flex flex-row sideTitles">Title Size</div>
+                        <div className="d-flex flex-row sideTitles" style={{ color: this.props.color }}>Title Size</div>
                         <div className="d-flex flex-row justify-content-between">
                             <input type="range" min="12" max="98" className="col-8 slider mt-3"
                                 value={this.state.finalSizeTitleValue}
                                 onChange={this.onChangeTitleSizeSlider}
                             />
-                            <input style={{ color: "white" }} id="title_size_input" className="input_line col-3"
+                            <input style={{ color: this.props.color }} id="title_size_input" className="input_line col-3"
                                 onKeyUp={this.onChangeTitleSizeInput} placeholder={this.state.finalSizeTitleValue} />
                         </div>
                     </div>
                 </div>
                 <br />
-                <div className="d-flex flex-row justify-content-around ">
-                    <div className="d-flex flex-column sideTitles mr-5">Alignment</div>
+                <div className="d-flex flex-row justify-content-around">
+                    <div className="d-flex flex-column sideTitles mr-5" style={{ color: this.props.color }}>Alignment</div>
                     <div className="d-flex flex-row justify-content-between">
                         <FormatAlignLeftIcon onClick={this.changeImage1} style={{ color: this.state.bold_img_align === 'left' ? "#EBEAEA" : "#BCBDC7" }} />
                         <FormatAlignJustifyIcon onClick={this.changeImage2} style={{ color: this.state.bold_img_align === 'center' ? "#EBEAEA" : "#BCBDC7" }} />
@@ -160,15 +160,15 @@ class Title_Editor extends Component {
                 </div>
 
                 <div className="d-flex flex-row justify-content-between mt-4 mb-1">
-                    <div className="d-flex flex-column sideTitles">Title Fill</div>
-                    <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
+                    <div className="d-flex flex-column sideTitles" style={{ color: this.props.color }}>Title Fill</div>
+                    <input style={{ backgroundColor: "transparent", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
                         onChange={this.onChangeTitleColor} value={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i] == undefined ? '' : this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].fill} />
                 </div>
 
 
                 <div className="d-flex flex-row justify-content-between">
                     <div className="d-flex flex-column justify-content-between sideTitles">
-                        <div className="d-flex flex-row sideTitles">Title Width</div>
+                        <div className="d-flex flex-row sideTitles" style={{ color: this.props.color }}>Title Width</div>
                         <div className="d-flex flex-row justify-content-between">
                             <input type="range" min="1" max="100" className="col-8 slider mt-3"
                                 value={this.state.finalWidthTitleValue}
@@ -181,7 +181,7 @@ class Title_Editor extends Component {
 
                 <div className="d-flex flex-row justify-content-between">
                     <div className="d-flex flex-column justify-content-between sideTitles">
-                        <div className="d-flex flex-row sideTitles">Title Height</div>
+                        <div className="d-flex flex-row sideTitles" style={{ color: this.props.color }}>Title Height</div>
                         <div className="d-flex flex-row justify-content-between">
                             <input type="range" min="1" max="100" className="col-9 slider mt-3"
                                 value={this.state.finalHeightTitleValue}

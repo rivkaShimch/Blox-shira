@@ -15,8 +15,9 @@ export default class Edit_choice extends Component {
     }
     render() {
         return (
-
-            <div className="d-flex flex-column justify-content-between">
+            // col-lg-6 col-md-2
+            // <div className="d-flex flex-column justify-content-between col-lg-12">
+            <div className="col-12">
                 <div className="d-flex flex-row justify-content-between mb-3" >
 
                     {/* <div className="col-12 d-flex flex-column justify-content-between" style={{ marginTop: "30%" }}> */}

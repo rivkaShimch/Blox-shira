@@ -30,10 +30,14 @@ import Popover from '@material-ui/core/Popover';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 import './wrap.css';
 import profil from './assets/profil.png';
 import logo from './assets/logo.png';
+
+import logo1 from '../img/logo1.png'
+import thumbtack from '../img/thumbtack-solid.png'
+import thumbtack2 from '../img/thumbtack-solid-stand.png'
 
 import Canvas from '../canvas';
 import Edit_choice from '../Edit_choice/edit_choice';
@@ -222,6 +226,7 @@ const useStyles = theme => ({
             left: theme.spacing(2),
         },
     },
+
 });
 
 class Wrap extends React.Component {
@@ -232,9 +237,18 @@ class Wrap extends React.Component {
             valueTab: 0,
             openCollapse: false,
             right: true,
+            thumbtackSign: true,
+            thumbtackImg: thumbtack2,
+            e: true,
+            x: 1,
+            y: 1,
+            dd: false,
+            display_icon_list: 'none',
             visibility: 'hidden',
             anchorEl: null,
-            color: '#B1B1B1',
+            color: '#fffff',
+            color1: '#B1B1B1',
+
             background: '#3a405e 0% 0% no-repeat padding-box',
             fontColor: 'white',
             arrowColor: '#B1B1B1',
@@ -263,44 +277,16 @@ class Wrap extends React.Component {
                     style={{ backgroundColor: '#fff', color: 'black' }}
                 >
                     <div className={classes.row}>
-                        <IconButton
-                            color="inherit"
-                            aria-label="open drawer"
-                            onClick={this.handleDrawerOpen}>
-                            <MenuIcon />
-                        </IconButton>
-
-                        <img src={logo} alt={"logo"} width="35px" />
-
-                        <Tabs value={this.state.valueTab} onChange={this.handleChange} variant="fullWidth" aria-label="simple tabs example" style={{ width: '80%' }} centered={true}>
-                            <Tab label={<div> Post {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between' }} />
-                            <Tab label={<div> Form {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between' }} />
-                            <div onMouseLeave={this.handlePopoverClose}>
-                                <Tab label={<div>10 Tips in fashion media {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between' }} onMouseOver={this.handlePopoverOpen} />
-                                <Popover
-                                    id="mouse-over-popover"
-                                    className={classes.popover}
-                                    classes={{
-                                        paper: classes.popoverPaper,
-                                    }}
-                                    open={open}
-                                    anchorEl={this.state.anchorEl}
-                                    anchorReference='anchorPosition'
-                                    anchorPosition={{
-                                        top: 145,
-                                        left: 145
-                                    }}
-                                    onClose={this.handlePopoverClose}
-                                    disableRestoreFocus
-                                >
-                                    {this.showTips()}
-
-                                </Popover>
-                            </div>
-                            <Tab label={<div> Bot {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between' }} />
-                            <Tab label={<div> File {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between' }} />
+                        {/* לקשר לינק כשיהיה חיבור לשרת!!!!!!!!!!!!!!! */}
+                        <Link to="https://lobby.leader.codes/undefined">
+                            <img src={logo1} alt={"logo"} width="35px" style={{ marginLeft: "20px" }} />
+                        </Link>
+                        <Tabs indicatorColor="white" value={this.state.valueTab} onChange={this.handleChange} style={{ width: '86%' }} centered={true}>
+                            <Tab label={<div> WorkSpace {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between', backgroundColor: "#EDEEF0", border: "none" }} />
                         </Tabs>
                         <img src={profil} alt={"profil"} width="45px" />
+
+                        <img src={this.state.thumbtackImg} alt={"thumbtack"} onClick={this.toggleThumbtack} />
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -325,7 +311,7 @@ class Wrap extends React.Component {
                         }),
                     }}
                 >
-                    <List>
+                    <List style={{ display: this.state.display_icon_list }}>
                         <ListItem button>
                             <ListItemIcon style={{ alignSelf: 'center', textAlign: 'center', alignItems: 'center', justifyItems: 'center' }}>{<svg xmlns="http://www.w3.org/2000/svg" style={{ fill: "#45AFFF" }} width="27.497" height="21.998" viewBox="0 0 27.497 21.998"><defs></defs><path class="a" d="M27.5,11.343v-.687a.687.687,0,0,0-.687-.687H14.78V8.249h3.093a1.375,1.375,0,0,0,1.375-1.375v-5.5A1.375,1.375,0,0,0,17.873,0H9.624A1.375,1.375,0,0,0,8.249,1.375v5.5A1.375,1.375,0,0,0,9.624,8.249h3.093V9.968H.687A.687.687,0,0,0,0,10.655v.687a.687.687,0,0,0,.687.687H5.156v1.719H2.75a1.375,1.375,0,0,0-1.375,1.375v5.5A1.375,1.375,0,0,0,2.75,22H9.624A1.375,1.375,0,0,0,11,20.623v-5.5a1.375,1.375,0,0,0-1.375-1.375H7.218V12.03H20.279v1.719H17.873A1.375,1.375,0,0,0,16.5,15.124v5.5A1.375,1.375,0,0,0,17.873,22h6.874a1.375,1.375,0,0,0,1.375-1.375v-5.5a1.375,1.375,0,0,0-1.375-1.375H22.342V12.03H26.81A.687.687,0,0,0,27.5,11.343ZM11,5.5V2.75h5.5V5.5ZM8.249,19.248H4.125V16.5H8.249Zm15.124,0H19.248V16.5h4.125Z" /></svg>}</ListItemIcon>
                             <ListItemText
@@ -379,56 +365,65 @@ class Wrap extends React.Component {
                             />
                         </ListItem>
 
+
                     </List>
                 </Drawer>
-                {this.props.displayComponents.display_main_option === '' ?
-                    <div className="d-flex flex-row justify-content-between ">
-                        <div className="col-4">
-                            <Edit_choice />
-                        </div>
-                        <div className="style_dmoCanva col-3" style={{ marginLeft: "10vw" }}>
-                            <img src={require('./assets/tellYourStory.jpg')} style={{ width: "500px", height: "400", border: "1px dashed #707070" }} />
+                {
+                    this.props.displayComponents.display_main_option === '' ?
+                        <div className="d-flex flex-row justify-content-start col-7" style={{ marginLeft: "-40px" }}>
+
+                            <div class="d-flex flex-column col-5" id="edit_choice" >
+                                <Edit_choice />
+                            </div>
+                            <div id="demo_canva" className="d-flex flex-column">
+                                {/* <div class="col-5"> */}
+                                <img class="style_dmoCanva mr-5 d-flex flex-column" src={require('./assets/tellYourStory.jpg')} style={{ marginTop: "28vh", marginLeft: "7vw", width: "650px", height: "400px", border: "3px dashed #D6CBE3" }}
+
+                                />
+                                {/* </div> */}
+
+                            </div>
 
                         </div>
-                        <div className="col-5"></div>
-                    </div>
-                    : <span></span>
+                        : <span></span>
                 }
 
-                {this.props.displayComponents.display_main_option === 'canva' ?
-                    <div className="d-flex flex-row justify-content-between ">
-                        <div className="col-4">
-                            <Edit_choice />
+                {
+                    this.props.displayComponents.display_main_option === 'canva' ?
+                        <div className="d-flex flex-row justify-content-start col-7" style={{ marginLeft: "-40px" }}>
+                            <div class="d-flex flex-column col-5" id="edit_choice" >
+                                <Edit_choice />
+                            </div>
+
+                            <Canvas class="d-flex flex-column style_dmoCanva mr-5" />
+
+
+
                         </div>
-                        <div className="style_dmoCanva" style={{ marginLeft: "10vw" }}>
-                            <Canvas />
+                        : <span></span>
+                }
+                {
+                    this.props.displayComponents.display_main_option === 'cards' ?
+                        <div className="d-flex flex-row justify-content-between " style={{ padding: "20px" }} >
+                            <TemplateCards />
                         </div>
-                        <div className="col-5"></div>
-
-                    </div>
-                    : <span></span>
-                }
-                {this.props.displayComponents.display_main_option === 'cards' ?
-                    <div className="d-flex flex-row justify-content-between " style={{ padding: "20px" }}>
-                        <TemplateCards />
-                    </div>
-                    : <span></span>
+                        : <span></span>
                 }
 
 
-                <Drawer anchor={'right'} classes={{ paper: clsx(classes.drawerPaper, { [classes.drawerPaperLight]: this.state.color === 'black', }) }} className={clsx(classes.configurator, {
+                <Drawer anchor={'right'} id={"configurator"} classes={{ paper: clsx(classes.drawerPaper, { [classes.drawerPaperLight]: this.state.color === 'black', }) }} className={clsx(classes.configurator, {
                     [classes.configuratorOpen]: this.state.right,
                     [classes.configuratorClose]: !this.state.right,
                 })} className="col-1" open={this.state['right']} fullwidth="true" variant="persistent" onClose={this.toggleDrawer}>
                     <div className={classes.row} style={{ position: 'static', marginTop: '5vh', marginBottom: '2vh' }}>
                         <IconButton edge="end" color="inherit" aria-label="setting" onClick={this.onClickSetting} >
-                            <SettingsIcon style={{ color: this.state.color }} />
+                            <SettingsIcon style={{ color: this.state.color1 }} />
                         </IconButton>
                         <Typography variant="h6" style={{ flexGrow: 5, color: this.state.fontColor, textAlign: 'center' }}>
                             {/*create new page*/}
                         </Typography>
                         <IconButton edge="start" color="inherit" aria-label="menu" onClick={this.changeColor}>
-                            <InvertColorsIcon style={{ color: this.state.color }} />
+                            <InvertColorsIcon style={{ color: this.state.color1 }} />
                         </IconButton>
                     </div>
 
@@ -442,10 +437,10 @@ class Wrap extends React.Component {
                             viewBox="0 0 8.211 11.124">
                             <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
                                 transform="translate(-5.5 0)" /></svg>}
-                        style={{ color: this.state.color, textTransform: "inherit", height: "40px", paddingLeft: "20px", fontSize: "15px" }}
+                        style={{ color: this.state.color1, textTransform: "inherit", height: "40px", paddingLeft: "20px", fontSize: "15px" }}
                         onClick={this.f}>Page Setting</Button>
                         : <span></span>}
-                    {this.props.displayComponents.display_editor == "title" ? <Title_Editor /> : <span></span>}
+                    {this.props.displayComponents.display_editor == "title" ? <Title_Editor color={this.state.color} /> : <span></span>}
                     {this.props.displayComponents.display_editor == "image" ? <Image_Editor /> : <span></span>}
                     {this.props.displayComponents.display_editor == "shape" ? <Shape_Editor /> : <span></span>}
                     {this.props.displayComponents.display_editor == "background" ? <Background_Editor /> : <span></span>}
@@ -487,7 +482,7 @@ class Wrap extends React.Component {
                                             <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
                                                 transform="translate(-5.5 0)" /></svg>
                                                         Save
-                                           </Fab>
+                                    </Fab>
                                 </div>
                             </div>
                         </Toolbar>
@@ -573,38 +568,66 @@ class Wrap extends React.Component {
         )
     }
 
-    showTips() {
-        const { classes } = this.props;
-        return (
-            <Grid item xs={12}>
-                <Grid container justify="center" spacing={3}>
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
+    // showTips() {
+    //     const { classes } = this.props;
+    //     return (
+    //         <Grid item xs={12}>
+    //             <Grid container justify="center" spacing={3}>
+    //                 {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((value) => (
 
-                        <Grid key={value} item>
-                            {value != 0 ? (<Paper className={classes.paper} />) : <Button variant="contained" color="secondary" className={classes.paper}>
-                                <AddIcon />
-                            </Button>}
-                        </Grid>
-                    ))}
-                </Grid>
-            </Grid>
-        )
+    //                     <Grid key={value} item>
+    //                         {value != 0 ? (<Paper className={classes.paper} />) : <Button variant="contained" color="secondary" className={classes.paper}>
+    //                             <AddIcon />
+    //                         </Button>}
+    //                     </Grid>
+    //                 ))}
+    //             </Grid>
+    //         </Grid>
+    //     )
+    // }
+    toggleThumbtack = () => {
+        // this.setState(this.state.dd === true);
+        // if (this.state.dd) {
+
+        this.setState({ e: true })
+
+        if (this.state.e) {
+            this.setState({ thumbtackImg: thumbtack })
+            const show1 = this.state.openRightByThumbtack
+            this.setState({ openRightByThumbtack: !show1 });
+            this.setState({ e: false });
+        }
+        else {
+            const show1 = this.state.openRightByThumbtack
+            this.setState({ openRightByThumbtack: !show1 });
+            this.setState({ thumbtackImg: thumbtack2 })
+
+        }
+
+
     }
-
     toggleDrawer = () => {
         const show = this.state.right
-        this.setState({ right: !show });
+        if (this.state.openRightByThumbtack === true)
+            this.setState({ right: !show });
+        else this.setState({ right: show });
     };
+    ffff = () => {
+        if (this.state.y === 1) {
+            this.setState({ display_icon_list: 'block' })
+            const show = this.state.openDrawer
+            this.setState({ openDrawer: !show });
+            this.setState({ y: 2 })
 
-    handleDrawerOpen = () => {
-        const show = this.state.openDrawer
-        this.setState({ openDrawer: !show });
-    };
+        }
+        else {
 
-    handleDrawerClose = () => {
-        this.setState({ openDrawer: false })
-    };
+            this.setState({ openDrawer: false })
+            this.setState({ display_icon_list: 'none' })
+            this.setState({ y: 1 })
 
+        };
+    }
     handleChange = (event, newValue) => {
         this.setState({ valueTab: newValue })
     };
@@ -626,10 +649,11 @@ class Wrap extends React.Component {
     };
 
     changeColor = () => {
-        if (this.state.color === 'gray')
-            this.setState({ color: 'black', fontColor: 'black', arrowColor: 'white' })
+        if (this.state.color === 'black')
+            this.setState({ color: 'white', fontColor: 'white', arrowColor: 'gray' });
         else
-            this.setState({ color: 'gray', fontColor: 'white', arrowColor: 'gray' });
+            this.setState({ color: 'black', fontColor: 'black', arrowColor: 'white' })
+
     };
     onClickSetting = () => {
         if (!this.state.bringDataFromDB) {
@@ -640,7 +664,7 @@ class Wrap extends React.Component {
                 .then(res => {
                     console.log("data  " + res.data[0].template_name)
                     let data = res.data
-                    debugger
+
                     data.map((template) => (
                         this.props.dispatch(addTemplateImage(template.template_name))
                     ))
@@ -662,6 +686,7 @@ class Wrap extends React.Component {
     }
     OnClickSave = () => {
         console.log("in OnClickSave")
+
         let dataURL = (this.props.canvasDetails.dataURL)
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
@@ -684,7 +709,6 @@ class Wrap extends React.Component {
     handleClose = () => {
         this.setState({ openSpeedDial: false });
     };
-
     handleOpen = () => {
         this.setState({ openSpeedDial: true });
     };

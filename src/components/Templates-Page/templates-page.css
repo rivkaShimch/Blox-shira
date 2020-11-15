@@ -22,11 +22,11 @@ padding-top: 0.5vh;
 
 .ui.four.cards>.card {
   border-radius: 11px;
-/*   
-  height: 26vh;
   
-  margin:.75em;
-    width:17vw; */
+  height: 34vh;
+  
+  /* margin:.75em; */
+    width:17vw; 
 } 
 
 .searchInput{

@@ -1,8 +1,9 @@
+
 .MuiDrawer-paperAnchorRight {
     left: auto;
     right: 0;
-     background: #3a405e 0% 0% no-repeat padding-box !important; 
-    
+     background:#3a405e 0% 0% no-repeat padding-box !important; 
+
     border-radius: 60px 0px 0px 0px !important;
     
     opacity: 1;
@@ -18,15 +19,15 @@
     opacity: 1;
     z-index: 2;
 
-     background-color: #3A405E;
-    /* background-color:red;
-    color: rgb(235, 234, 234);
+     /* background-color: #3A405E; */
+     /* background-color:red; */
+    /* color: rgb(235, 234, 234);
     display: inline-block;
     overflow-y: auto;
     padding-bottom: 78px;
     transition-duration: 0.3s;
     transition-timing-function: linear;
-    border-radius: 60px 0px 0px; */
+    border-radius: 60px 0px 0px;  */
 }
 .MuiPaper {
     /* background: #3a405e 0% 0% no-repeat padding-box; */
@@ -50,7 +51,26 @@ body{
   }
   .style_dmoCanva{
     /* margin-right: 3vw; */
-    margin-top: 19vh;
-    height: 50vh;
+    margin-top: 15vh;
+    height: 48vh;
+    width:50vw;
+  
     
      }
+  
+     @media only screen and (max-width: 600px) {
+      #configurator {
+        display: none !important;
+      }
+      main{
+        width:100% !important;
+      }
+      #edit_choice{
+        display: none !important;
+      }
+      #ttt{
+        display: block !important;
+
+
+      }
+    }

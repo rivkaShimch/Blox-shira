@@ -2,9 +2,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Stage, Layer, Image, Text, Transformer, Rect } from 'react-konva';
 import useImage from 'use-image';
-import Portal from './Portal';
+import './canvas.css'
+import Portal from './portal.js'
 import ContextMenu from "./ContextMenu";
-
 import { connect } from 'react-redux';
 
 import {
@@ -121,7 +121,6 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu
         onTap={onSelect}
         onMouseEnter={onSelect}
         onContextMenu={handleContextMenu}
-
         ref={TextRef}
         {...shapeProps}
 
@@ -173,6 +172,7 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu
 
 
 const Canvas = (props) => {
+  const initialTextArray = props.canvasDetails.titles
   const dragUrl = React.useRef();
   const stageRef = React.useRef();
   const [images, setImages] = React.useState([]);
@@ -257,6 +257,40 @@ const Canvas = (props) => {
     };
     setImages(items);
   };
+  const _handleClick = (event) => {
+    event.preventDefault();
+
+    this.setState({ visible: true });
+
+    const clickX = event.clientX;
+    const clickY = event.clientY;
+    const screenW = window.innerWidth;
+    const screenH = window.innerHeight;
+    const rootW = this.root.offsetWidth;
+    const rootH = this.root.offsetHeight;
+
+    const right = (screenW - clickX) > rootW;
+    const left = !right;
+    const top = (screenH - clickY) > rootH;
+    const bottom = !top;
+    console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+    if (right) {
+      this.root.style.left = `${clickX + 5}px`;
+    }
+
+    if (left) {
+      this.root.style.left = `${clickX - rootW - 5}px`;
+    }
+
+    if (top) {
+      this.root.style.top = `${clickY + 5}px`;
+    }
+
+    if (bottom) {
+      this.root.style.top = `${clickY - rootH - 5}px`;
+    }
+  }
+
 
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
@@ -276,7 +310,7 @@ const Canvas = (props) => {
       selectImage(null);
       selectText(null);
     }
-    props.dispatch(setDisplayEditor(''))
+    props.dispatch(setDisplayEditor('background'))
   };
 
   const downloadURI = (uri, name) => {
@@ -315,11 +349,12 @@ const Canvas = (props) => {
     setBackground_color_stage(e.target.value);
 
   }
-  return (
-    <div>
-      <div>
 
-        <br />
+  return (
+
+
+    <>
+      <div style={{ marginTop: "28vh", marginLeft: "6vw", width: "650px", height: "400px", border: '3px dashed #D6CBE3' }} >
         <div ref={inputRef} onMouseEnter={() => {
           setPosition_div_x(inputRef.current.getBoundingClientRect().x);
           setPosition_div_y(inputRef.current.getBoundingClientRect().y); console.log(inputRef.current.getBoundingClientRect())
@@ -339,18 +374,37 @@ const Canvas = (props) => {
           }}
           onDragOver={e => e.preventDefault()}
         >
+          {/* <ContextMenu outerRef={outerRef} />
+          <table ref={outerRef}>yyyyy
+            <tbody ref={outerRef}>
+              <tr id="row1">
+                <td>
+                  <input type="checkbox" />
+                </td>
+                <td>Smbc</td>
+                <td>20</td>
+              </tr>
+              <tr id="row2">
+                <td>
+                  <input type="checkbox" />
+                </td>
+                <td>Xkcd</td>
+                <td>30</td>
+              </tr>
+            </tbody>
+          </table>
+          <ContextMenu outerRef={outerRef} /> */}
           <Stage
             id="my_stage"
+
             width={props.canvasDetails.canvas_width}
             height={props.canvasDetails.canvas_height}
-            style={{ border: '1px solid grey' }}
+            // style={{
+            //   border: '3px dashed #D6CBE3'
+            // }
+            // }
 
-            style={{
-              border: '1px solid #D6CBE3', borderStyle: 'dashed'
-            }
-            }
 
-            ref={stageRef}
             onMouseDown={checkDeselect}
             onTouchStart={checkDeselect}
 
@@ -358,17 +412,16 @@ const Canvas = (props) => {
             <Layer>
 
               <Rect
+
                 onMouseDown={checkDeselectBackground}
                 onTouchStart={checkDeselectBackground}
                 // onMouseEnter={checkDeselectBackground}
-
-
                 width={props.canvasDetails.canvas_width}
                 height={props.canvasDetails.canvas_height}
                 fill={props.canvasDetails.background_color === '' ? 'white' : props.canvasDetails.background_color}
               />
               {props.canvasDetails.titles.map((text, i) => {
-                debugger
+
                 // if (props.canvasDetails.removed_titles.length === 0 || props.canvasDetails.removed_titles[0].id !== i)
                 return (
                   <TextObj
@@ -422,10 +475,11 @@ const Canvas = (props) => {
               )}
             </Layer>
           </Stage>
-
         </div>
       </div>
-    </div >
+    </>
+
+
   );
 };
 

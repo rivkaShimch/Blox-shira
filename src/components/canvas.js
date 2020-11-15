@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
 import { Stage, Layer, Image, Text, Transformer, Rect } from 'react-konva';
 import useImage from 'use-image';
 import './canvas.css'
 import Portal from './portal.js'
 import ContextMenu from "./ContextMenu";
+import axios from 'axios'
 import { connect } from 'react-redux';
 
 import {
@@ -23,19 +24,48 @@ import {
 } from '../redux/actions/componentsActions'
 
 
+
+
+
 const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onChange }) => {
-  const [img] = useImage(image.src);
   const [img_id] = useImage(image_change.id);
   const shapeRef = React.useRef();
   const trRef = React.useRef();
+  // let url = 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png'
+  // const [img, status] = useImage(null, 'Anonymous');
 
-  React.useEffect(() => {
-    if (isSelected) {
-      // we need to attach transformer manually
-      trRef.current.nodes([shapeRef.current]);
-      trRef.current.getLayer().batchDraw();
-    }
-  }, [isSelected]);
+  // const [img, setImg] = React.useState(image.src);
+  // "https://konvajs.org/assets/lion.png"
+  const [img] = useImage(image.src);
+  // console.log("status " + status)
+
+
+
+  // React.useEffect(() => {
+  //   debugger
+  //   axios
+  //     .get(
+  //       img,
+  //       { responseType: 'arraybuffer' },
+  //     )
+  //     .then(response => {
+  //       const base64 = btoa(
+  //         new Uint8Array(response.data).reduce(
+  //           (data, byte) => data + String.fromCharCode(byte),
+  //           '',
+  //         ),
+  //       );
+  //       setImg("data:;base64," + base64)
+  //       // this.setState({ source: "data:;base64," + base64 });
+  //     })
+  //     .catch((err) => console.log("ERROR " + err));
+
+  //   if (isSelected) {
+  //     // we need to attach transformer manually
+  //     trRef.current.nodes([shapeRef.current]);
+  //     trRef.current.getLayer().batchDraw();
+  //   }
+  // }, [isSelected]);
 
   return (
     <React.Fragment>
@@ -178,7 +208,7 @@ const Canvas = (props) => {
   const [images, setImages] = React.useState([]);
   const [selectedId, selectImage] = React.useState(null);
   // const [title, setTitle] = React.useState(null)
-  const [title2, setTitle2] = React.useState(null)
+  const [loadImage, setLoadImage] = React.useState(null)
   const [fontStyleTitle, setfontStyleTitle] = React.useState(null)
   const [fontSizeTitle, setfontSizeTitle] = React.useState(null)
   const [textColor, setTextColor] = React.useState(null)
@@ -196,12 +226,10 @@ const Canvas = (props) => {
 
 
   const handleOptionSelected = (option) => {
-    console.log(stageRef.current);
 
     if (option === 'Delete') {
       props.dispatch(removedTitlesCanvas(selectedTextId))
     }
-    console.log(option);
     setSelectedContextMenu(null);
   };
   const handleContextMenu = (e) => {
@@ -353,11 +381,12 @@ const Canvas = (props) => {
   return (
 
 
+
     <>
       <div style={{ marginTop: "28vh", marginLeft: "6vw", width: "650px", height: "400px", border: '3px dashed #D6CBE3' }} >
         <div ref={inputRef} onMouseEnter={() => {
           setPosition_div_x(inputRef.current.getBoundingClientRect().x);
-          setPosition_div_y(inputRef.current.getBoundingClientRect().y); console.log(inputRef.current.getBoundingClientRect())
+          setPosition_div_y(inputRef.current.getBoundingClientRect().y);
         }}
           onDrop={e => {
             // register event position
@@ -431,9 +460,10 @@ const Canvas = (props) => {
                     handleContextMenu={handleContextMenu}
 
                     onSelect={() => {
+                      debugger
                       selectText(text.id);
-                      props.dispatch(setTitlesICanvas(text.id))
-                      props.dispatch(setTitlesTextCanvas(text.text, text.id))
+                      props.dispatch(setTitlesICanvas(text.id - (props.canvasDetails.removed_titles).length))
+                      props.dispatch(setTitlesTextCanvas(text.text, text.id - (props.canvasDetails.removed_titles).length))
                       props.dispatch(setDisplayEditor('title'))
                     }}
                     onChange={(newAttrs) => {
@@ -442,7 +472,6 @@ const Canvas = (props) => {
                   />
                 );
               })}
-
               {props.canvasDetails.element_img.map((image, i) => {
                 return <URLImage
                   key={i}
@@ -451,15 +480,14 @@ const Canvas = (props) => {
                   onSelect={() => {
                     selectImage(image.id);
                     props.dispatch(setElementsICanvas(image.id))
-                    // props.dispatch(setTitlesTextCanvas(text.text, text.id))
                     props.dispatch(setDisplayEditor('image'))
                   }}
                   onChange={(newAttrs) => {
                     props.dispatch(updateElementsCanvas(newAttrs, i))
                   }}
                   image_change={image}
-                  // onDragStart={handleDragStart}
-                  // onDragEnd={handleDragEnd}
+                  onDragStart={handleDragStart}
+                  onDragEnd={handleDragEnd}
                   image={image} />;
               })}
               {selectedContextMenu && (

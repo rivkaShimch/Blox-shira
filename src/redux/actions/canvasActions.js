@@ -1,3 +1,18 @@
+export function setTempElementImg(img) {
+
+    return {
+        type: 'TEMP_ELEMENT_IMG',
+        payload: img
+
+    };
+}
+export function setTempFd(fd) {
+
+    return {
+        type: 'TEMP_FD',
+        payload: fd
+    };
+}
 export function addTemplateImage(data) {
 
     return {
@@ -30,11 +45,12 @@ export function setElementsCanvasServer(element) {
     };
 }
 
-export function addElementsCanvas(element) {
+export function addElementsCanvas(element, fd) {
 
     return {
         type: 'ADD_ELEMENTS_CANVAS',
-        payload: element
+        payload: element,
+        fd: fd
     };
 }
 export function updateElementsCanvas(element, i) {
@@ -52,12 +68,12 @@ export function setTitlesICanvas(i) {
         payload: i
     };
 }
-export function setTitlesTextCanvas(title, id) {
+export function setTitlesTextCanvas(title, i) {
 
     return {
         type: 'TITLES_TEXT_CANVAS',
         payload: title,
-        id: id
+        i: i
     };
 }
 export function setTitlesCanvasServer(title) {
@@ -233,3 +249,11 @@ export function setBackgroundColor(background_color) {
         payload: background_color
     };
 }
+export function setCounterTitles(counter) {
+
+    return {
+        type: 'COUNTER_TITELS',
+        payload: counter
+    };
+}
+

@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css"
 import lines from '../img/lines.png';
-import Text from '../img/text.png';
-import onOff from '../img/onOff.png';
+import Text from '../img/title_icon.png';
+import onOff from '../img/button_icon.png';
 import imageButton from '../img/imageButton.png';
 import drawpolygonsolid from '../img/drawpolygonsolid.png';
-import sign from '../img/sign.png';
-import $ from 'jquery'
 
-
+import sign from '../img/signature_icon.png'
+import backgroundIcon from '../img/background_icon.svg';
 import { connect } from 'react-redux';
 
 
@@ -38,6 +37,7 @@ class Widget extends Component {
 
     }
     openTitleEditor() {
+        if (this.props.displayComponents.display_main_option !== '') {
         this.props.dispatch(setDisplayEditor("title"))
         debugger
         // let arr_length = (this.props.canvasDetails.titles).length + (this.props.canvasDetails.removed_titles).length
@@ -55,10 +55,8 @@ class Widget extends Component {
         let tempCount = this.props.canvasDetails.counter_titles + 1
         this.props.dispatch(setCounterTitles(tempCount))
         this.props.dispatch(setTitlesCanvas(newTitle))
-
-
-        console.log("open title editor " + this.props.displayComponents.display_title_editor)
-    }
+        }
+       
 
     // openImageEditor(e) {
     //     this.props.dispatch(setDisplayEditor("image"))
@@ -128,36 +126,79 @@ class Widget extends Component {
                 width: 100,
                 height: 100
             }
-            this.props.dispatch(addElementsCanvas(newImage, myFile))
-        };
-        reader1.readAsDataURL(file);
 
-        console.log("event", event)
-        var fileToUpload = event
-        //שימוש בformdata כדי להעביר את התמונה בקריאת הpost.      
-        var myFile = new FormData();
-        myFile.append("file", fileToUpload);
-        this.props.dispatch(setTempFd(myFile))
-        // this.addNewImage(myFile, this.props);
-
-
+            this.props.dispatch(addElementsCanvas(newImage))
+        }
     }
 
 
     openShapeEditor() {
-        this.props.dispatch(setDisplayEditor("shape"))
+        if (this.props.displayComponents.display_main_option !== '') {
+            this.props.dispatch(setDisplayEditor("shape"))
+        }
     }
+
     openBackgroundEditor() {
-        this.props.dispatch(setDisplayEditor("background"))
+        if (this.props.displayComponents.display_main_option !== '') {
+            this.props.dispatch(setDisplayEditor("background"))
+        }
     }
 
     render() {
         return (
-
             <div className="col-12 d-flex flex-column justify-content-start white_circleborder_background">
 
 
-                <p className="d-flex ml-3 mt-4"><b>Widget</b></p>
+                <p className="d-flex ml-3 mt-4"><b style={{ color: "#1C1D21", fontFamily: "Lato-Bold", fontSize: "18px" }}>Widget</b></p>
+                <div className="d-flex flex-column justify-content-between wrap_flow_widget">
+
+
+                    <div className="d-flex flex-row  widget_button " onClick={this.openTitleEditor}>
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "13px" }} src={Text} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Title </div>
+                    </div>
+
+                    <div className="d-flex flex-row  widget_button " onClick={this.openImageEditor}>
+
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={imageButton} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
+                        {
+                            this.props.displayComponents.display_main_option !== '' ?
+                                <input type="file" class="form-control-file" id="element_img" style={{ width: "80vw", position: "absolute", zIndex: 0, opacity: 1 }} />
+
+                                : <span></span>
+                        }
+                    </div>
+                    <div className="d-flex flex-row  widget_button " >
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={onOff} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Button </div>
+                    </div>
+                    <div className="d-flex flex-row  widget_button ">
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "17px", marginLeft: "3px" }} src={sign} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Signature </div>
+                    </div>
+                    <div className="d-flex flex-row  widget_button " onClick={this.openBackgroundEditor}>
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "13px" }} src={drawpolygonsolid} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Background </div>
+                    </div>
+                    <div className="d-flex flex-row  widget_button " onClick={this.openShapeEditor}>
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "13px" }} src={drawpolygonsolid} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Shape </div>
+                    </div>
+                    <div className="d-flex flex-row  widget_button " >
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={onOff} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Button </div>
+                    </div>
+                    <div className="d-flex flex-row  widget_button " >
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={onOff} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Button </div>
+                    </div>
+
+                </div>
+
+
+                {/* 
+
                 <div className="wrap_flow_widget">
                     <div className="d-flex flex-row  widget_button" onClick={this.openTitleEditor}>
                         <div className="d-flex flex-column justify-content-center ml-4 "> <img className="imgDetails" src={Text} alt="icon" /></div>
@@ -173,7 +214,13 @@ class Widget extends Component {
                         <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
                         <input type="file" class="form-control-file" id="element_img" onChange={(e) => this.openImageEditor(e.target.files[0])} style={{ opacity: 0, zIndex: 2 }} />
 
+
                     </div>
+                    <div className="d-flex flex-row  widget_button " onClick={this.openBackgroundEditor}>
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img className="imgDetails" style={{ height: "17px", width: "17px" }} id="backButton" src={imageButton} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Background </div>
+                    </div>
+
                     <div className="d-flex flex-row  widget_button " onClick={this.openBackgroundEditor}>
                         <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img className="imgDetails" style={{ height: "17px", width: "17px" }} id="backButton" src={imageButton} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Background </div>
@@ -197,7 +244,8 @@ class Widget extends Component {
                         <div className="d-flex flex-col justify-content-between icon_text">shape!כפתור זמני </div>
                     </div>
 
-                </div>
+                </div> */}
+
             </div >
         );
     }

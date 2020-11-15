@@ -26,6 +26,7 @@ import {
 import {
     setDisplayMainOption
 } from '../../redux/actions/componentsActions'
+import { CalendarDay } from 'react-bootstrap-icons';
 
 class TemplateCards extends Component {
     constructor(props) {
@@ -76,7 +77,7 @@ class TemplateCards extends Component {
 
                     <div className="d-flex flex-row justify-content-center">
                         <div style={{ color: "#8181A5" }}>Project Name | </div>
-                        <div style={{ color: "#8181A5" }}> Last Opened 02/03/2020</div>
+                        <div style={{ color: "#8181A5" }}> Last Opened {new Date().toString()}</div>
                     </div>
 
 

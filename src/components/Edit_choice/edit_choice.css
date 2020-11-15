@@ -14,7 +14,7 @@ border: none;
     border-width: 1px;
     border-color: #A66DFF;
     align-content: center;
-    font-weight: 500; 
+    font-weight: 400; 
 }
 .up_button:active{
     color:white;
@@ -28,7 +28,7 @@ image-rendering: initial;
 .arow_img{
     height: 1.7vh;
     width: 2vh;
-    /* margin-left: 1vh; */
+    margin-left: 1vh;
 }
 .underLineDiv{
 
@@ -53,30 +53,15 @@ image-rendering: initial;
     text-decoration: underline;
     text-decoration-color:#A66DFF ;
 }
-.dividerStyle{
-    top:200px;
-    left: 400px;
-    margin-top: 0;
-    height: 6px;
- z-index: 1;
- color: red;
- width: 300px;
- height: 20px;
-}
-
-
-
-
-
 
 .medAndSecImg{
     height: 9vh;
-    width: 9vh;
+    width: 5vw;
 }
 .icon_style{
 align-items:center;
     height: 35px;
-    width: 35px;
+    width: 37px;
     background-color: #E8EAEC ;
     /* padding: 20px; */
     border-radius: 50%;
@@ -87,7 +72,8 @@ align-items:center;
 .icon_text{
     margin-top: 1.5vh;
     font-weight: 500;
-    font-size: medium;
+    font-size: large;
+    color: #384364;
   
 }
 .widget_text{
@@ -98,71 +84,117 @@ align-items:center;
      border: none;
     background-color: none;
     padding: 0.8vh;
+    cursor: auto;
     
 } 
-.widget_button:hover{
+ .widget_button:hover{
     display: block;
     background-color: #f6f7f8;
-} 
 
+} 
+.widget_button:active{
+  display: block;
+  background-color: #f6f7f8;
+
+}
+
+.scrollbar {
+    width: fit-content;
+    max-height: 150px;
+    overflow-y: scroll;
+  }
+  
+  .scrollbar::-webkit-scrollbar {
+    width: 6px;
+    /* height: 6px; */
+  }
+  
+  .scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  /* custom colors  */
+  .scrollbar-primary::-webkit-scrollbar {
+    background-color: #F5F5F5;
+  }
+  .scrollbar-primary {
+    scrollbar-color: #4285f4 #f5f5f5;
+  }
+  .scrollbar-primary::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+    background-color: #4285F4;
+  }
+
+/* 
 .wrap_flow {
     
-    width: 25vw;
-    height: 25vh;
+    /* width: 25vw;
+    height: 25vh; */
  
-    overflow-y: scroll; /* Add the ability to scroll */
-  }
+    /* overflow-y: scroll; Add the ability to scroll */
+  /* }
   .wrap_flow::-webkit-scrollbar {
     display: none;
 }
 
 .wrap_flow_widget {
     
-    width: 25vw;
-    height: 35vh;
+
  
-    overflow-y: scroll; /* Add the ability to scroll */
+    overflow-y: scroll;
   }
   .wrap_flow_widget::-webkit-scrollbar {
     display: none;
 }
-
+ */ */
 
 .imgDetails{
     height: 5vh;
     width: 5vh;
 }
-    .ss{
+.ss{
         vertical-align: text-bottom;
-        
-    } 
-    .styleOverFlow{
+         } 
+ .styleOverFlow{
      overflow: auto;
       max-height: 17vh;
       width: 200vh;
       max-width: 45vh;
       scrollbar-3dlight-color: lawngreen;
       
-     
-    } 
-    .tt{
+       } 
+        .tt{
         height: 50px;
-        width: 200px;
-        background-color: lightcoral;
+        padding-top: 20px;
+        /* margin-bottom: 15px; */
+        /* width: 100px; */
+        background-color: white;
         display: flex;
         align-items: center;
         justify-content: space-between;
         cursor: pointer;
-        top: 250px;
-        right: 25px;
-        position: absolute;
-        border-bottom: 2px solid yellow;
+        /* top: 250px; */
+        /* right: 25px; */
+        /* position: absolute; */
+        /* border-bottom: 2px solid yellow; */
+        /* background-color:rgb(150, 58, 243) ; */
+
     }
     .rr{
-        width: 20px;
+        /* width: 20px; */
+        margin-left: 23px;
         height: 50px;
-        background-color: lightgreen;
-        border-bottom:2px solid  maroon;
+        align-items: center;
+        display: flex;
+        position: relative;
+        /* background-color:rgb(202, 165, 240) ; */
+        /* border-bottom:2px solid  #A66DFF; */
+    }
+    .rr:checked{
+      border-bottom:2px solid  #A66DFF;
 
     }
     .rr2{

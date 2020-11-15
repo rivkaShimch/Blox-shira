@@ -55,9 +55,11 @@ class Image_Editor extends Component {
 
                     </div>
 
-                    {console.log("the img " + this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i])}
+                    {/* {console.log("the img " + this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i])} */}
                     <div className="d-flex flex-row justify-content-center">
-                        <img style={{ height: "90px", width: "100px" }} src={this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i].src} alt="image" />
+                        <img style={{ height: "90px", width: "100px" }}
+                            // src={this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i].src}
+                            alt="image" />
                     </div>
 
 

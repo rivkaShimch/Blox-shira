@@ -51,35 +51,33 @@ export default class MediaAndSection111 extends Component {
     }
     render() {
         return (
-            <div className="container-fluid d-flex flex-column justify-content-around">
-                <div className="d-flex flex-row justify-content-around navTitle ">
-                    <Navbar className="topnav" >
+            <div className="container-fluid d-flex flex-column justify-content-around" style={{ paddingLeft: "0px", paddingRight: "0px" }} >
 
-                        <Nav className="mr-auto" >
+                <div className="d-flex flex-row justify-content-between navTitle tt ">
+                    {/* <Navbar className="topnav " >
 
-                            <Nav.Link className="navTitle a" href="#media" onClick={this.mediaFunc} style={{ color: this.state.color_media }}>Media</Nav.Link>
-                            <Nav.Link className="navTitle a" href="#section" onClick={this.sectionFunc} style={{ color: this.state.color_section }}>Section</Nav.Link><Divider />
+                        <Nav className="mr-auto " >
+
+                            <Nav.Link className="navTitle a" href="" onClick={this.mediaFunc} style={{ color: this.state.color_media }}>Media</Nav.Link>
+                            <Nav.Link className="navTitle a" href="" onClick={this.sectionFunc} style={{ color: this.state.color_section }}>Section</Nav.Link><Divider />
                         </Nav>
 
-                    </Navbar>
-
+                    </Navbar> */}
+                    <div className="col rr" onClick={this.mediaFunc}>Media</div>
+                    <div className="col rr" onClick={this.sectionFunc}>Section</div>
                 </div>
-                {/* <div className="row tt">
-                    <div className="rr">dfdffg</div>
-                    <div className="rr2">ffdggxdg</div>
-                </div> */}
-                {/* <Divider className="dividerStyle" /> */}
-                <div className="d-flex flex-row justify-content-around wrap_flow">
+
+                <div className="d-flex flex-row justify-content-around ">
                     {this.state.display_media ?
-                        <div id="media" className="d-flex flex-column" >
+                        <div id="media" className="d-flex flex-column scrollbar" >
 
                             <div className="d-flex flex-row justify-content-around" >
                                 <div>
-                                    <img className="medAndSecImg" src={section1} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>media</div>
                                 </div>
                                 <div>
-                                    <img className="medAndSecImg" src={section2} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>media</div>
                                 </div>
                                 <div>
@@ -89,11 +87,25 @@ export default class MediaAndSection111 extends Component {
                             </div>
                             <div className="d-flex flex-row justify-content-around" >
                                 <div>
-                                    <img className="medAndSecImg" src={section1} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>media</div>
                                 </div>
                                 <div>
-                                    <img className="medAndSecImg" src={section2} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
+                                    <div style={{ marginLeft: "12px" }}>media</div>
+                                </div>
+                                <div>
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
+                                    <div style={{ marginLeft: "12px" }}>media</div>
+                                </div>
+                            </div>
+                            <div className="d-flex flex-row justify-content-around" >
+                                <div>
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
+                                    <div style={{ marginLeft: "12px" }}>media</div>
+                                </div>
+                                <div>
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>media</div>
                                 </div>
                                 <div>
@@ -103,32 +115,46 @@ export default class MediaAndSection111 extends Component {
                             </div>
                         </div>
                         :
-                        <div id="section" className="d-flex flex-column">
+                        <div id="section" className="d-flex flex-column scrollbar" >
                             <div className="d-flex flex-row justify-content-around" >
                                 <div>
-                                    <img src={section3} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>section</div>
                                 </div>
                                 <div>
-                                    <img src={section3} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>section</div>
                                 </div>
                                 <div>
-                                    <img src={section3} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>section</div>
                                 </div>
                             </div>
                             <div className="d-flex flex-row justify-content-around" >
                                 <div>
-                                    <img src={section3} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>section</div>
                                 </div>
                                 <div>
-                                    <img src={section3} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>section</div>
                                 </div>
                                 <div>
-                                    <img src={section3} alt="section3" />
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
+                                    <div style={{ marginLeft: "12px" }}>section</div>
+                                </div>
+                            </div>
+                            <div className="d-flex flex-row justify-content-around" >
+                                <div>
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
+                                    <div style={{ marginLeft: "12px" }}>section</div>
+                                </div>
+                                <div>
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
+                                    <div style={{ marginLeft: "12px" }}>section</div>
+                                </div>
+                                <div>
+                                    <img className="medAndSecImg" src={section3} alt="section3" />
                                     <div style={{ marginLeft: "12px" }}>section</div>
                                 </div>
                             </div>

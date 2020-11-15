@@ -13,8 +13,8 @@ const initialState = {
     imageTemplates: [],
     removed_titles: [],
 
-    canvas_width: 500,
-    canvas_height: 400,
+    canvas_width: 630,
+    canvas_height: 394,
     background_color: '',
     temp_element_img: '',
     temp_fd: '',
@@ -105,6 +105,7 @@ export default produce((state, action) => {
       // debugger
       console.log("text id " + action.i)
       state.canvasDetails.titles[action.i].text = action.payload;
+
       break;
     case 'DATA_URL_CANVAS':
       state.canvasDetails.dataURL = action.payload;

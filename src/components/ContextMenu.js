@@ -4,7 +4,6 @@ import "./ContextMenu.css";
 
 const ContextMenu = ({ position, onOptionSelected, position_div_x, position_div_y }) => {
     const handleOptionSelected = option => () => onOptionSelected(option);
-
     return (
         <div
             className="menu"
@@ -16,7 +15,7 @@ const ContextMenu = ({ position, onOptionSelected, position_div_x, position_div_
         >
             <ul>
                 <li onClick={handleOptionSelected("Delete")}>Delete</li>
-                <li onClick={handleOptionSelected("option2")}>Option2</li>
+                <li onClick={handleOptionSelected("Duplicate")}>Duplicate</li>
             </ul>
         </div>
     );

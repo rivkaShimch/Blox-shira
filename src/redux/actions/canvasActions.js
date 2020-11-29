@@ -41,12 +41,12 @@ export function setElementsCanvasServer(element) {
         payload: element
     };
 }
-export function addElementsCanvas(element, fd) {
+export function addElementsCanvas(element) {
+
 
     return {
         type: 'ADD_ELEMENTS_CANVAS',
-        payload: element,
-        fd: fd
+        payload: element
     };
 }
 export function updateElementsCanvas(element, i) {
@@ -394,6 +394,55 @@ export function setCounterTitles(counter) {
         payload: counter
     };
 }
+export function updateTextPreHistory(i, updateField) {
+
+    return {
+        type: 'UPDATE_TEXT_PRE_HISTORY',
+        payload: i,
+        updateField: updateField
+    };
+}
+export function updateTextFollowingHistory(i, fieldType, updateField) {
+
+    return {
+        type: 'UPDATE_TEXT_FOLLOWING_HISTORY',
+        payload: i,
+        fieldType: fieldType,
+        updateField: updateField
+    };
+}
+export function getTextPreHistory() {
+
+    return {
+        type: 'GET_TEXT_PRE_HISTORY'
+    };
+}
+export function getTextFollowingHistory() {
+
+    return {
+        type: 'GET_TEXT_FOLLOWING_HISTORY'
+    };
+}
+export function addPreHistory(item) {
+
+    return {
+        type: 'ADD_PRE_HISTORY',
+        payload: item
+    };
+}
+export function getFirstItem() {
+
+    return {
+        type: 'GET_FIRST_ITEM'
+    };
+}
+export function uploadImageTofileServer(fd) {
+
+    return {
+        type: 'UPLOAD_IMAGE',
+        fd: fd
+    };
+}
 export function setCounterButtons(counter) {
 
     return {
@@ -428,7 +477,6 @@ export function setShapeStroke(shape_stroke, i) {
         type: 'SHAPE_STROKE_COLOR',
         payload: shape_stroke,
         id: i
-
     };
 }
 

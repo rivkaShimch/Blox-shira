@@ -126,7 +126,8 @@ class Image_Editor extends Component {
                                 <input type="range" min="1" max="100" className="col-6 slider mt-3"
                                     value={this.state.BorderValue}
                                     onChange={e => this.setState({ BorderValue: (e.target.value) })}
-                                    onAfterChange={e => this.setState({ finalBorderValue: (e.target.value) })} />
+                                // onAfterChange={e => this.setState({ finalBorderValue: (e.target.value) })} 
+                                />
                                 <input className="input_line col-2" value={this.finalBorderValue} />
 
                             </div>

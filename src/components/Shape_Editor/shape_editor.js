@@ -214,6 +214,34 @@ class Shape_Editor extends Component {
                                 <div className="sideLittleTitles  ">Shape Setting</div>
                             </div>
                         </div>
+
+                        <div className="d-flex flex-row justify-content-between">
+                            <div className="d-flex flex-column  sideTitles">Title Name</div>
+                            <div className="d-flex flex-row  ">  <Switch /></div>
+                        </div>
+
+                        <div className="d-flex flex-column justify-content-start">
+                            <input className="w3-input " style={{ padding: "0px", color: "white", backgroundColor: "#3A405E" }}
+                                onKeyUp={this.onChangeTitleInput} placeholder={this.props.canvasDetails.titles} />
+                        </div>
+                    </div>
+
+                    <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column justify-content-between sideTitles">
+                            <div className="d-flex flex-row sideTitles">Text Size</div>
+
+
+                            <div className="d-flex flex-row justify-content-between">
+                                <input type="range" min="1" max="100" className="col-9 slider mt-3"
+                                    value={this.state.SizeTitleValue}
+                                    onChange={e => this.setState({ SizeTitleValue: (e.target.value) })}
+                                // onAfterChange={e => this.setState({ finalSizeTitleValue: (e.target.value) })}
+                                />
+                                <input className="input_line col-2" value={this.finalSizeTitleValue} />
+
+                            </div>
+                        </div>
+
                     </div>
 
 
@@ -234,14 +262,22 @@ class Shape_Editor extends Component {
                         <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-row form-control" id="input_color2" name="favcolor2"
                             onChange={this.onChangeShapeColor} value={this.props.canvasDetails.shape_color} />
                     </div>
-                    <div className="d-flex flex-column justify-content-between sideTitles">
-                        <div className="d-flex flex-row sideTitles" style={{ color: this.props.color }}>Stroke Width</div>
-                        <div className="d-flex flex-row justify-content-between">
-                            <input type="range" min="0" max="50" className="col-8 slider mt-3"
-                                value={this.state.finalStrokeWidth}
-                                onChange={this.onChangeStrokeSlider} />
-                            <input style={{ color: "white" }} id="stroke_width_input" className="input_line col-3"
-                                onKeyUp={this.onChangeStrokeWidthInput} placeholder={this.finalStrokeWidth} />
+
+                    <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column justify-content-between sideTitles">
+                            <div className="d-flex flex-row sideTitles">Shape Width</div>
+
+
+                            <div className="d-flex flex-row justify-content-between">
+                                <input type="range" min="1" max="100" className="col-9 slider mt-3"
+                                    value={this.state.WidthShapeValue}
+                                    onChange={e => this.setState({ WidthShapeValue: (e.target.value) })}
+                                // onAfterChange={e => this.setState({ finalWidthShapeValue: (e.target.value) })}
+                                />
+                                <input className="input_line col-2" value={this.finalWidthShapeValue} />
+
+                            </div>
+
                         </div>
                     </div>
                     <div className="d-flex flex-column justify-content-between">
@@ -253,12 +289,14 @@ class Shape_Editor extends Component {
                         <div className="d-flex flex-column justify-content-between sideTitles">
                             <div className="d-flex flex-row sideTitles" style={{ color: this.props.color }}>Shadow Size</div>
                             <div className="d-flex flex-row justify-content-between">
-                                <input type="range" min="0" max="20" className="col-8 slider mt-3"
-                                    value={this.state.shapeProps}
-                                    onChange={this.onChangeShadowSizeSlider}
+                                <input type="range" min="1" max="100" className="col-9 slider mt-3"
+                                    value={this.state.HeightShapeValue}
+                                    onChange={e => this.setState({ HeightShapeValue: (e.target.value) })}
+                                // onAfterChange={e => this.setState({ finalHeightShapeValue: (e.target.value) })} 
                                 />
-                                <input style={{ color: this.props.color }} id="shadowSize_input" className="input_line col-3"
-                                    onKeyUp={this.onChangeShadowSizeInput} placeholder={this.state.shapeProps} />
+                                <input className="input_line col-2" value={this.finalHeightShapeValue} />
+
+
                             </div>
                         </div>
                     </div>

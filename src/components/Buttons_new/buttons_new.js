@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Icon } from 'semantic-ui-react'
 
 // import "../bootstrap/dist/css/bootstrap.min.css"
 import { Link } from 'react-router-dom';
@@ -13,7 +14,9 @@ import {
     setButtonsCanvasServer,
 
     setElementsCanvasServer,
-    setBackgroundColor
+    setBackgroundColor,
+    setUpdateTitlesCanvas,
+    getFirstItem
 } from '../../redux/actions/canvasActions'
 
 
@@ -31,6 +34,21 @@ class Buttons_new extends Component {
         this.onClickNewFunc = this.onClickNewFunc.bind(this)
 
     }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.canvasDetails.firstItem !== this.props.canvasDetails.firstItem) {
+            debugger
+            let tempItem = this.props.canvasDetails.firstItem
+
+            if (tempItem === null) {
+                return
+            }
+            // if ("text" in tempItem) {
+            console.log("hhhh " + tempItem)
+            this.props.dispatch(setUpdateTitlesCanvas(tempItem, tempItem.id))
+        }
+    }
+
     onClickNewFunc() {
 
         this.props.dispatch(setTitlesCanvasServer([]))
@@ -39,6 +57,15 @@ class Buttons_new extends Component {
         this.props.dispatch(setBackgroundColor('white'))
         this.props.dispatch(setDisplayMainOption('canva'))
 
+    }
+    onClickPreButton = () => {
+
+        console.log("in onClickPreButton");
+        debugger
+        this.props.dispatch(getFirstItem())
+
+        // let newattars = this.props.canvasDetails.titles[tempItem.text].preText[0]
+        // }
     }
 
     render() {
@@ -55,6 +82,7 @@ class Buttons_new extends Component {
                             <img className="arow_img" src={arow} alt="icon" />
 
                         </div>
+                        <Icon name="arrow left" onClick={this.onClickPreButton} />
 
                     </div>
                 </div>
@@ -69,7 +97,8 @@ class Buttons_new extends Component {
 
 function mapStateToProps(state) {
     return {
-        displayComponents: state.displayComponents.displayComponents
+        displayComponents: state.displayComponents.displayComponents,
+        canvasDetails: state.canvasDetails.canvasDetails
     };
 }
 

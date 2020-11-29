@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router()
 const Template = require('../models/Template');
 var fs = require('fs');
-var path = require('path');
 var multer = require('multer');
 var request = require('request');
 
@@ -43,56 +42,61 @@ router.get('/find', (req, res) => {
 router.post(('/uploadImage/:uId'), async (req, res) => {
     console.log("&&&&&&&&&&&&&&&&&&&&")
     console.log("wwwwwwwwwwwwwwwwwwww", req.files)
-    console.log(req.files.file)
+    if (!req.files) {
+        let url = 'https://files.leader.codes/uploads/uLKS7DPkWsdywmn1LaRv1gI3RYL2/img/1606297106751__banner_ad.jpg'
+        res.send(url)
+        return
+    }
     console.log(req.params.uId)
-    // let url = await uploadedFile(req.files.file, req.params.uId, req.headers["authorization"]);
-    let url = 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png'
+    console.log(req.files.file)
+    let url = await uploadedFile(req.files.file, req.params.uId, req.headers["authorization"]);
+    // let url = 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png'
     console.log(url);
     res.send(url);
 })
 
 
-// uploadedFile = (fileToUpload, uId, headers) => {
-//     console.log("headers", headers);
-//     return new Promise(async (resolve, reject) => {
-//         console.log(fileToUpload);
-//         console.log("uploadedFile");
-//         const uri = `https://files.leader.codes/api/${uId}/upload`;
-//         console.log(uri);
-//         const options = {
-//             method: "POST",
-//             url: uri,
-//             headers: {
-//                 Authorization: headers,
-//                 "Content-Type": "multipart/form-data",
-//             },
-//             formData: {
-//                 file: {
-//                     value: fileToUpload.data,
-//                     options: {
-//                         filename: fileToUpload.name,
-//                     },
-//                 },
-//             },
-//         };
+uploadedFile = (fileToUpload, uId, headers) => {
+    console.log("headers", headers);
+    return new Promise(async (resolve, reject) => {
+        console.log(fileToUpload);
+        console.log("uploadedFile");
+        const uri = `https://files.leader.codes/api/${uId}/upload`;
+        console.log(uri);
+        const options = {
+            method: "POST",
+            url: uri,
+            headers: {
+                Authorization: headers,
+                "Content-Type": "multipart/form-data",
+            },
+            formData: {
+                file: {
+                    value: fileToUpload.data,
+                    options: {
+                        filename: fileToUpload.name,
+                    },
+                },
+            },
+        };
 
-//         request(options, async (err, res, body) => {
-//             if (err) {
-//                 console.log(err);
-//                 reject(err);
-//             }
-//             let url;
-//             console.log("result from server", body);
-//             try {
-//                 url = JSON.parse(body).data.url;
-//                 // let url=body.data.url;
-//                 resolve(url);
-//             } catch (error) {
-//                 reject(error);
-//             }
-//         });
-//     });
-// };
+        request(options, async (err, res, body) => {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            let url;
+            console.log("result from server", body);
+            try {
+                url = JSON.parse(body).data.url;
+                // let url=body.data.url;
+                resolve(url);
+            } catch (error) {
+                reject(error);
+            }
+        });
+    });
+};
 
 
 router.post('/add', upload.single('image'), (req, res) => {

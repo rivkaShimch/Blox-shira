@@ -664,7 +664,7 @@ class Wrap extends React.Component {
             })
             axios.get('http://localhost:9000/templates/')
                 .then(res => {
-                    console.log("data  " + res.data[0].template_name)
+                    // console.log("data  " + res.data[0].template_name)
                     let data = res.data
 
                     data.map((template) => (
@@ -688,8 +688,9 @@ class Wrap extends React.Component {
     }
     OnClickSave = () => {
         console.log("in OnClickSave")
-
+        debugger
         let dataURL = (this.props.canvasDetails.dataURL)
+        debugger
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
             background_color: this.props.canvasDetails.background_color,

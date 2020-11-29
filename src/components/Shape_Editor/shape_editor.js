@@ -129,7 +129,8 @@ class Shape_Editor extends Component {
                                 <input type="range" min="1" max="100" className="col-9 slider mt-3"
                                     value={this.state.SizeTitleValue}
                                     onChange={e => this.setState({ SizeTitleValue: (e.target.value) })}
-                                    onAfterChange={e => this.setState({ finalSizeTitleValue: (e.target.value) })} />
+                                // onAfterChange={e => this.setState({ finalSizeTitleValue: (e.target.value) })}
+                                />
                                 <input className="input_line col-2" value={this.finalSizeTitleValue} />
 
                             </div>
@@ -169,7 +170,8 @@ class Shape_Editor extends Component {
                                 <input type="range" min="1" max="100" className="col-9 slider mt-3"
                                     value={this.state.WidthShapeValue}
                                     onChange={e => this.setState({ WidthShapeValue: (e.target.value) })}
-                                    onAfterChange={e => this.setState({ finalWidthShapeValue: (e.target.value) })} />
+                                // onAfterChange={e => this.setState({ finalWidthShapeValue: (e.target.value) })}
+                                />
                                 <input className="input_line col-2" value={this.finalWidthShapeValue} />
 
                             </div>
@@ -185,7 +187,8 @@ class Shape_Editor extends Component {
                                 <input type="range" min="1" max="100" className="col-9 slider mt-3"
                                     value={this.state.HeightShapeValue}
                                     onChange={e => this.setState({ HeightShapeValue: (e.target.value) })}
-                                    onAfterChange={e => this.setState({ finalHeightShapeValue: (e.target.value) })} />
+                                // onAfterChange={e => this.setState({ finalHeightShapeValue: (e.target.value) })} 
+                                />
                                 <input className="input_line col-2" value={this.finalHeightShapeValue} />
 
                             </div>

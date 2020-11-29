@@ -15,7 +15,13 @@ import {
   setTitlesTextCanvas,
   updateElementsCanvas,
   setElementsICanvas,
-  removedTitlesCanvas
+  removedTitlesCanvas,
+  setTitlesCanvas,
+  setCounterTitles,
+  updateTextPreHistory,
+  updateTextFollowingHistory,
+  addPreHistory
+
 
 } from '../redux/actions/canvasActions'
 import {
@@ -111,6 +117,7 @@ const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onCha
             width: Math.max(5, node.width() * scaleX),
             height: Math.max(node.height() * scaleY),
           });
+
         }}
       // onDragStart={handleDragStart}
       // onDragEnd={handleDragEnd}
@@ -202,21 +209,12 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu
 
 
 const Canvas = (props) => {
-  const initialTextArray = props.canvasDetails.titles
   const dragUrl = React.useRef();
-  const stageRef = React.useRef();
+  const stageRef = React.useRef(null);
   const [images, setImages] = React.useState([]);
   const [selectedId, selectImage] = React.useState(null);
-  // const [title, setTitle] = React.useState(null)
-  const [loadImage, setLoadImage] = React.useState(null)
-  const [fontStyleTitle, setfontStyleTitle] = React.useState(null)
-  const [fontSizeTitle, setfontSizeTitle] = React.useState(null)
-  const [textColor, setTextColor] = React.useState(null)
-  const [background_color_stage, setBackground_color_stage] = React.useState(null)
-  const [background_image, setBackground_image] = React.useState(null)
   const [selectedTextId, selectText] = React.useState(null);
   const inputRef = React.useRef();
-
   props.dispatch(setDataUrl(stageRef.current))
 
   const [selectedContextMenu, setSelectedContextMenu] = React.useState(null)
@@ -230,6 +228,25 @@ const Canvas = (props) => {
     if (option === 'Delete') {
       props.dispatch(removedTitlesCanvas(selectedTextId))
       props.dispatch(setDisplayEditor(''))
+    }
+    else if (option === 'Duplicate') {
+      console.log("duplicate " + selectedTextId)
+      let dupTitle = {
+        id: props.canvasDetails.counter_titles,
+        x: props.canvasDetails.titles[props.canvasDetails.titles_i].x + 10,
+        y: props.canvasDetails.titles[props.canvasDetails.titles_i].y + 10,
+        width: props.canvasDetails.titles[props.canvasDetails.titles_i].width,
+        height: props.canvasDetails.titles[props.canvasDetails.titles_i].height,
+        text: props.canvasDetails.titles[props.canvasDetails.titles_i].text,
+        align: props.canvasDetails.titles[props.canvasDetails.titles_i].align,
+        fill: props.canvasDetails.titles[props.canvasDetails.titles_i].fill,
+        fontSize: props.canvasDetails.titles[props.canvasDetails.titles_i].fontSize,
+        display: props.canvasDetails.titles[props.canvasDetails.titles_i].display,
+        preText: [],
+        followText: []
+      }
+      props.dispatch(setCounterTitles(props.canvasDetails.counter_titles + 1))
+      props.dispatch(setTitlesCanvas(dupTitle))
     }
     setSelectedContextMenu(null);
   };
@@ -245,32 +262,32 @@ const Canvas = (props) => {
   };
 
 
-  const BackgroundImage = () => {
-    const [image] = useImage(require('../background_images/galim_b.jpg'));
-    return <Image
-      width={stageRef.current.width()}
-      height={stageRef.current.height()}
-      onTouchStart={checkDeselectBackground}
-      onMouseDown={checkDeselectBackground}
-      // onTap={onSelect}
-      image={image}
-      id="background_image" />;
-  };
+  // const BackgroundImage = () => {
+  //   const [image] = useImage(require('../background_images/galim_b.jpg'));
+  //   return <Image
+  //     width={stageRef.current.width()}
+  //     height={stageRef.current.height()}
+  //     onTouchStart={checkDeselectBackground}
+  //     onMouseDown={checkDeselectBackground}
+  //     // onTap={onSelect}
+  //     image={image}
+  //     id="background_image" />;
+  // };
 
-  const handleDragStart = (e) => {
-    const id = e.target.id();
-    console.log("id " + id)
-    const items = images.slice();
+  // const handleDragStart = (e) => {
+  //   const id = e.target.id();
+  //   console.log("id " + id)
+  //   const items = images.slice();
 
-    // console.log(items)
-    const item = items.find(i => i.id === id);
-    const index = items.indexOf(item);
-    // remove from the list:
-    items.splice(index, 1);
-    // add to the top
-    items.push(item);
-    setImages(items);
-  };
+  //   // console.log(items)
+  //   const item = items.find(i => i.id === id);
+  //   const index = items.indexOf(item);
+  //   // remove from the list:
+  //   items.splice(index, 1);
+  //   // add to the top
+  //   items.push(item);
+  //   setImages(items);
+  // };
   const handleDragEnd = (e) => {
     console.log("handleDragend")
 
@@ -286,39 +303,39 @@ const Canvas = (props) => {
     };
     setImages(items);
   };
-  const _handleClick = (event) => {
-    event.preventDefault();
+  // const _handleClick = (event) => {
+  //   event.preventDefault();
 
-    this.setState({ visible: true });
+  //   this.setState({ visible: true });
 
-    const clickX = event.clientX;
-    const clickY = event.clientY;
-    const screenW = window.innerWidth;
-    const screenH = window.innerHeight;
-    const rootW = this.root.offsetWidth;
-    const rootH = this.root.offsetHeight;
+  //   const clickX = event.clientX;
+  //   const clickY = event.clientY;
+  //   const screenW = window.innerWidth;
+  //   const screenH = window.innerHeight;
+  //   const rootW = this.root.offsetWidth;
+  //   const rootH = this.root.offsetHeight;
 
-    const right = (screenW - clickX) > rootW;
-    const left = !right;
-    const top = (screenH - clickY) > rootH;
-    const bottom = !top;
-    console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-    if (right) {
-      this.root.style.left = `${clickX + 5}px`;
-    }
+  //   const right = (screenW - clickX) > rootW;
+  //   const left = !right;
+  //   const top = (screenH - clickY) > rootH;
+  //   const bottom = !top;
+  //   console.log("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+  //   if (right) {
+  //     this.root.style.left = `${clickX + 5}px`;
+  //   }
 
-    if (left) {
-      this.root.style.left = `${clickX - rootW - 5}px`;
-    }
+  //   if (left) {
+  //     this.root.style.left = `${clickX - rootW - 5}px`;
+  //   }
 
-    if (top) {
-      this.root.style.top = `${clickY + 5}px`;
-    }
+  //   if (top) {
+  //     this.root.style.top = `${clickY + 5}px`;
+  //   }
 
-    if (bottom) {
-      this.root.style.top = `${clickY - rootH - 5}px`;
-    }
-  }
+  //   if (bottom) {
+  //     this.root.style.top = `${clickY - rootH - 5}px`;
+  //   }
+  // }
 
 
   const checkDeselect = (e) => {
@@ -338,46 +355,31 @@ const Canvas = (props) => {
     if (clickedOnEmpty) {
       selectImage(null);
       selectText(null);
+      setSelectedContextMenu(null);
+
     }
     props.dispatch(setDisplayEditor('background'))
   };
 
-  const downloadURI = (uri, name) => {
-    var link = document.createElement('a');
-    link.download = name;
-    link.href = uri;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    delete link.click;
-  }
+  // const downloadURI = (uri, name) => {
+  //   var link = document.createElement('a');
+  //   link.download = name;
+  //   link.href = uri;
+  //   document.body.appendChild(link);
+  //   link.click();
+  //   document.body.removeChild(link);
+  //   delete link.click;
+  // }
 
-  const onClickDownload = (e) => {
-    console.log("in onClickDownload");
-    // let stage_to_download = document.getElementById('my_stage');
-    console.log(stageRef.current)
-    var dataURL = stageRef.current
-    downloadURI(dataURL.toDataURL(), 'my_template.png');
-  }
-  const onClickBold = (e) => {
-    console.log("in onClickBold");
-    setfontStyleTitle("bold");
-  }
-  const onChangeFontSize = (e) => {
-    console.log("in onSelectFontSize");
-    setfontSizeTitle(e.target.value);
+  // const onClickDownload = (e) => {
+  //   console.log("in onClickDownload");
+  //   // let stage_to_download = document.getElementById('my_stage');
+  //   console.log(stageRef.current)
+  //   var dataURL = stageRef.current
+  //   downloadURI(dataURL.toDataURL(), 'my_template.png');
+  // }
 
-  }
-  const onChangeTextColor = (e) => {
-    console.log("in onChangeTextColor");
-    setTextColor(e.target.value);
 
-  }
-  const onChangeBackgroundColor = (e) => {
-    console.log("in onBackgroundColor");
-    setBackground_color_stage(e.target.value);
-
-  }
 
   return (
 
@@ -388,7 +390,9 @@ const Canvas = (props) => {
         <div ref={inputRef} onMouseEnter={() => {
           setPosition_div_x(inputRef.current.getBoundingClientRect().x);
           setPosition_div_y(inputRef.current.getBoundingClientRect().y);
-        }}
+        }}>
+
+          {/*
           onDrop={e => {
             // register event position
             stageRef.current.setPointersPositions(e);
@@ -403,8 +407,7 @@ const Canvas = (props) => {
             );
           }}
           onDragOver={e => e.preventDefault()}
-        >
-          {/* <ContextMenu outerRef={outerRef} />
+        > <ContextMenu outerRef={outerRef} />
           <table ref={outerRef}>yyyyy
             <tbody ref={outerRef}>
               <tr id="row1">
@@ -426,7 +429,7 @@ const Canvas = (props) => {
           <ContextMenu outerRef={outerRef} /> */}
           <Stage
             id="my_stage"
-
+            ref={stageRef}
             width={props.canvasDetails.canvas_width}
             height={props.canvasDetails.canvas_height}
             // style={{
@@ -451,8 +454,7 @@ const Canvas = (props) => {
                 fill={props.canvasDetails.background_color === '' ? 'white' : props.canvasDetails.background_color}
               />
               {props.canvasDetails.titles.map((text, i) => {
-                if (props.canvasDetails.titles[i].display === true) {
-                  // if (props.canvasDetails.removed_titles.length === 0 || props.canvasDetails.removed_titles[0].id !== i)
+                if (props.canvasDetails.titles[i].display !== false) {
                   return (
                     <TextObj
                       key={i}
@@ -467,7 +469,11 @@ const Canvas = (props) => {
                         props.dispatch(setDisplayEditor('title'))
                       }}
                       onChange={(newAttrs) => {
+                        debugger
+                        props.dispatch(addPreHistory({ text: text.id }))
                         props.dispatch(setUpdateTitlesCanvas(newAttrs, text.id))
+                        props.dispatch(updateTextPreHistory(text.id, text))
+
                       }}
                     />
                   );
@@ -488,7 +494,7 @@ const Canvas = (props) => {
                     props.dispatch(updateElementsCanvas(newAttrs, i))
                   }}
                   image_change={image}
-                  onDragStart={handleDragStart}
+                  // onDragStart={handleDragStart}
                   onDragEnd={handleDragEnd}
                   image={image} />;
               })}

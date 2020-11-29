@@ -1,12 +1,10 @@
-
+import { setTempElementImg } from '../actions/canvasActions'
 import $ from 'jquery'
 
 export const getImageFromServer = ({ dispatch, getState }) => next => action => {
-
-    if (action.type === 'ADD_ELEMENTS_CANVAS') {
+    if (action.type === 'UPLOAD_IMAGE') {
         debugger
         $.ajax({
-            // "url": 'https://lobby.leader.codes/api/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
             "url": 'http://localhost:9000/templates/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
             "method": "POST",
             "processData": false,
@@ -24,8 +22,10 @@ export const getImageFromServer = ({ dispatch, getState }) => next => action => 
                 console.log("success")
                 console.log(data1)
                 debugger
-                //חוזר הurl של התמונה.     console.log(data1);
+                console.log(data1);
                 // dispatch({ type: 'TEMP_ELEMENT_IMG', payload: data1 })
+
+                dispatch(setTempElementImg(data1))
             },
             error: function (err) {
                 console.log(err)

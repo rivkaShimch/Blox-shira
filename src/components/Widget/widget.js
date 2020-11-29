@@ -5,12 +5,12 @@ import Text from '../img/title_icon.png';
 import onOff from '../img/button_icon.png';
 import imageButton from '../img/imageButton.png';
 import drawpolygonsolid from '../img/drawpolygonsolid.png';
-
+import $ from 'jquery'
 import sign from '../img/signature_icon.png'
 import backgroundIcon from '../img/background_icon.svg';
 import { connect } from 'react-redux';
 
-
+import ReactTooltip from 'react-tooltip';
 import {
     setDisplayEditor,
 } from '../../redux/actions/componentsActions';
@@ -21,7 +21,8 @@ import {
     setElementWidth,
     setTempElementImg,
     setTempFd,
-    setCounterTitles
+    setCounterTitles,
+    uploadImageTofileServer
 } from '../../redux/actions/canvasActions'
 class Widget extends Component {
     constructor(props) {
@@ -43,15 +44,17 @@ class Widget extends Component {
             // let arr_length = (this.props.canvasDetails.titles).length + (this.props.canvasDetails.removed_titles).length
             const newTitle = {
                 id: this.props.canvasDetails.counter_titles,
-                x: this.props.canvasDetails.title_position_x,
-                y: 10,
+                x: this.props.canvasDetails.title_position_x + this.props.canvasDetails.counter_titles * 5,
+                y: this.props.canvasDetails.title_position_y + this.props.canvasDetails.counter_titles * 5,
                 width: 100,
                 height: 30,
                 text: 'TITLE 0' + this.props.canvasDetails.counter_titles,
                 align: 'left',
                 fill: 'black',
                 fontSize: 24,
-                display: true
+                display: true,
+                preText: [],
+                followText: []
             }
             let tempCount = this.props.canvasDetails.counter_titles + 1
             this.props.dispatch(setCounterTitles(tempCount))
@@ -59,77 +62,39 @@ class Widget extends Component {
         }
 
     }
-    // openImageEditor(e) {
-    //     this.props.dispatch(setDisplayEditor("image"))
-    //     let arr_length = (this.props.canvasDetails.element_img).length
-    //     const newImage = {
-    //         src: URL.createObjectURL(e.target.files[0]),
-    //         id: arr_length,
-    //         x: 100,
-    //         y: 100,
-    //         width: 100,
-    //         height: 100
-    //     }
-    //     this.props.dispatch(addElementsCanvas(newImage))
-    // }
 
-
-
-    // addNewImage = (fd, props) => {
-    //     // debugger
-    //     $.ajax({
-    //         // "url": 'https://lobby.leader.codes/api/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
-    //         "url": 'http://localhost:9000/templates/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
-    //         "method": "POST",
-    //         "processData": false,
-    //         "mimeType": "multipart/form-data",
-    //         "contentType": false,
-    //         "headers": {
-    //             //בauthorization יש לשים jwt אחר!!!!!!!      
-    //             "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJzaW1kc01ycmNKZHBRZ3RhOGtnWHlRQmRERnkyIiwiZW1haWwiOiJjdG9AbGVhZGVyLmNvZGVzIiwiaXAiOiI1LjEwMi4yNDYuMjAyIiwiaWF0IjoxNjA0NDgyOTc0fQ.Nn2IC7j_VCDOFIkbwzT3nao0l7OcqbNqDUKkcL0Aoik"
-
-    //         },
-    //         "data": fd,
-    //         "async": false,
-    //         success: function (data1) {
-
-    //             console.log("success")
-    //             console.log(data1)
-    //             debugger
-    //             //חוזר הurl של התמונה.     console.log(data1);
-    //             props.dispatch(setElementWidth(data1))
-    //         },
-    //         error: function (err) {
-    //             console.log(err)
-    //         }
-    //     });
-    // }
-
-
-
-
-
-    openImageEditor = (event) => {
-        this.props.dispatch(setDisplayEditor("image"))
-        // שימוש בFileReader לצורך הצגה מקומית של התמונה, היות ולוקח כמה שניות עד שחוזר url מהשרת.
-        const reader1 = new FileReader();
-        const file = event;
-        reader1.onloadend = () => {
-            this.props.dispatch(setTempElementImg(reader1.result));
-            debugger
+    componentDidUpdate(prevProps, prevState) {
+        //add image after the image upload from the server
+        if (prevProps.canvasDetails.temp_element_img !== this.props.canvasDetails.temp_element_img) {
             let arr_length = (this.props.canvasDetails.element_img).length
+
             const newImage = {
-                src: 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png',
-                // src: this.props.canvasDetails.temp_element_img,
+                // src: 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png',
+                src: this.props.canvasDetails.temp_element_img,
                 id: arr_length,
                 x: 100,
                 y: 100,
                 width: 100,
                 height: 100
             }
-
             this.props.dispatch(addElementsCanvas(newImage))
         }
+    }
+
+    openImageEditor = (event) => {
+        debugger
+        this.props.dispatch(setDisplayEditor("image"))
+        // שימוש בFileReader לצורך הצגה מקומית של התמונה, היות ולוקח כמה שניות עד שחוזר url מהשרת.
+        // const reader1 = new FileReader();
+        const file = new FormData();
+        file.append("file", event)
+        debugger
+
+        // reader1.onloadend = () => {
+        // }
+        debugger
+        this.props.dispatch(uploadImageTofileServer(file))
+
     }
 
 
@@ -158,18 +123,25 @@ class Widget extends Component {
                         <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "13px" }} src={Text} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Title </div>
                     </div>
+                    <div className="d-flex flex-row  widget_button ">
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style" style={{ width: "50px" }}>
+                            <img style={{ height: "17px", width: "17px" }} src={imageButton} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
+                        <input type="file" class="form-control-file" id="element_img" onChange={(e) => this.openImageEditor(e.target.files[0])} style={{ opacity: 0, zIndex: 2 }} />
 
-                    <div className="d-flex flex-row  widget_button " onClick={this.openImageEditor}>
+
+                    </div>
+                    {/* <div className="d-flex flex-row  widget_button ">
 
                         <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={imageButton} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
                         {
                             this.props.displayComponents.display_main_option !== '' ?
-                                <input type="file" class="form-control-file" id="element_img" style={{ width: "80vw", position: "absolute", zIndex: 0, opacity: 0 }} />
+                                <input type="file" class="form-control-file" id="element_img" onClick={(e) => this.openImageEditor(e.target.files[0])} style={{ width: "80vw", position: "absolute", zIndex: 0, opacity: 0 }} />
 
                                 : <span></span>
                         }
-                    </div>
+                    </div> */}
                     <div className="d-flex flex-row  widget_button " >
                         <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={onOff} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Button </div>
@@ -197,6 +169,7 @@ class Widget extends Component {
 
                 </div>
 
+                <ReactTooltip backgroundColor="gray" textColor="black" />
 
                 {/* 
 

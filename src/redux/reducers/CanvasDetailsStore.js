@@ -9,9 +9,14 @@ const initialState = {
     titles: [],
     titles_i: 0,
     counter_titles: 0,
-    dataURL: "",
+    dataURL: "FFFFFFFFF",
     imageTemplates: [],
     removed_titles: [],
+    //history:
+    preHistory: [],
+    followHistory: [],
+    updateItem: '',
+    firstItem: '',
 
     canvas_width: 630,
     canvas_height: 394,
@@ -67,8 +72,7 @@ export default produce((state, action) => {
       state.canvasDetails.element_img = action.payload;
       break;
     case 'ADD_ELEMENTS_CANVAS':
-      state.canvasDetails.element_img = state.canvasDetails.element_img.slice();
-      state.canvasDetails.element_img.push(action.payload);
+      state.canvasDetails.element_img = state.canvasDetails.element_img.concat(action.payload);
       break;
     case 'ELEMENTS_I_CANVAS':
       state.canvasDetails.element_img_i = action.payload;
@@ -95,11 +99,10 @@ export default produce((state, action) => {
       break;
     case 'SET_TITLES_CANVAS':
       state.canvasDetails.titles = action.payload;
-      // state.canvasDetails.titles.push(action.payload);
       break;
     case 'TITLES_CANVAS':
-      state.canvasDetails.titles = state.canvasDetails.titles.slice();
-      state.canvasDetails.titles.push(action.payload);
+      debugger
+      state.canvasDetails.titles = state.canvasDetails.titles.concat(action.payload);
       break;
     case 'TITLES_I_CANVAS':
       state.canvasDetails.titles_i = action.payload;
@@ -169,6 +172,44 @@ export default produce((state, action) => {
     case 'ELEMENT_HEIGHT_CANVAS':
       state.canvasDetails.element_height = action.payload;
       break;
+    case 'UPDATE_TEXT_PRE_HISTORY':
+      if (state.canvasDetails.titles[action.payload].preText === undefined) {
+        state.canvasDetails.titles[action.payload].preText = []
+      }
+      state.canvasDetails.titles[action.payload].preText = state.canvasDetails.titles[action.payload].preText.concat(action.updateField);
+      break;
+
+    case 'UPDATE_TEXT_FOLLOWING_HISTORY':
+      state.canvasDetails.element_height = action.payload;
+      break;
+    case 'ADD_PRE_HISTORY':
+      state.canvasDetails.preHistory = state.canvasDetails.preHistory.slice();
+      state.canvasDetails.preHistory.push(action.payload);
+      break;
+    case 'GET_LAST_PRE_HISTORY':
+      state.canvasDetails.preHistory = state.canvasDetails.preHistory.slice();
+      state.canvasDetails.preHistory.push(action.payload);
+      break;
+
+    case 'GET_FIRST_ITEM':
+      debugger
+      if ((state.canvasDetails.preHistory.length) === 0) {
+        state.canvasDetails.firstItem = null
+        return
+      }
+      const firstItemArr = state.canvasDetails.preHistory[state.canvasDetails.preHistory.length - 1]
+      state.canvasDetails.preHistory = state.canvasDetails.preHistory.slice(0, state.canvasDetails.preHistory.length - 1)
+      const lengthPreText = state.canvasDetails.titles[firstItemArr.text].preText.length - 1
+      if (lengthPreText + 1 === 0) {
+        state.canvasDetails.firstItem = null
+      }
+      else {
+        state.canvasDetails.firstItem = state.canvasDetails.titles[firstItemArr.text].preText[lengthPreText]
+      }
+      break;
+    case 'UPLOAD_IMAGE':
+      break;
+
     default:
       return state;
 

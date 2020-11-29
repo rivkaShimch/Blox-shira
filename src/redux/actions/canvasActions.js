@@ -27,9 +27,6 @@ export function setName(name) {
         payload: name
     };
 }
-
-
-
 export function setElementsICanvas(i) {
 
     return {
@@ -44,8 +41,8 @@ export function setElementsCanvasServer(element) {
         payload: element
     };
 }
-
 export function addElementsCanvas(element) {
+
 
     return {
         type: 'ADD_ELEMENTS_CANVAS',
@@ -82,7 +79,6 @@ export function setTitlesCanvasServer(title) {
         payload: title
     };
 }
-
 export function setTitlesCanvas(title) {
 
     return {
@@ -90,7 +86,6 @@ export function setTitlesCanvas(title) {
         payload: title
     };
 }
-
 export function removedTitlesCanvas(i) {
 
     return {
@@ -107,6 +102,67 @@ export function setUpdateTitlesCanvas(title, i) {
         counter: i
     };
 }
+export function setButtonsICanvas(i) {
+
+    return {
+        type: 'BUTTONS_I_CANVAS',
+        payload: i
+    };
+}
+export function setShapesICanvas(i) {
+
+    return {
+        type: 'SHAPES_I_CANVAS',
+        payload: i
+    };
+}
+export function setShapePoints(shape_points) {
+
+    return {
+        type: 'SHAPES_POINTS',
+        payload: shape_points
+    };
+}
+export function setButtonsCanvasServer(button) {
+
+    return {
+        type: 'SET_BUTTONS_CANVAS',
+        payload: button
+    };
+}
+export function setButtonsCanvas(button) {
+
+    return {
+        type: 'BUTTONS_CANVAS',
+        payload: button
+    };
+}
+export function removedButtonsCanvas(i) {
+
+    return {
+        type: 'REMOVE_BUTTONS_CANVAS',
+        // payload: button,
+        counter: i
+    };
+}
+export function setUpdateButtonsCanvas(button, i) {
+
+    return {
+        type: 'UPDATE_BUTTONS_CANVAS',
+        payload: button,
+        counter: i
+    };
+}
+export function setUpdateShapesCanvas(shape, i) {
+
+    return {
+        type: 'UPDATE_SHAPES_CANVAS',
+        payload: shape,
+        counter: i
+    };
+}
+
+
 export function setDataUrl(url) {
 
     return {
@@ -115,7 +171,6 @@ export function setDataUrl(url) {
     };
 }
 export function setCanvasWidth(width) {
-
     return {
         type: 'TYPE_CANVAS',
         payload: width
@@ -128,7 +183,6 @@ export function setCanvasHeight(height) {
         payload: height
     };
 }
-
 export function setBackgroundImgName(back_img_n) {
 
     return {
@@ -168,7 +222,6 @@ export function setTitleWidth(title_width, i) {
     };
 }
 export function setTitleHeight(title_height, i) {
-
     return {
         type: 'TITLE_HEIGHT_CANVAS',
         payload: title_height,
@@ -176,7 +229,6 @@ export function setTitleHeight(title_height, i) {
     };
 }
 export function setTitleColor(title_color, i) {
-
     return {
         type: 'TITLE_COLOR_CANVAS',
         payload: title_color,
@@ -191,7 +243,6 @@ export function setTitleType(title_type) {
         payload: title_type
     };
 }
-
 export function setTitlePositionX(title_position_x) {
 
     return {
@@ -200,10 +251,100 @@ export function setTitlePositionX(title_position_x) {
     };
 }
 export function setTitlePositionY(title_position_y) {
-
     return {
         type: 'TITLE_POSITION_Y_CANVAS',
         payload: title_position_y
+    };
+}
+
+
+
+
+
+
+export function setButtonWidth(button_width, i) {
+
+    return {
+        type: 'BUTTON_WIDTH',
+        payload: button_width,
+        id: i
+    };
+}
+export function setButtonHeight(button_height, i) {
+    return {
+        type: 'BUTTON_HEIGHT_CANVAS',
+        payload: button_height,
+        id: i
+    };
+}
+export function setButtonColor(button_color, i) {
+    return {
+        type: 'BUTTON_FILL',
+        payload: button_color,
+        id: i
+
+    };
+}
+export function setShapeColor(shape_color, i) {
+    return {
+        type: 'SHAPE_FILL',
+        payload: shape_color,
+        id: i
+
+    };
+}
+// shadowBlur: 10,
+export function setButtonCorners(button_cornerRadius, i) {
+    return {
+        type: 'BUTTON_CORNERS',
+        payload: button_cornerRadius,
+        id: i
+
+    };
+}
+export function setButtonStroke(button_stroke, i) {
+    return {
+        type: 'BUTTON_STROKE_COLOR',
+        payload: button_stroke,
+        id: i
+
+    };
+}
+export function setButtonStrokeWidth(button_strokeWidth, i) {
+    return {
+        type: 'BUTTON_STROKE_WIDTH',
+        payload: button_strokeWidth,
+        id: i
+
+    };
+}
+export function setButtonShadowBlur(shadowBlur, i) {
+    return {
+        type: 'BUTTON_SHADOW_BLUR',
+        payload: shadowBlur,
+        id: i
+
+    };
+}
+export function setShapeShadowBlur(shadowBlur, i) {
+    return {
+        type: 'SHAPE_SHADOW_BLUR',
+        payload: shadowBlur,
+        id: i
+
+    };
+}
+export function setButtonPositionX(button_position_x) {
+
+    return {
+        type: 'BUTTON_POSITION_X_CANVAS',
+        payload: button_position_x
+    };
+}
+export function setButtonPositionY(button_position_y) {
+    return {
+        type: 'BUTTON_POSITION_Y_CANVAS',
+        payload: button_position_y
     };
 }
 export function setElementImg(element_img) {
@@ -214,14 +355,12 @@ export function setElementImg(element_img) {
     };
 }
 export function setElementPositionX(element_position_x) {
-
     return {
         type: 'ELEMENT_POSITION_X_CANVAS',
         payload: element_position_x
     };
 }
 export function setElementPositionY(element_position_y) {
-
     return {
         type: 'ELEMENT_POSITION_Y_CANVAS',
         payload: element_position_y
@@ -302,6 +441,42 @@ export function uploadImageTofileServer(fd) {
     return {
         type: 'UPLOAD_IMAGE',
         fd: fd
+    };
+}
+export function setCounterButtons(counter) {
+
+    return {
+        type: 'COUNTER_BUTTONS',
+        payload: counter
+    };
+}
+export function setCounterShapes(counter) {
+
+    return {
+        type: 'COUNTER_SHAPES',
+        payload: counter
+    };
+}
+export function setShapesCanvas(shape) {
+
+    return {
+        type: 'SHAPES_CANVAS',
+        payload: shape
+    };
+}
+export function setShapeStrokeWidth(shape_strokeWidth, i) {
+    return {
+        type: 'SHAPE_STROKE_WIDTH',
+        payload: shape_strokeWidth,
+        id: i
+
+    };
+}
+export function setShapeStroke(shape_stroke, i) {
+    return {
+        type: 'SHAPE_STROKE_COLOR',
+        payload: shape_stroke,
+        id: i
     };
 }
 

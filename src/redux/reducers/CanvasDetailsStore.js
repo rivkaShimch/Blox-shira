@@ -18,6 +18,14 @@ const initialState = {
     updateItem: '',
     firstItem: '',
 
+    buttons: [],
+    buttons_i: 0,
+    counter_buttons: 0,
+
+    shapes: [],
+    shapes_i: 0,
+    counter_shapes: 0,
+
     canvas_width: 630,
     canvas_height: 394,
     background_color: '',
@@ -39,7 +47,30 @@ const initialState = {
     element_position_x: '',
     element_position_y: '',
     element_width: '',
-    element_height: ''
+    element_height: '',
+
+    button_position_x: 20,
+    button_position_y: 20,
+    button_width: 100,
+    button_height: 50,
+    button_fill: '',
+    button_stroke: '',
+    button_strokeWidth: 1,
+    button_cornerRadius: 0,
+    button_shadowBlur: 0,
+
+
+    shape_position_x: 20,
+    shape_position_y: 20,
+    shape_fill: '',
+    shape_stroke: '',
+    shape_strokeWidth: 1,
+    shape_cornerRadius: 0,
+    shape_shadowBlur: 0,
+    shape_points: [],
+    shape_tension: 1,
+
+
   }
 
 };
@@ -77,10 +108,11 @@ export default produce((state, action) => {
     case 'ELEMENTS_I_CANVAS':
       state.canvasDetails.element_img_i = action.payload;
       break;
+
     case 'REMOVE_TITLES_CANVAS':
       // const titles = state.canvasDetails.titles.slice();
       // const removed_item = titles.splice(action.counter, 1);
-      debugger
+
       // // state.canvasDetails.removed_titles = state.canvasDetails.removed_titles.slice()
       // state.canvasDetails.removed_titles.push(removed_item[0]);
       // state.canvasDetails.titles_i -= state.canvasDetails.titles_i
@@ -108,18 +140,18 @@ export default produce((state, action) => {
       state.canvasDetails.titles_i = action.payload;
       break;
     case 'TITLES_TEXT_CANVAS':
-      // debugger
+
       console.log("text id " + action.i)
       state.canvasDetails.titles[action.i].text = action.payload;
 
       break;
+
     case 'DATA_URL_CANVAS':
       state.canvasDetails.dataURL = action.payload;
       break;
     case 'CANVAS_WIDTH':
       state.canvasDetails.canvas_width = action.payload;
       break;
-
     case 'CANVAS_HEIGHT':
       state.canvasDetails.canvas_height = action.payload;
       break;
@@ -132,10 +164,10 @@ export default produce((state, action) => {
     case 'BACKGROUND_IMG_PATH_CANVAS':
       state.canvasDetails.background_img_path = action.payload;
       break;
+
     case 'TITLE_ALIGN_CANVAS':
       state.canvasDetails.titles[action.id].align = action.payload;
       break;
-
     case 'TITLE_SIZE_CANVAS':
       state.canvasDetails.titles[action.id].fontSize = action.payload;
       break;
@@ -151,12 +183,13 @@ export default produce((state, action) => {
     case 'TITLE_TYPE_CANVAS':
       state.canvasDetails.title_type = action.payload;
       break;
-    case 'TITLE_POSITION_X_CANVAS':
+    case 'TITLE_POSITION_X_CANVAS'://///////
       state.canvasDetails.title_position_x = action.payload;
       break;
-    case 'TITLE_POSITION_Y_CANVAS':
+    case 'TITLE_POSITION_Y_CANVAS'://///////
       state.canvasDetails.title_position_y = action.payload;
       break;
+
     case 'ELEMENT_IMG_CANVAS':
       state.canvasDetails.element_img = action.payload;
       break;
@@ -210,6 +243,109 @@ export default produce((state, action) => {
     case 'UPLOAD_IMAGE':
       break;
 
+
+
+    case 'BUTTONS_I_CANVAS':
+      state.canvasDetails.buttons_i = action.payload;
+      break;
+    case 'SHAPES_I_CANVAS':
+      state.canvasDetails.shapes_i = action.payload;
+      break;
+    case 'SHAPES_POINTS':
+      state.canvasDetails.shape_points = action.payload;
+      break;
+    case 'BUTTONS_CANVAS':
+      state.canvasDetails.buttons = state.canvasDetails.buttons.slice();
+      state.canvasDetails.buttons.push(action.payload);
+      break;
+    case 'COUNTER_BUTTONS':
+      state.canvasDetails.counter_buttons = action.payload;
+      break;
+
+
+    case 'BUTTON_X':
+      state.canvasDetails.button_position_x = action.payload;
+      break;
+    case 'BUTTON_Y':
+      state.canvasDetails.button_position_y = action.payload;
+      break;
+    case 'BUTTON_WIDTH':
+      state.canvasDetails.button_width = action.payload;
+      break;
+    case 'BUTTON_HEIGHT':
+      state.canvasDetails.button_height = action.payload;
+      break;
+    case 'BUTTON_FILL':
+      state.canvasDetails.buttons[action.id].fill = action.payload;
+      break;
+    case 'BUTTON_STROKE_COLOR':
+      state.canvasDetails.buttons[action.id].stroke = action.payload;
+      break;
+    case 'BUTTON_STROKE_WIDTH':
+      state.canvasDetails.buttons[action.id].strokeWidth = action.payload;
+      break;
+    case 'BUTTON_CORNERS':
+
+      state.canvasDetails.buttons[action.id].cornerRadius = action.payload;
+      break;
+    case 'BUTTON_SHADOW_BLUR':
+
+      state.canvasDetails.buttons[action.id].shadowBlur = action.payload;
+      break;
+    case 'SHAPE_SHADOW_BLUR':
+
+      state.canvasDetails.shapes[action.id].shadowBlur = action.payload;
+      break;
+    case 'BUTTON_POSITION_X_CANVAS'://///////
+      state.canvasDetails.buttons[action.id].button_position_x = action.payload;
+      break;
+    case 'BUTTON_POSITION_Y_CANVAS'://///////
+      state.canvasDetails.buttons[action.id].button_position_y = action.payload;
+      break;
+
+    case 'SHAPES_CANVAS':
+
+      state.canvasDetails.shapes = state.canvasDetails.shapes.concat(action.payload);
+      // state.canvasDetails.shapes.push(action.payload);
+      break;
+    case 'SHAPE_FILL':
+      state.canvasDetails.shapes[action.id].fill = action.payload;
+      break;
+
+    case 'SHAPE_STROKE_WIDTH':
+      state.canvasDetails.shapes[action.id].strokeWidth = action.payload;
+      break;
+    case 'SHAPE_STROKE_COLOR':
+      state.canvasDetails.shapes[action.id].stroke = action.payload;
+      break;
+    case 'COUNTER_SHAPES':
+      state.canvasDetails.counter_shapes = action.payload;
+      break;
+    case 'REMOVE_BUTTONS_CANVAS':
+
+      const buttons = state.canvasDetails.buttons.slice();
+      buttons[action.counter].display = false;
+      state.canvasDetails.buttons = (buttons);
+      console.log("new array" + state.canvasDetails.buttons)
+      break;
+    case 'UPDATE_BUTTONS_CANVAS':
+      const buttons_ = state.canvasDetails.buttons.slice();
+      buttons_[action.counter] = action.payload;
+      console.log("newattrs " + action.payload)
+      state.canvasDetails.buttons = (buttons_);
+      break;
+    case 'REMOVE_SHAPES_CANVAS':
+      const shapes = state.canvasDetails.shapes.slice();
+      shapes[action.counter].display = false;
+      state.canvasDetails.shapes = (titles);
+      console.log("new array" + state.canvasDetails.shapes)
+      break;
+    case 'UPDATE_TITLES_CANVAS':
+      const shapes_ = state.canvasDetails.shapes.slice();
+      shapes_[action.counter] = action.payload;
+      console.log("newattrs " + action.payload)
+      state.canvasDetails.shapes = (shapes_);
+      break;
     default:
       return state;
 

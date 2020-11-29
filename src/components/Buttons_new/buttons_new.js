@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Icon } from 'semantic-ui-react'
 
-import "bootstrap/dist/css/bootstrap.min.css"
+// import "../bootstrap/dist/css/bootstrap.min.css"
 import { Link } from 'react-router-dom';
 import arow from '../img/arow.png';
 
@@ -11,6 +11,8 @@ import { connect } from 'react-redux';
 
 import {
     setTitlesCanvasServer,
+    setButtonsCanvasServer,
+
     setElementsCanvasServer,
     setBackgroundColor,
     setUpdateTitlesCanvas,
@@ -27,8 +29,10 @@ class Buttons_new extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
         };
         this.onClickNewFunc = this.onClickNewFunc.bind(this)
+
     }
 
     componentDidUpdate(prevProps) {
@@ -46,10 +50,13 @@ class Buttons_new extends Component {
     }
 
     onClickNewFunc() {
+
         this.props.dispatch(setTitlesCanvasServer([]))
+        this.props.dispatch(setButtonsCanvasServer([]))
         this.props.dispatch(setElementsCanvasServer([]))
         this.props.dispatch(setBackgroundColor('white'))
         this.props.dispatch(setDisplayMainOption('canva'))
+
     }
     onClickPreButton = () => {
 

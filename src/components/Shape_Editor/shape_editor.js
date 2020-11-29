@@ -1,31 +1,21 @@
 
-import React, { Component, useState } from 'react';
-import { Link } from 'react-router-dom';
-// import Styles from './title_editor.css'
-import "bootstrap/dist/css/bootstrap.min.css";
-import Arrow_down from "../img/arrow_down.png";
-import Switch from "../Switch/Switch";
-import RangeSlider from 'react-bootstrap-range-slider';
-import 'semantic-ui-css/semantic.min.css'
-import { Form } from 'semantic-ui-react'
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import '../Title_Editor/title_editor';
-import Title_Editor from '../Title_Editor/title_editor';
-import Image_Editor from '../Image_Editor/image_editor';
-
 import {
     setTitlesCanvas,
     setTitleColor,
     setShapeColor,
+    setShapeStrokeWidth,
+    setShapeStroke,
+    setCounterShapes,
+    setShapesCanvas,
+    setShapeShadowBlur,
     setName,
-
 } from '../../redux/actions/canvasActions'
-
-
-import alignCenter from '../img/alignCenter.png';
-import TextField from '@material-ui/core/TextField';
-import alignLeftWhite1 from '../img/alignLeftWhite1.png';
-import alignRight from '../img/alignRight.png';
+import circle from '../img/circle.PNG';
+import square from '../img/sqr.PNG';
+import tringle from '../img/trngl.PNG';
 
 class Shape_Editor extends Component {
     constructor(prop) {
@@ -33,6 +23,7 @@ class Shape_Editor extends Component {
 
 
         this.state = {
+            myShapePoints: [0, 0, -50, 60, 50, 60],
             checked: false,
             background: '#fff',
             value: '',
@@ -51,6 +42,8 @@ class Shape_Editor extends Component {
             finalWidthShapeValue: '',
             finalHeightShapeValue: '',
 
+            finalStrokeWidth: '4',
+
             bold_img_align: 1
         };
         this.handleChange = this.handleChange.bind(this);
@@ -58,8 +51,130 @@ class Shape_Editor extends Component {
         // this.onChangeShapeColor = this.onChangeShapeColor.bind(this)
         // this.onChangeTitleInput = this.onChangeTitleInput.bind(this)
         this.onKeyTemplateName = this.onKeyTemplateName.bind(this)
+        this.onChangeShapeColor = this.onChangeShapeColor.bind(this)
+        this.onChangeStrokeSlider = this.onChangeStrokeSlider.bind(this)
+        this.onChangeShapeStrokeColor = this.onChangeShapeStrokeColor.bind(this)
+        this.onChangeStrokeWidthInput = this.onChangeStrokeWidthInput.bind(this)
+        this.onCircleClick = this.onCircleClick.bind(this)
+        this.onSquareClick = this.onSquareClick.bind(this)
+        this.onTriangularClick = this.onTriangularClick.bind(this)
+        this.onChangeShadowSizeSlider = this.onChangeShadowSizeSlider.bind(this)
+        this.onChangeShadowSizeInput = this.onChangeShadowSizeInput.bind(this)
+        this.onPantagonClick = this.onPantagonClick.bind(this)
     }
+    onChangeShapeColor(e) {
+        this.props.dispatch(setShapeColor((e.target.value), this.props.canvasDetails.shapes_i))
+    }
+    onChangeStrokeWidthInput(e) {
+        this.props.dispatch(setShapeStrokeWidth((e.target.value), this.props.canvasDetails.shapes_i))
+        this.setState({ finalStrokeWidth: e.target.value })
+    }
+    onChangeStrokeSlider(e) {
+        this.props.dispatch(setShapeStrokeWidth((e.target.value), this.props.canvasDetails.shapes_i))
+        document.getElementById("stroke_width_input").value = ''
+        this.setState({ finalStrokeWidth: e.target.value })
+    }
+    onChangeShapeStrokeColor(e) {
+        this.props.dispatch(setShapeStroke((e.target.value), this.props.canvasDetails.shapes_i))
+    }
+    onChangeShadowSizeSlider(e) {
 
+        this.props.dispatch(setShapeShadowBlur((e.target.value), this.props.canvasDetails.shapes_i))
+        document.getElementById("shadowSize_input").value = ''
+        this.setState({ shapeProps: e.target.value })
+    }
+    onChangeShadowSizeInput(e) {
+        this.props.dispatch(setShapeShadowBlur((e.target.value), this.props.canvasDetails.shapes_i))
+        this.setState({ shapeProps: e.target.value })
+    }
+    onCircleClick(e) {
+
+        let arr_length_shp = (this.props.canvasDetails.shapes).length
+        const newShape = {
+            id: arr_length_shp,
+            x: 200,
+            y: 200,
+            points: [0, 0, 50, 0, 50, 50, 0, 50],
+            tension: 0.5555555,
+            shadowBlur: 0,
+            display: true,
+
+            stroke: "black",
+            //   fillLinearGradientStartPoint={{ x: -50, y: -50 }},
+            //   fillLinearGradientEndPoint={{ x: 50, y: 50 }},
+            //   fillLinearGradientColorStops={[0, 'red', 1, 'yellow']},
+        }
+        let tempCount = this.props.canvasDetails.counter_shapes + 1
+        this.props.dispatch(setCounterShapes(tempCount))
+        this.props.dispatch(setShapesCanvas(newShape))
+    }
+    onSquareClick(e) {
+
+        let arr_length_shp = (this.props.canvasDetails.shapes).length
+        const newShape = {
+            id: arr_length_shp,
+            x: 200,
+            y: 200,
+            points: [0, 0, 50, 0, 50, 50, 0, 50],
+            tension: 0,
+            display: true,
+
+            stroke: "black",
+            //   fillLinearGradientStartPoint={{ x: -50, y: -50 }},
+            //   fillLinearGradientEndPoint={{ x: 50, y: 50 }},
+            //   fillLinearGradientColorStops={[0, 'red', 1, 'yellow']},
+        }
+        let tempCount = this.props.canvasDetails.counter_shapes + 1
+        this.props.dispatch(setCounterShapes(tempCount))
+        this.props.dispatch(setShapesCanvas(newShape))
+    }
+    onTriangularClick(e) {
+
+        let arr_length_shp = (this.props.canvasDetails.shapes).length
+        const newShape = {
+            id: arr_length_shp,
+            x: 200,
+            y: 0,
+            points: this.state.myShapePoints,
+            tension: 0,
+            shadowBlur: 0,
+            display: true,
+            shadowColor: "blue",
+            opacity: 1,
+            stroke: "black",
+            //   fillLinearGradientStartPoint={{ x: -50, y: -50 }},
+            //   fillLinearGradientEndPoint={{ x: 50, y: 50 }},
+            //   fillLinearGradientColorStops={[0, 'red', 1, 'yellow']},
+        }
+        let tempCount = this.props.canvasDetails.counter_shapes + 1
+        this.props.dispatch(setCounterShapes(tempCount))
+        this.props.dispatch(setShapesCanvas(newShape))
+
+    }
+    onPantagonClick(e) {
+
+        let arr_length_shp = (this.props.canvasDetails.shapes).length
+        const newShape = {
+            id: arr_length_shp,
+            x: 200,
+            y: 300,
+            points: [0, 0, 100, 0, 150, -100, 200, -250, 50, -180, -50, -100],
+            tension: 0,
+            shadowBlur: 0,
+            display: true,
+            shadowColor: "blue",
+            opacity: 1,
+            stroke: "black",
+            //   fillLinearGradientStartPoint={{ x: -50, y: -50 }},
+            //   fillLinearGradientEndPoint={{ x: 50, y: 50 }},
+            //   fillLinearGradientColorStops={[0, 'red', 1, 'yellow']},
+        }
+        let tempCount = this.props.canvasDetails.counter_shapes + 1
+        this.props.dispatch(setCounterShapes(tempCount))
+        this.props.dispatch(setShapesCanvas(newShape))
+
+    }
+    // onChangeStrokeWidthInput(e)
     changeImage1 = () => {
         this.setState({ bold_img_align: 1 });
     };
@@ -75,26 +190,17 @@ class Shape_Editor extends Component {
     handleChangeComplete = (color) => {
         this.setState({ background: color.hex });
     };
-
     onChangeTitleColor(e) {
         this.props.dispatch(setTitleColor(e.target.value))
     }
-    // onChangeShapeColor(e) {
-    //     this.props.dispatch(setShapeColor(e.target.value))
-    // }
-    // onChangeShapeColor(e) {
-    //     this.props.dispatch(setShapeColor(e.target.value))
-    // }
+
     onChangeTitleInput(e) {
         this.props.dispatch(setTitlesCanvas(e.target.value))
     }
     onKeyTemplateName(e) {
         this.props.dispatch(setName(e.target.value))
     }
-    // hh = () => {
-    //     slider = new Slider('#ex26');
-    //     slider.refresh({ useCurrentValue: true });
-    // }
+
     render() {
 
         return (
@@ -135,24 +241,20 @@ class Shape_Editor extends Component {
 
                             </div>
                         </div>
+
                     </div>
 
-                    <div className="d-flex flex-row justify-content-between ">
-                        <div className="d-flex flex-column sideTitles mr-5">Alignment</div>
-                        <div className="d-flex flex-column">
-                            <div className="d-flex flex-row justify-content-end">
-                                <img onClick={this.changeImage1} style={{ height: "20px", marginLeft: "9px" }} src={this.state.bold_img_align === 1 ? alignCenter : alignLeftWhite1} alt="icon" />
-                                <img onClick={this.changeImage2} style={{ height: "20px", marginLeft: "9px" }} src={this.state.bold_img_align === 2 ? alignCenter : alignLeftWhite1} alt="icon" />
-                                <img onClick={this.changeImage3} style={{ height: "20px", marginLeft: "9px" }} src={this.state.bold_img_align === 3 ? alignCenter : alignLeftWhite1} alt="icon" />
 
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="d-flex flex-column justify-content-between">
-                        <div className="d-flex flex-row sideTitles">Title Fill</div>
-                        <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-row form-control" id="input_color1" name="favcolor1"
-                            onChange={this.onChangeTitleColor} value={this.props.canvasDetails.title_color} />
+                    <div className="d-flex flex-wrap scrollbar white_circleborder_background" style={{ height: "100px", width: "200px" }}>
+                        <div> <img src={circle} alt="shape" onClick={this.onCircleClick} /></div>
+                        <div> <img src={square} alt="shape" onClick={this.onSquareClick} /></div>
+                        <div> <img src={tringle} alt="shape" onClick={this.onTriangularClick} /></div>
+                        <div> <img src={circle} alt="shape" onClick={this.onPantagonClick} /></div>
+                        <div> <img src={square} alt="shape" /></div>
+                        <div> <img src={tringle} alt="shape" /></div>
+                        <div> <img src={circle} alt="shape" /></div>
+                        <div> <img src={square} alt="shape" /></div>
+                        <div> <img src={tringle} alt="shape" /></div>
                     </div>
 
                     <div className="d-flex flex-column justify-content-between">
@@ -175,14 +277,17 @@ class Shape_Editor extends Component {
                                 <input className="input_line col-2" value={this.finalWidthShapeValue} />
 
                             </div>
+
                         </div>
                     </div>
-
-                    <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column justify-content-between">
+                        <div className="d-flex flex-row sideTitles">Stroke Fill</div>
+                        <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-row form-control" id="input_color2" name="favcolor2"
+                            onChange={this.onChangeShapeStrokeColor} value={this.props.canvasDetails.shape_color} />
+                    </div>
+                    <div className="d-flex flex-row justify-content-between" >
                         <div className="d-flex flex-column justify-content-between sideTitles">
-                            <div className="d-flex flex-row sideTitles">Shape Height</div>
-
-
+                            <div className="d-flex flex-row sideTitles" style={{ color: this.props.color }}>Shadow Size</div>
                             <div className="d-flex flex-row justify-content-between">
                                 <input type="range" min="1" max="100" className="col-9 slider mt-3"
                                     value={this.state.HeightShapeValue}
@@ -191,29 +296,13 @@ class Shape_Editor extends Component {
                                 />
                                 <input className="input_line col-2" value={this.finalHeightShapeValue} />
 
+
                             </div>
                         </div>
                     </div>
 
-                    <div className="d-flex flex-row justify-content-between">
-                        <div className="d-flex flex-column justify-content-between sideTitles">
-                            <div className="d-flex flex-row sideTitles">Border Radius Image</div>
 
 
-                            <div className="d-flex flex-row justify-content-between">
-                                <div className="radius_icon"></div>
-                                <div className="rec_icon"></div>
-
-                                <input className="input_line col-2 mr-2" value={this.finalBorderValue} />
-                                <input className="input_line col-2 mr-2" value={this.finalBorderValue} />
-                                <input className="input_line col-2 mr-2" value={this.finalBorderValue} />
-                                <input className="input_line col-2" value={this.finalBorderValue} />
-
-                            </div>
-                        </div>
-
-
-                    </div>
 
                 </div>
             </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { Stage, Layer, Image, Text, Transformer } from 'react-konva';
 import useImage from 'use-image';
-import Portal from './portal';
+import Portal from './Portal';
 
 
 const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onChange }) => {

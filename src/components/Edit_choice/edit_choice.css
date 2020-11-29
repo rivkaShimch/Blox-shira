@@ -60,8 +60,8 @@ image-rendering: initial;
 }
 .icon_style{
 align-items:center;
-    height: 35px;
-    width: 37px;
+    height: 4.7vh;
+    width: 2.5vw;
     background-color: #E8EAEC ;
     /* padding: 20px; */
     border-radius: 50%;

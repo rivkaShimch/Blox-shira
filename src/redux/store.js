@@ -1,4 +1,4 @@
-import { Component } from "react";
+
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import canvasDetails from './reducers/CanvasDetailsStore'
 import displayComponents from './reducers/ComponentsDisplayStore'

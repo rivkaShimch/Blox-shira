@@ -3,7 +3,7 @@ import $ from 'jquery'
 
 export const getImageFromServer = ({ dispatch, getState }) => next => action => {
     if (action.type === 'UPLOAD_IMAGE') {
-        debugger
+
         $.ajax({
             "url": 'http://localhost:9000/templates/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
             "method": "POST",
@@ -23,6 +23,7 @@ export const getImageFromServer = ({ dispatch, getState }) => next => action => 
                 console.log(data1)
                 debugger
                 console.log(data1);
+
                 // dispatch({ type: 'TEMP_ELEMENT_IMG', payload: data1 })
 
                 dispatch(setTempElementImg(data1))

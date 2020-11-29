@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import "bootstrap/dist/css/bootstrap.min.css"
+// import "../bootstrap/dist/css/bootstrap.min.css"
 import { Link } from 'react-router-dom';
 import arow from '../img/arow.png';
 
@@ -10,6 +10,8 @@ import { connect } from 'react-redux';
 
 import {
     setTitlesCanvasServer,
+    setButtonsCanvasServer,
+
     setElementsCanvasServer,
     setBackgroundColor
 } from '../../redux/actions/canvasActions'
@@ -24,14 +26,19 @@ class Buttons_new extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
         };
         this.onClickNewFunc = this.onClickNewFunc.bind(this)
+
     }
     onClickNewFunc() {
+
         this.props.dispatch(setTitlesCanvasServer([]))
+        this.props.dispatch(setButtonsCanvasServer([]))
         this.props.dispatch(setElementsCanvasServer([]))
         this.props.dispatch(setBackgroundColor('white'))
         this.props.dispatch(setDisplayMainOption('canva'))
+
     }
 
     render() {

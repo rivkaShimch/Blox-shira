@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 // import style from './components/Image_Editor/image_editor.css';
 import { connect } from 'react-redux';
 import logo from '../img/לוגו.png';
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "../bootstrap/dist/css/bootstrap.min.css";
 import Styles from '../Title_Editor/title_editor.css'
 import Image_Editor1 from '../Image_Editor/Image_editor.css';
 import Switch from "../Switch/Switch";

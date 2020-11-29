@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import styles from './edit_choice.css'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import MediaAndSection111 from '../MediaAndSection111/mediaAndSection111';
 import Buttons_new from '../Buttons_new/buttons_new';
 import Widget from '../Widget/widget';
+import styles from '../Edit_choice/edit_choice.css';
 
 // import MediaAndSection from '../MediaAndSection/mediaAndSection';
 

@@ -36,6 +36,25 @@ const templateSchema = new Schema({
         type: Number
     },
 
+
+    // shapes: [{
+    //     id: { type: Number },
+    //     x: { type: Number },
+    //     y: { type: Number },
+    //     fill: { type: String },
+    //     points: { type: Number },
+    //     tension: { type: Number },
+    //     shadowBlur: { type: Number },
+    //     stroke: { type: String },
+    //     strokeWidth: { type: Number },
+
+
+    // }]
+    // ,
+    // shapes_i: {
+    //     type: Number
+    // },
+
     element_img: [{
         id: { type: Number },
         x: { type: Number },

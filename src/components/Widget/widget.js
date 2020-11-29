@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "bootstrap/dist/css/bootstrap.min.css"
+// import "../Button_Editor/node_modules/bootstrap/dist/css/bootstrap.min.css"
 import lines from '../img/lines.png';
 import Text from '../img/title_icon.png';
 import onOff from '../img/button_icon.png';
@@ -13,15 +13,20 @@ import { connect } from 'react-redux';
 
 import {
     setDisplayEditor,
+
 } from '../../redux/actions/componentsActions';
 
 import {
     setTitlesCanvas,
+    setButtonsCanvas,
     addElementsCanvas,
     setElementWidth,
     setTempElementImg,
     setTempFd,
-    setCounterTitles
+    setCounterTitles,
+    setCounterButtons,
+
+
 } from '../../redux/actions/canvasActions'
 class Widget extends Component {
     constructor(props) {
@@ -31,15 +36,17 @@ class Widget extends Component {
             img: ''
         };
         this.openTitleEditor = this.openTitleEditor.bind(this)
+        this.openButtonEditor = this.openButtonEditor.bind(this)
         this.openImageEditor = this.openImageEditor.bind(this)
         this.openShapeEditor = this.openShapeEditor.bind(this)
         this.openBackgroundEditor = this.openBackgroundEditor.bind(this)
 
     }
     openTitleEditor() {
+
         if (this.props.displayComponents.display_main_option !== '') {
             this.props.dispatch(setDisplayEditor("title"))
-            debugger
+
             // let arr_length = (this.props.canvasDetails.titles).length + (this.props.canvasDetails.removed_titles).length
             const newTitle = {
                 id: this.props.canvasDetails.counter_titles,
@@ -57,57 +64,38 @@ class Widget extends Component {
             this.props.dispatch(setCounterTitles(tempCount))
             this.props.dispatch(setTitlesCanvas(newTitle))
         }
+    }
+    openButtonEditor() {
+        if (this.props.displayComponents.display_main_option !== '') {
+            this.props.dispatch(setDisplayEditor("button"))
+            let arr_length_btn = (this.props.canvasDetails.buttons).length
+            const newButton = {
+                id: arr_length_btn,
+                x: 10,
+                y: 20,
+                width: 100,
+                height: 30,
+                fill: 'rgb(212, 200, 200)',
+
+                strokeWidth: '0',
+                stroke: 'none',
+                display: true,
+                cornerRadius: '',
+                shadowBlur: 0,
+            }
+            let tempCount = this.props.canvasDetails.counter_buttons + 1
+            this.props.dispatch(setCounterButtons(tempCount))
+            this.props.dispatch(setButtonsCanvas(newButton))
+        }
 
     }
-    // openImageEditor(e) {
-    //     this.props.dispatch(setDisplayEditor("image"))
-    //     let arr_length = (this.props.canvasDetails.element_img).length
-    //     const newImage = {
-    //         src: URL.createObjectURL(e.target.files[0]),
-    //         id: arr_length,
-    //         x: 100,
-    //         y: 100,
-    //         width: 100,
-    //         height: 100
-    //     }
-    //     this.props.dispatch(addElementsCanvas(newImage))
-    // }
+    openShapeEditor() {
+        if (this.props.displayComponents.display_main_option !== '') {
 
+            this.props.dispatch(setDisplayEditor("shape"))
+        }
 
-
-    // addNewImage = (fd, props) => {
-    //     // debugger
-    //     $.ajax({
-    //         // "url": 'https://lobby.leader.codes/api/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
-    //         "url": 'http://localhost:9000/templates/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
-    //         "method": "POST",
-    //         "processData": false,
-    //         "mimeType": "multipart/form-data",
-    //         "contentType": false,
-    //         "headers": {
-    //             //בauthorization יש לשים jwt אחר!!!!!!!      
-    //             "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJzaW1kc01ycmNKZHBRZ3RhOGtnWHlRQmRERnkyIiwiZW1haWwiOiJjdG9AbGVhZGVyLmNvZGVzIiwiaXAiOiI1LjEwMi4yNDYuMjAyIiwiaWF0IjoxNjA0NDgyOTc0fQ.Nn2IC7j_VCDOFIkbwzT3nao0l7OcqbNqDUKkcL0Aoik"
-
-    //         },
-    //         "data": fd,
-    //         "async": false,
-    //         success: function (data1) {
-
-    //             console.log("success")
-    //             console.log(data1)
-    //             debugger
-    //             //חוזר הurl של התמונה.     console.log(data1);
-    //             props.dispatch(setElementWidth(data1))
-    //         },
-    //         error: function (err) {
-    //             console.log(err)
-    //         }
-    //     });
-    // }
-
-
-
-
+    }
 
     openImageEditor = (event) => {
         this.props.dispatch(setDisplayEditor("image"))
@@ -116,7 +104,7 @@ class Widget extends Component {
         const file = event;
         reader1.onloadend = () => {
             this.props.dispatch(setTempElementImg(reader1.result));
-            debugger
+
             let arr_length = (this.props.canvasDetails.element_img).length
             const newImage = {
                 src: 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png',
@@ -132,19 +120,11 @@ class Widget extends Component {
         }
     }
 
-
-    openShapeEditor() {
-        if (this.props.displayComponents.display_main_option !== '') {
-            this.props.dispatch(setDisplayEditor("shape"))
-        }
-    }
-
     openBackgroundEditor() {
         if (this.props.displayComponents.display_main_option !== '') {
             this.props.dispatch(setDisplayEditor("background"))
         }
     }
-
     render() {
         return (
             <div className="col-12 d-flex flex-column justify-content-start white_circleborder_background">
@@ -170,7 +150,7 @@ class Widget extends Component {
                                 : <span></span>
                         }
                     </div>
-                    <div className="d-flex flex-row  widget_button " >
+                    <div className="d-flex flex-row  widget_button " onClick={this.openButtonEditor}>
                         <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={onOff} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Button </div>
                     </div>

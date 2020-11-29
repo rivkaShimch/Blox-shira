@@ -4,7 +4,7 @@ import "./ContextMenu.css";
 
 const ContextMenu = ({ position, onOptionSelected, position_div_x, position_div_y }) => {
     const handleOptionSelected = option => () => onOptionSelected(option);
-    debugger
+
     return (
         <div
             className="menu"

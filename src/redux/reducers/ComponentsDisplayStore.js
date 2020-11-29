@@ -8,6 +8,7 @@ const initialState = {
         display_image_editor: false,
         display_title_editor: false,
         display_shape_editor: false,
+        display_button_editor: false,
         new_canva: false,
         display_setting_page: false,
         display_editor: '',

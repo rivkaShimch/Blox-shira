@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Styles from './title_editor.css'
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "../Button_Editor/node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Arrow_down from "../img/arrow_down.png";
 
 import Lion from "../img/lion.png";
@@ -11,7 +11,7 @@ import Switch from "../Switch/Switch";
 import { HuePicker, SketchPicker } from 'react-color';
 
 import RangeSlider from 'react-bootstrap-range-slider';
-import 'semantic-ui-css/semantic.min.css'
+// import '../Button_Editor/node_modules/semantic-ui-css/semantic.min.css'
 import { Form } from 'semantic-ui-react'
 import { connect } from 'react-redux';
 import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
@@ -37,7 +37,6 @@ class Title_Editor extends Component {
     constructor(prop) {
         super(prop);
 
-
         this.state = {
             checked: false,
             background: '#fff',
@@ -46,10 +45,9 @@ class Title_Editor extends Component {
             valueColor: "red",
             finalValueRange: '',
             finalValueColor: '',
-            sizeTitleValue: '',
             WidthTitleValue: '',
             HeightTitleValue: '',
-            finalSizeTitleValue: '',
+            shapeProps: '',
             finalWidthTitleValue: '',
             finalHeightTitleValue: '',
 
@@ -81,7 +79,6 @@ class Title_Editor extends Component {
     handleChangeComplete = (color) => {
         this.setState({ background: color.hex });
     };
-
     onChangeTitleColor(e) {
         this.props.dispatch(setTitleColor((e.target.value), this.props.canvasDetails.titles_i))
     }
@@ -91,11 +88,11 @@ class Title_Editor extends Component {
     onChangeTitleSizeSlider = (e) => {
         this.props.dispatch(setTitleSize((e.target.value), this.props.canvasDetails.titles_i))
         document.getElementById("title_size_input").value = ''
-        this.setState({ finalSizeTitleValue: e.target.value })
+        this.setState({ shapeProps: e.target.value })
     }
     onChangeTitleSizeInput = (e) => {
         this.props.dispatch(setTitleSize((e.target.value), this.props.canvasDetails.titles_i))
-        this.setState({ finalSizeTitleValue: e.target.value })
+        this.setState({ shapeProps: e.target.value })
     }
     onChangeTitleWidthSlider = (e) => {
         this.props.dispatch(setTitleWidth((e.target.value), this.props.canvasDetails.titles_i))
@@ -141,11 +138,11 @@ class Title_Editor extends Component {
                         <div className="d-flex flex-row sideTitles" style={{ color: this.props.color }}>Title Size</div>
                         <div className="d-flex flex-row justify-content-between">
                             <input type="range" min="12" max="98" className="col-8 slider mt-3"
-                                value={this.state.finalSizeTitleValue}
+                                value={this.state.shapeProps}
                                 onChange={this.onChangeTitleSizeSlider}
                             />
                             <input style={{ color: this.props.color }} id="title_size_input" className="input_line col-3"
-                                onKeyUp={this.onChangeTitleSizeInput} placeholder={this.state.finalSizeTitleValue} />
+                                onKeyUp={this.onChangeTitleSizeInput} placeholder={this.state.shapeProps} />
                         </div>
                     </div>
                 </div>

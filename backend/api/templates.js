@@ -102,6 +102,8 @@ router.post('/add', upload.single('image'), (req, res) => {
     const background_color = req.body.background_color;
     const titles = req.body.titles;
     const titles_i = req.body.titles_i;
+    // const shapes = req.body.shapes;
+    // const shapes_i = req.body.shapes_i;
     const element_img = req.body.element_img;
     const element_img_i = req.body.element_img_i;
 
@@ -113,6 +115,8 @@ router.post('/add', upload.single('image'), (req, res) => {
         background_color: background_color,
         titles: titles,
         titles_i: titles_i,
+        // shapes: shapes,
+        // shapes_i: shapes_i,
         element_img: element_img,
         element_img_i: element_img_i,
     })

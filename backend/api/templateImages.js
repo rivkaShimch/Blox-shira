@@ -74,13 +74,13 @@ router.post('/add', (req, res) => {
         }))
         .then((res) => {
             console.log(res)
-            fs.copyFile('C:/Users/User/Downloads/' + name + '.png', 'C:/Users/User/Documents/GitHub/Blox-shira/backend/api/uploads/' + name + '.png',
+            fs.copyFile('C:/Users/אתרא/Downloads/' + name + '.png', 'C:/Users/אתרא/Desktop/Atara-develop/backend/api/uploads/' + name + '.png',
                 (err) => { if (err) throw err; });
 
         })
         .then((res) => {
             // delete a file
-            fs.unlink('C:/Users/User/Downloads/' + name + '.png', (err) => {
+            fs.unlink('C:/Users/אתרא/Downloads/' + name + '.png', (err) => {
                 if (err) {
                     throw err;
                 }

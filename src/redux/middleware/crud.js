@@ -4,7 +4,7 @@ import $ from 'jquery'
 export const getImageFromServer = ({ dispatch, getState }) => next => action => {
 
     if (action.type === 'ADD_ELEMENTS_CANVAS') {
-        debugger
+
         $.ajax({
             // "url": 'https://lobby.leader.codes/api/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
             "url": 'http://localhost:9000/templates/uploadImage/' + 'uLKS7DPkWsdywmn1LaRv1gI3RYL2',
@@ -23,7 +23,7 @@ export const getImageFromServer = ({ dispatch, getState }) => next => action => 
 
                 console.log("success")
                 console.log(data1)
-                debugger
+
                 //חוזר הurl של התמונה.     console.log(data1);
                 // dispatch({ type: 'TEMP_ELEMENT_IMG', payload: data1 })
             },

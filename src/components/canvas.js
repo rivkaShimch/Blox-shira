@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import { Stage, Layer, Image, Text, Transformer, Rect, Line } from 'react-konva';
 import useImage from 'use-image';
 // import './canvas.css'
-import Portal from './portal.js'
+import Portal from './Portal.js'
 import ContextMenu from "./ContextMenu";
 import axios from 'axios'
 import { connect } from 'react-redux';
@@ -20,7 +20,7 @@ import {
   setCounterTitles,
   updateTextPreHistory,
   updateTextFollowingHistory,
-  addPreHistory
+  addPreHistory,
 
   setButtonsICanvas,
   setShapesICanvas,
@@ -33,7 +33,7 @@ import {
   setDisplayEditor
 
 } from '../redux/actions/componentsActions'
-import { createBootstrapComponent } from 'react-bootstrap/esm/ThemeProvider';
+// import { createBootstrapComponent } from 'react-bootstrap/esm/ThemeProvider';
 
 const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onChange }) => {
   const [img_id] = useImage(image_change.id);
@@ -188,6 +188,7 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
   // const [shapes_i] = useImage(shape_change.id);
   const shapeRef = React.useRef();
   const trRefShape = React.useRef();
+  let boundBoxFunc
 
   React.useEffect(() => {
     if (isSelected) {
@@ -195,6 +196,9 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
       // we need to attach transformer manually
       trRefShape.current.nodes([shapeRef.current]);
       trRefShape.current.getLayer().batchDraw();
+
+
+
     }
   }, [isSelected]);
   return (
@@ -227,21 +231,31 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
         }}
         // onDragStart={onDragStart}
         onTransformEnd={(e) => {
-
+          debugger
           const node = shapeRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
-
+          debugger
           // we will reset it back
           node.scaleX(1);
           node.scaleY(1);
+          let arr_p = node.points()
+          // arr_p.map((i) => {
+          arr_p[2] *= scaleX
+          arr_p[4] *= scaleX
+          arr_p[5] *= scaleX
+          arr_p[7] *= scaleX
+          let newBox = boundBoxFunc
+          // })
           onChange({
             ...shapeProps,
+            ...newBox,
             x: node.x(),
             y: node.y(),
             // set minimal value
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(node.height() * scaleY),
+            // points: arr_p
+            // width: Math.max(5, node.width() * scaleX),
+            // height: Math.max(node.height() * scaleY),
           });
         }}
 
@@ -399,17 +413,17 @@ const Canvas = (props) => {
     );
   };
 
-  const BackgroundImage = () => {
-    const [image] = useImage(require('../background_images/galim_b.jpg'));
-    return <Image
-      width={stageRef.current.width()}
-      height={stageRef.current.height()}
-      onTouchStart={checkDeselectBackground}
-      onMouseDown={checkDeselectBackground}
-      // onTap={onSelect}
-      image={image}
-      id="background_image" />;
-  };
+  // const BackgroundImage = () => {
+  //   const [image] = useImage(require('../background_images/galim_b.jpg'));
+  //   return <Image
+  //     width={stageRef.current.width()}
+  //     height={stageRef.current.height()}
+  //     onTouchStart={checkDeselectBackground}
+  //     onMouseDown={checkDeselectBackground}
+  //     // onTap={onSelect}
+  //     image={image}
+  //     id="background_image" />;
+  // };
   const handleDragStart = (e) => {
     const id = e.target.id();
     console.log("id " + id)
@@ -506,40 +520,40 @@ const Canvas = (props) => {
 
 
 
-  const _handleClick = (event) => {
-    event.preventDefault();
+  // const _handleClick = (event) => {
+  //   event.preventDefault();
 
-    this.setState({ visible: true });
+  //   this.setState({ visible: true });
 
-    const clickX = event.clientX;
-    const clickY = event.clientY;
-    const screenW = window.innerWidth;
-    const screenH = window.innerHeight;
-    const rootW = this.root.offsetWidth;
-    const rootH = this.root.offsetHeight;
+  //   const clickX = event.clientX;
+  //   const clickY = event.clientY;
+  //   const screenW = window.innerWidth;
+  //   const screenH = window.innerHeight;
+  //   const rootW = this.root.offsetWidth;
+  //   const rootH = this.root.offsetHeight;
 
-    const right = (screenW - clickX) > rootW;
-    const left = !right;
-    const top = (screenH - clickY) > rootH;
-    const bottom = !top;
+  //   const right = (screenW - clickX) > rootW;
+  //   const left = !right;
+  //   const top = (screenH - clickY) > rootH;
+  //   const bottom = !top;
 
-    if (right) {
-      console.log("blblblblllllblblblblblblblbl")
-      this.root.style.left = `${clickX + 5}px`;
-    }
-
-  //   if (left) {
-  //     this.root.style.left = `${clickX - rootW - 5}px`;
+  //   if (right) {
+  //     console.log("blblblblllllblblblblblblblbl")
+  //     this.root.style.left = `${clickX + 5}px`;
   //   }
 
-  //   if (top) {
-  //     this.root.style.top = `${clickY + 5}px`;
-  //   }
+  //   //   if (left) {
+  //   //     this.root.style.left = `${clickX - rootW - 5}px`;
+  //   //   }
 
-  //   if (bottom) {
-  //     this.root.style.top = `${clickY - rootH - 5}px`;
-  //   }
-  // }
+  //   //   if (top) {
+  //   //     this.root.style.top = `${clickY + 5}px`;
+  //   //   }
+
+  //   //   if (bottom) {
+  //   //     this.root.style.top = `${clickY - rootH - 5}px`;
+  //   //   }
+  //   // }
 
 
   const checkDeselect = (e) => {
@@ -703,7 +717,6 @@ const Canvas = (props) => {
                 }
               })}
               {props.canvasDetails.shapes.map((shape, i) => {
-                debugger
                 if (props.canvasDetails.shapes[i].display === true) {
                   return (
                     <ShapeObj
@@ -717,6 +730,7 @@ const Canvas = (props) => {
                         props.dispatch(setDisplayEditor('shape'))
                       }}
                       onChange={(newAttrs) => {
+                        debugger
                         props.dispatch(setUpdateShapesCanvas(newAttrs, i))
                       }}
                       shape_change={shape}

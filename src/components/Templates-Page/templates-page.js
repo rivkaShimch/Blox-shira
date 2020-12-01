@@ -21,7 +21,8 @@ import {
     setBackgroundColor,
     setElementsCanvasServer,
     setElementsICanvas,
-    setBackgroundImgName
+    setBackgroundImgName,
+    setShapesCanvasServer
 } from '../../redux/actions/canvasActions'
 import {
     setDisplayMainOption
@@ -64,14 +65,14 @@ class TemplateCards extends Component {
                 this.props.dispatch(setElementPositionY(template_data.element_position_y))
                 this.props.dispatch(setElementWidth(template_data.element_width))
                 this.props.dispatch(setElementHeight(template_data.element_height))
-
+                this.props.dispatch(setShapesCanvasServer(template_data.shapes))
                 this.props.dispatch(setDisplayMainOption('canva'))
             });
     }
     render() {
         // let temp_name = ''
         return (
-            <div className="d-flex flex-column justify-content-start white_circleborder_background mb-4  " style={{ marginTop: "6rem", width: "75vw", height: "87vh" }}>
+            <div className="d-flex flex-column justify-content-start white_circleborder_background mb-4  " style={{ marginTop: "4rem", marginRight: "4rem", width: "73vw", height: "95vh" }}>
                 <div className="d-flex flex-row justify-content-center" style={{ backgroundColor: "#F5F5FA66", marginTop: "4vh", width: "100%", padding: "1%" }}>
 
 
@@ -82,9 +83,9 @@ class TemplateCards extends Component {
 
 
                 </div>
-                <div className="d-flex flex-row justify-content-between  container-fluid" style={{ marginTop: "4vh", width: "100%", padding: "1%" }}>
+                <div className="d-flex flex-row justify-content-between  containe5-fluid" style={{ marginTop: "4vh", width: "100%", padding: "1%" }}>
                     <div className="d-flex flex-row justify-content-start">
-                        <label type="label" className="bb" >Face Book cover</label>
+                        <label type="label" className="bb" >Facebook cover</label>
                         <label type="label" className="bb" >Instegram 20</label>
                         <label type="label" className="bb" >Blog Cover 32</label>
                     </div>
@@ -104,7 +105,7 @@ class TemplateCards extends Component {
                         {/* <input className="form-control" type="text" placeholder="Search" aria-label="Search" style={{ width: "20vw" }} /> */}
                     </div>
                 </div>
-                <div className="d-flex flex-row wrapOverflow ml-4">
+                <div className="d-flex flex-row wrapOverflow ml-4" style={{ minHeight: "400px" }}>
                     <Card.Group itemsPerRow={4} >
                         <Card className="card_style" raised
                             onClick={this.onClickNewProject}
@@ -122,7 +123,7 @@ class TemplateCards extends Component {
                             this.props.canvasDetails.imageTemplates.map((name_of_template) => (
                                 <Card className="card_style" raised
                                     onClick={() => this.onClickTemplateCard(name_of_template)}>
-                                    <Image src={require('C:/Users/אתרא/Desktop/Atara-develop/backend/api/uploads/' + name_of_template + '.png')} wrapped ui={false} />
+                                    <Image src={require('C:/Users/User/Documents/GitHub/Blox-shira/backend/api/uploads/' + name_of_template + '.png')} wrapped ui={false} />
                                     <Card.Content extra>
                                         <Card.Header className="d-flex justify-content-center">
                                             {name_of_template}

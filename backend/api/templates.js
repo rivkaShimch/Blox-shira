@@ -17,6 +17,7 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 router.get('/', (req, res) => {
+    console.log("in get template");
     Template.find()
         .then(templates => res.json(templates))
         .catch(err => console.log(err))
@@ -105,9 +106,7 @@ router.post('/add', upload.single('image'), (req, res) => {
     const canvas_height = req.body.canvas_height;
     const background_color = req.body.background_color;
     const titles = req.body.titles;
-    const titles_i = req.body.titles_i;
-    // const shapes = req.body.shapes;
-    // const shapes_i = req.body.shapes_i;
+    const shapes = req.body.shapes;
     const element_img = req.body.element_img;
     const element_img_i = req.body.element_img_i;
 
@@ -118,9 +117,7 @@ router.post('/add', upload.single('image'), (req, res) => {
         canvas_height: canvas_height,
         background_color: background_color,
         titles: titles,
-        titles_i: titles_i,
-        // shapes: shapes,
-        // shapes_i: shapes_i,
+        shapes: shapes,
         element_img: element_img,
         element_img_i: element_img_i,
     })
@@ -140,13 +137,13 @@ router.post('/add', upload.single('image'), (req, res) => {
             console.log(res)
 
             // delete a file
-            fs.unlink('C:/Users/User/Downloads/' + template_name + '.png', (err) => {
-                if (err) {
-                    throw err;
-                }
+            // fs.unlink('C:/Users/User/Downloads/' + template_name + '.png', (err) => {
+            //     if (err) {
+            //         throw err;
+            //     }
 
-                console.log("File is deleted.");
-            });
+            //     console.log("File is deleted.");
+            // });
         })
         .catch(err => res.status(400).json({
             "error": err,

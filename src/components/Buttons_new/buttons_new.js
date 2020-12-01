@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import {
     setTitlesCanvasServer,
     setButtonsCanvasServer,
+    setShapesCanvasServer,
 
     setElementsCanvasServer,
     setBackgroundColor,
@@ -53,6 +54,7 @@ class Buttons_new extends Component {
 
         this.props.dispatch(setTitlesCanvasServer([]))
         this.props.dispatch(setButtonsCanvasServer([]))
+        this.props.dispatch(setShapesCanvasServer([]))
         this.props.dispatch(setElementsCanvasServer([]))
         this.props.dispatch(setBackgroundColor('white'))
         this.props.dispatch(setDisplayMainOption('canva'))

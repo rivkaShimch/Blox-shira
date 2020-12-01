@@ -658,19 +658,24 @@ class Wrap extends React.Component {
 
     };
     onClickSetting = () => {
+        debugger
         if (!this.state.bringDataFromDB) {
             this.setState({
                 bringDataFromDB: true
             })
             axios.get('http://localhost:9000/templates/')
                 .then(res => {
-                    // console.log("data  " + res.data[0].template_name)
+                    console.log("data  " + res.data[0].template_name)
                     let data = res.data
+                    debugger
 
                     data.map((template) => (
                         this.props.dispatch(addTemplateImage(template.template_name))
                     ))
                     console.log("my array " + this.props.canvasDetails.imageTemplates)
+                })
+                .catch(err => {
+                    console.log("in catch");
                 })
         }
         this.props.dispatch(setDisplayMainOption('cards'))
@@ -695,12 +700,12 @@ class Wrap extends React.Component {
             template_name: this.props.canvasDetails.name,
             background_color: this.props.canvasDetails.background_color,
             titles: this.props.canvasDetails.titles,
-            titles_i: this.props.canvasDetails.titles_i,
             element_img: this.props.canvasDetails.element_img,
             element_position_x: this.props.canvasDetails.element_position_x,
             element_position_y: this.props.canvasDetails.element_position_y,
             element_width: this.props.canvasDetails.element_width,
-            element_height: this.props.canvasDetails.element_height
+            element_height: this.props.canvasDetails.element_height,
+            shapes: this.props.canvasDetails.shapes,
         };
         console.log(newTemplate);
         // save on mongodb

@@ -130,6 +130,13 @@ export function setButtonsCanvasServer(button) {
         payload: button
     };
 }
+export function setShapesCanvasServer(shape) {
+
+    return {
+        type: 'SET_SHAPES_CANVAS',
+        payload: shape
+    };
+}
 export function setButtonsCanvas(button) {
 
     return {

@@ -30,31 +30,18 @@ const templateSchema = new Schema({
         align: { type: String },
         fill: { type: String },
         fontSize: { type: Number },
-    }]
-    ,
-    titles_i: {
-        type: Number
-    },
-
-
-    // shapes: [{
-    //     id: { type: Number },
-    //     x: { type: Number },
-    //     y: { type: Number },
-    //     fill: { type: String },
-    //     points: { type: Number },
-    //     tension: { type: Number },
-    //     shadowBlur: { type: Number },
-    //     stroke: { type: String },
-    //     strokeWidth: { type: Number },
-
-
-    // }]
-    // ,
-    // shapes_i: {
-    //     type: Number
-    // },
-
+    }],
+    shapes: [{
+        id: { type: Number },
+        x: { type: Number },
+        y: { type: Number },
+        fill: { type: String },
+        points: [{ type: Number }],
+        tension: { type: Number },
+        shadowBlur: { type: Number },
+        stroke: { type: String },
+        display: { type: Boolean }
+    }],
     element_img: [{
         id: { type: Number },
         x: { type: Number },

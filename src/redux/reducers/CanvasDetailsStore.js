@@ -254,6 +254,9 @@ export default produce((state, action) => {
     case 'SHAPES_POINTS':
       state.canvasDetails.shape_points = action.payload;
       break;
+    case 'SET_SHAPES_CANVAS':
+      state.canvasDetails.shapes = action.payload;
+      break;
     case 'BUTTONS_CANVAS':
       state.canvasDetails.buttons = state.canvasDetails.buttons.slice();
       state.canvasDetails.buttons.push(action.payload);
@@ -340,7 +343,7 @@ export default produce((state, action) => {
       state.canvasDetails.shapes = (titles);
       console.log("new array" + state.canvasDetails.shapes)
       break;
-    case 'UPDATE_TITLES_CANVAS':
+    case 'UPDATE_SHAPES_CANVAS':
       const shapes_ = state.canvasDetails.shapes.slice();
       shapes_[action.counter] = action.payload;
       console.log("newattrs " + action.payload)

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Styles from './title_editor.css'
 // import "../Button_Editor/node_modules/bootstrap/dist/css/bootstrap.min.css";
 import Arrow_down from "../img/arrow_down.png";
-
+import BrandingGuide from '../BrandingGuide/BrandingGuide';
 import Lion from "../img/lion.png";
 // import ToggleSwitch from 'toggle-switch-rn'
 
@@ -25,7 +25,8 @@ import {
     setTitleWidth,
     setTitleHeight,
     setTitlesTextCanvas,
-    setTitleAlign
+    setTitleAlign,
+    setTitleBrandColor
 
 } from '../../redux/actions/canvasActions'
 
@@ -44,7 +45,7 @@ class Title_Editor extends Component {
             valueRange: "14",
             valueColor: "red",
             finalValueRange: '',
-            finalValueColor: '',
+
             WidthTitleValue: '',
             HeightTitleValue: '',
             shapeProps: '',
@@ -55,8 +56,14 @@ class Title_Editor extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.onChangeTitleColor = this.onChangeTitleColor.bind(this)
+        this.addToBrandColorArr = this.addToBrandColorArr.bind(this)
         this.onChangeTitleInput = this.onChangeTitleInput.bind(this)
     }
+    // componentDidUpdate(prevProps, prevState) {
+    //     if (this.props.canvasDetails.titles[titles_i].fill !== prevProps.canvasDetails.titles[titles_i].fill) {
+
+    //     }
+    // }
 
     changeImage1 = () => {
         this.setState({ bold_img_align: 'left' });
@@ -81,6 +88,10 @@ class Title_Editor extends Component {
     };
     onChangeTitleColor(e) {
         this.props.dispatch(setTitleColor((e.target.value), this.props.canvasDetails.titles_i))
+    }
+    addToBrandColorArr(e) {
+        console.log("enter to")
+        this.props.dispatch(setTitleBrandColor((e.target.value), this.props.canvasDetails.titles_i))
     }
     onChangeTitleInput(e) {
         this.props.dispatch(setTitlesTextCanvas((e.target.value), this.props.canvasDetails.titles_i))
@@ -159,10 +170,10 @@ class Title_Editor extends Component {
                 <div className="d-flex flex-row justify-content-between mt-4 mb-1">
                     <div className="d-flex flex-column sideTitles" style={{ color: this.props.color }}>Title Fill</div>
                     <input style={{ backgroundColor: "transparent", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
-                        onChange={this.onChangeTitleColor} value={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i] == undefined ? '' : this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].fill} />
+                        onPointerLeave={this.addToBrandColorArr} onChange={this.onChangeTitleColor} value={this.props.canvasDetails.titles[this.props.canvasDetails.titles_i] == undefined ? '' : this.props.canvasDetails.titles[this.props.canvasDetails.titles_i].fill} />
                 </div>
 
-
+                {/* 
                 <div className="d-flex flex-row justify-content-between">
                     <div className="d-flex flex-column justify-content-between sideTitles">
                         <div className="d-flex flex-row sideTitles" style={{ color: this.props.color }}>Title Width</div>
@@ -187,7 +198,8 @@ class Title_Editor extends Component {
                                 onKeyUp={this.onChangeTitleHeightInput} placeholder={this.finalHeightTitleValue} />
                         </div>
                     </div>
-                </div>
+                </div> */}
+                <BrandingGuide />
             </div>
 
 

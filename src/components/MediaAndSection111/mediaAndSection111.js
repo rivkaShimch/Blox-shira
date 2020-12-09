@@ -24,9 +24,24 @@ import section2 from '../img/section2.PNG';
 import section3 from '../img/section3.PNG';
 import Scrollspy from 'react-scrollspy';
 
+import {
+    setTitlesCanvasServer,
+    setButtonsCanvasServer,
+    setShapesCanvasServer,
+
+    setElementsCanvasServer,
+    setBackgroundColor,
+    setUpdateTitlesCanvas,
+    getFirstItem
+} from '../../redux/actions/canvasActions'
+
+import {
+    setDisplayMainOption
+} from '../../redux/actions/componentsActions'
 
 
-export default class MediaAndSection111 extends Component {
+import { connect } from 'react-redux';
+class MediaAndSection111 extends Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
@@ -37,7 +52,7 @@ export default class MediaAndSection111 extends Component {
         };
         this.mediaFunc = this.mediaFunc.bind(this)
         this.sectionFunc = this.sectionFunc.bind(this)
-
+        this.chooseCategory = this.chooseCategory.bind(this)
     }
     mediaFunc() {
         this.setState({ display_media: true, color_media: "#A66DFF" })
@@ -47,6 +62,16 @@ export default class MediaAndSection111 extends Component {
     sectionFunc() {
         this.setState({ display_media: false, color_media: "gray" })
         this.setState({ color_section: "#A66DFF" })
+
+    }
+    chooseCategory(type_, category_, width_, height_) {
+        console.log("details of facebook" + type_ + " " + category_ + " " + width_ + " " + height_)
+        this.props.dispatch(setTitlesCanvasServer([]))
+        this.props.dispatch(setButtonsCanvasServer([]))
+        this.props.dispatch(setShapesCanvasServer([]))
+        this.props.dispatch(setElementsCanvasServer([]))
+        this.props.dispatch(setBackgroundColor('white'))
+        this.props.dispatch(setDisplayMainOption('canva'))
 
     }
     render() {
@@ -72,31 +97,31 @@ export default class MediaAndSection111 extends Component {
                         <div id="media" className="d-flex flex-column scrollbar" >
 
                             <div className="d-flex flex-row justify-content-around" >
-                                <div>
+                                <div onClick={() => this.chooseCategory("web", "post_facebook", 500, 500)}>
                                     <img className="medAndSecImg" src={section3} alt="section3" />
-                                    <div style={{ marginLeft: "12px" }}>media</div>
+                                    <div style={{ marginLeft: "12px" }}>Logo</div>
                                 </div>
-                                <div>
+                                <div onClick={() => this.chooseCategory("web", "post_facebook", 788, 940)}>
                                     <img className="medAndSecImg" src={section3} alt="section3" />
-                                    <div style={{ marginLeft: "12px" }}>media</div>
+                                    <div style={{ marginLeft: "12px" }}>Poster</div>
                                 </div>
-                                <div>
+                                <div onClick={() => this.chooseCategory("web", "post_facebook", 500, 300)}>
                                     <img className="medAndSecImg" src={section3} alt="section3" />
-                                    <div style={{ marginLeft: "12px" }}>media</div>
+                                    <div style={{ marginLeft: "12px" }}>Card</div>
                                 </div>
                             </div>
                             <div className="d-flex flex-row justify-content-around" >
-                                <div>
+                                <div onClick={() => this.chooseCategory("web", "post_facebook", 788, 940)}>
                                     <img className="medAndSecImg" src={section3} alt="section3" />
-                                    <div style={{ marginLeft: "12px" }}>media</div>
+                                    <div style={{ marginLeft: "12px" }}>Facebook Post</div>
                                 </div>
-                                <div>
+                                <div onClick={() => this.chooseCategory("web", "post_facebook", 1080, 1080)}>
                                     <img className="medAndSecImg" src={section3} alt="section3" />
-                                    <div style={{ marginLeft: "12px" }}>media</div>
+                                    <div style={{ marginLeft: "12px" }}>Instegram Post</div>
                                 </div>
-                                <div>
+                                <div onClick={() => this.chooseCategory("web", "post_facebook", 1080, 1920)}>
                                     <img className="medAndSecImg" src={section3} alt="section3" />
-                                    <div style={{ marginLeft: "12px" }}>media</div>
+                                    <div style={{ marginLeft: "12px" }}>Instegram Story</div>
                                 </div>
                             </div>
                             <div className="d-flex flex-row justify-content-around" >
@@ -170,3 +195,11 @@ export default class MediaAndSection111 extends Component {
 }
 
 
+function mapStateToProps(state) {
+    return {
+        displayComponents: state.displayComponents.displayComponents,
+        canvasDetails: state.canvasDetails.canvasDetails
+    };
+}
+
+export default connect(mapStateToProps)(MediaAndSection111)

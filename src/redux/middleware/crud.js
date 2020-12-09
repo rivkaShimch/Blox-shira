@@ -21,7 +21,7 @@ export const getImageFromServer = ({ dispatch, getState }) => next => action => 
 
                 console.log("success")
                 console.log(data1)
-                debugger
+
                 console.log(data1);
 
                 // dispatch({ type: 'TEMP_ELEMENT_IMG', payload: data1 })

@@ -3,10 +3,11 @@ import { render } from 'react-dom';
 import { Stage, Layer, Image, Text, Transformer, Rect, Line } from 'react-konva';
 import useImage from 'use-image';
 // import './canvas.css'
-import Portal from './Portal.js'
+import Portal from './portal.js'
 import ContextMenu from "./ContextMenu";
 import axios from 'axios'
 import { connect } from 'react-redux';
+import Wrap from './Wrap/wrap';
 
 import {
   setDataUrl,
@@ -52,7 +53,7 @@ const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onCha
         offsetY={img ? img.height / 2 : 0}
         onClick={onSelect}
         onTap={onSelect}
-        onMouseEnter={onSelect}
+        //onMouseEnter={onSelect}
         ref={imageRef}
         {...shapeProps}
         draggable
@@ -133,7 +134,7 @@ const ButtonsObj = ({ button, button_change, shapeProps, isSelected, onSelect, o
         //  drawBorder={true}
         onClick={onSelect}
         onTap={onSelect}
-        onMouseEnter={onSelect}
+        //onMouseEnter={onSelect}
         ref={ButtonRef}
         {...shapeProps}
         draggable
@@ -212,30 +213,23 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
         shadowBlur={shape.shadowBlur}
         draggable
         closed
-
         stroke={shape.stroke}
         strokeWidth={shape.strokeWidth}
         fill={shape.fill}
         onClick={onSelect}
         onTap={onSelect}
-        onMouseEnter={onSelect}
+        //onMouseEnter={onSelect}
         ref={shapeRef}
         {...shapeProps}
         draggable
-        onDragEnd={(e) => {
-          onChange({
-            ...shapeProps,
-            x: e.target.x(),
-            y: e.target.y(),
-          });
-        }}
+
         // onDragStart={onDragStart}
         onTransformEnd={(e) => {
-          debugger
+
           const node = shapeRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
-          debugger
+
           // we will reset it back
           node.scaleX(1);
           node.scaleY(1);
@@ -296,7 +290,7 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu
       <Text
         onClick={onSelect}
         onTap={onSelect}
-        onMouseEnter={onSelect}
+        //onMouseEnter={onSelect}
         onContextMenu={handleContextMenu}
         ref={TextRef}
         {...shapeProps}
@@ -360,10 +354,10 @@ const Canvas = (props) => {
   const [selectedShapeId, selectShape] = React.useState(null);
   // const [title, setTitle] = React.useState(null)
   const [loadImage, setLoadImage] = React.useState(null)
-  const [fontStyleTitle, setfontStyleTitle] = React.useState(null)
-  const [fontSizeTitle, setfontSizeTitle] = React.useState(null)
-  const [textColor, setTextColor] = React.useState(null)
-  const [background_color_stage, setBackground_color_stage] = React.useState(null)
+  // const [fontStyleTitle, setfontStyleTitle] = React.useState(null)
+  // const [fontSizeTitle, setfontSizeTitle] = React.useState(null)
+  // const [textColor, setTextColor] = React.useState(null)
+  // const [background_color_stage, setBackground_color_stage] = React.useState(null)
   const [background_image, setBackground_image] = React.useState(null)
   const [selectedTextId, selectText] = React.useState(null);
   const inputRef = React.useRef();
@@ -585,7 +579,10 @@ const Canvas = (props) => {
 
   return (
     <>
-      <div style={{ marginTop: "28vh", marginLeft: "6vw", width: "650px", height: "400px", border: '3px dashed #D6CBE3' }} >
+      {/* <div style={{ marginTop: "28vh", width: "650px", height: "400px", border: '3px dashed #D6CBE3' }} ></div> */}
+      {/* לשנות את הרוחב והאורך של הקנבה לפי מה שנשלח מהקומפוננטה media and section */}
+      <div style={{ marginTop: "28vh", width: props.canvasDetails.width_canva, height: props.canvasDetails.height_canva, border: '3px dashed #D6CBE3' }} >
+        {console.log("enter to canvas " + props.canvasDetails.width_canva)}
         <div ref={inputRef} onMouseEnter={() => {
           setPosition_div_x(inputRef.current.getBoundingClientRect().x);
           setPosition_div_y(inputRef.current.getBoundingClientRect().y);
@@ -631,8 +628,8 @@ const Canvas = (props) => {
             id="my_stage"
             ref={stageRef}
 
-            width={props.canvasDetails.canvas_width}
-            height={props.canvasDetails.canvas_height}
+            width={props.canvasDetails.width_canva}
+            height={props.canvasDetails.height_canva}
             onMouseDown={checkDeselect}
             onTouchStart={checkDeselect}
           >
@@ -642,9 +639,9 @@ const Canvas = (props) => {
 
                 onMouseDown={checkDeselectBackground}
                 onTouchStart={checkDeselectBackground}
-                // onMouseEnter={checkDeselectBackground}
-                width={props.canvasDetails.canvas_width}
-                height={props.canvasDetails.canvas_height}
+                // //onMouseEnter={checkDeselectBackground}
+                width={props.canvasDetails.width_canva}
+                height={props.canvasDetails.height_canva}
                 fill={props.canvasDetails.background_color === '' ? 'white' : props.canvasDetails.background_color}
               />
               {props.canvasDetails.titles.map((text, i) => {
@@ -658,12 +655,16 @@ const Canvas = (props) => {
 
                       onSelect={() => {
                         selectText(text.id);
+                        selectImage(null);
+                        setSelectedContextMenu(null);
+                        selectButton(null);
+                        selectShape(null);
                         props.dispatch(setTitlesICanvas(text.id - (props.canvasDetails.removed_titles).length))
                         props.dispatch(setTitlesTextCanvas(text.text, text.id - (props.canvasDetails.removed_titles).length))
                         props.dispatch(setDisplayEditor('title'))
                       }}
                       onChange={(newAttrs) => {
-                        debugger
+
                         props.dispatch(addPreHistory({ text: text.id }))
                         props.dispatch(setUpdateTitlesCanvas(newAttrs, text.id))
                         props.dispatch(updateTextPreHistory(text.id, text))
@@ -682,6 +683,10 @@ const Canvas = (props) => {
                     shapeProps={image}
                     isSelected={image.id === selectedId}
                     onSelect={() => {
+                      selectText(null);
+                      setSelectedContextMenu(null);
+                      selectButton(null);
+                      selectShape(null);
                       selectImage(image.id);
                       props.dispatch(setElementsICanvas(image.id))
                       props.dispatch(setDisplayEditor('image'))
@@ -726,11 +731,15 @@ const Canvas = (props) => {
                       onSelect={() => {
 
                         selectShape(shape.id);
+                        selectText(null);
+                        selectImage(null);
+                        setSelectedContextMenu(null);
+                        selectButton(null);
                         props.dispatch(setShapesICanvas(shape.id))
                         props.dispatch(setDisplayEditor('shape'))
                       }}
                       onChange={(newAttrs) => {
-                        debugger
+
                         props.dispatch(setUpdateShapesCanvas(newAttrs, i))
                       }}
                       shape_change={shape}

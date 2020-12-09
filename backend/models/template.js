@@ -65,6 +65,12 @@ const templateSchema = new Schema({
     element_height: {
         type: Number
     },
+    brandColors: [{
+        id: { type: Number },
+        color: { type: String },
+        type: { type: String },
+    }],
+
 
 })
 module.exports = mongoose.model("Template", templateSchema, "templates")

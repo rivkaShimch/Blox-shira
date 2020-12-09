@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Card, Icon, Image } from 'semantic-ui-react'
 import AddIcon from '@material-ui/icons/Add';
 import axios from 'axios';
-import Edit_choice from '../Edit_choice/edit_choice';
-import templates_page from './templates-page.css';
+// import Edit_choice from '../Edit_choice/edit_choice';
+import templates_page from './templates-page.css'
 // import "../Button_Editor/node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { connect } from 'react-redux';
 import searchIcon from '../img/searchSolid.svg';
@@ -22,12 +22,14 @@ import {
     setElementsCanvasServer,
     setElementsICanvas,
     setBackgroundImgName,
-    setShapesCanvasServer
+    setShapesCanvasServer,
+    setBrandColorsCanvas,
+
 } from '../../redux/actions/canvasActions'
 import {
     setDisplayMainOption
 } from '../../redux/actions/componentsActions'
-import { CalendarDay } from 'react-bootstrap-icons';
+// import { CalendarDay } from 'react-bootstrap-icons';
 
 class TemplateCards extends Component {
     constructor(props) {
@@ -47,7 +49,7 @@ class TemplateCards extends Component {
     }
 
     onClickTemplateCard = (name) => {
-        console.log("in onClickTemplateCard " + name)
+        // console.log("in onClickTemplateCard " + name)
         axios.get('http://localhost:9000/templates/find', { params: { template_name: name } })
             .then(res => {
                 console.log(res.data)
@@ -66,6 +68,8 @@ class TemplateCards extends Component {
                 this.props.dispatch(setElementWidth(template_data.element_width))
                 this.props.dispatch(setElementHeight(template_data.element_height))
                 this.props.dispatch(setShapesCanvasServer(template_data.shapes))
+                this.props.dispatch(setBrandColorsCanvas(template_data.brandColors))
+
                 this.props.dispatch(setDisplayMainOption('canva'))
             });
     }
@@ -123,7 +127,7 @@ class TemplateCards extends Component {
                             this.props.canvasDetails.imageTemplates.map((name_of_template) => (
                                 <Card className="card_style" raised
                                     onClick={() => this.onClickTemplateCard(name_of_template)}>
-                                    <Image src={require('C:/Users/User/Documents/GitHub/Blox-shira/backend/api/uploads/' + name_of_template + '.png')} wrapped ui={false} />
+                                    <Image src={require('C:/Users/אתרא/Desktop/Atara-develop/backend/api/uploads/' + name_of_template + '.png')} wrapped ui={false} />
                                     <Card.Content extra>
                                         <Card.Header className="d-flex justify-content-center">
                                             {name_of_template}

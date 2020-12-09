@@ -45,7 +45,7 @@ class Buttons_new extends Component {
                 return
             }
             // if ("text" in tempItem) {
-            console.log("hhhh " + tempItem)
+            // console.log("hhhh " + tempItem)
             this.props.dispatch(setUpdateTitlesCanvas(tempItem, tempItem.id))
         }
     }
@@ -62,8 +62,8 @@ class Buttons_new extends Component {
     }
     onClickPreButton = () => {
 
-        console.log("in onClickPreButton");
-        debugger
+        // console.log("in onClickPreButton");
+
         this.props.dispatch(getFirstItem())
 
         // let newattars = this.props.canvasDetails.titles[tempItem.text].preText[0]

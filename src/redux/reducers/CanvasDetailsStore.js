@@ -5,8 +5,9 @@ import produce from 'immer'
 
 const initialState = {
   canvasDetails: {
-
-    scali: "",
+    sliderInput: 1,
+    ratio_psbl: "false",
+    ratio: 100,
     name: "",
     titles: [],
     titles_i: 0,
@@ -30,9 +31,11 @@ const initialState = {
     shapes_i: 0,
     counter_shapes: 0,
 
+    initial_canvas_width: 2000,
+    initial_canvas_height: 2000,
     canvas_width: 630,
     canvas_height: 394,
-    background_color: '',
+    background_color: 'white',
     temp_element_img: '',
     temp_fd: '',
     // background_img_path: '',
@@ -41,7 +44,7 @@ const initialState = {
     title_size: '24',
     title_width: '100',
     title_height: '50',
-    title_color: '',
+    title_color: 'black',
     title_type: '',
     title_position_x: 200,
     title_position_y: 50,
@@ -57,8 +60,8 @@ const initialState = {
     button_position_y: 20,
     button_width: 100,
     button_height: 50,
-    button_fill: '',
-    button_stroke: '',
+    button_fill: 'white',
+    button_stroke: 'gray',
     button_strokeWidth: 1,
     button_cornerRadius: 0,
     button_shadowBlur: 0,
@@ -66,8 +69,8 @@ const initialState = {
 
     shape_position_x: 20,
     shape_position_y: 20,
-    shape_fill: '',
-    shape_stroke: '',
+    shape_fill: 'white',
+    shape_stroke: 'gray',
     shape_strokeWidth: 1,
     shape_cornerRadius: 0,
     shape_shadowBlur: 0,
@@ -83,14 +86,44 @@ const initialState = {
 
 export default produce((state, action) => {
   switch (action.type) {
-    case 'WIDTH_CANVAS':
-      state.canvasDetails.scali = (1 + (action.payload / 1000))
-      state.canvasDetails.width_canva = 300 * (1 + (action.payload / 1000));
-      state.canvasDetails.titles.map(item => item.fontSize = x * state.canvasDetails.scali);
-      break;
-    case 'HEIGHT_CANVAS':
 
-      state.canvasDetails.height_canva = 200 * (1 + (action.payload / 1000));
+    case 'SET_INPUT_SLIDER_IN_SCALE':
+      state.canvasDetails.sliderInput = action.payload;
+      break;
+
+    case 'WIDTH&HEIGHT_CANVAS':
+      state.canvasDetails.initial_canvas_width = action.payload1;
+      state.canvasDetails.initial_canvas_height = action.payload2;
+      console.log("DONE1")
+      let x1 = action.payload1;
+      let y1 = action.payload2;
+
+      if ((x1 <= 600) && (y1 <= 600)) {
+        console.log("greeeeeaaaaaatttttttttttttttttttttttt")
+        state.canvasDetails.width_canva = x1;
+        state.canvasDetails.height_canva = y1;
+        console.log(state.canvasDetails.width_canva + " if  " + state.canvasDetails.height_canva)
+
+      }
+      else if (x1 > y1) {
+        state.canvasDetails.ratio = action.payload1 / 500;
+        console.log("ratio" + state.canvasDetails.ratio)
+        state.canvasDetails.width_canva = action.payload1 / state.canvasDetails.ratio;
+        console.log("  state.canvasDetails.width_canva" + state.canvasDetails.width_canva)
+        state.canvasDetails.height_canva = action.payload2 / state.canvasDetails.ratio;
+        console.log(" state.canvasDetails.height_canva" + state.canvasDetails.height_canva)
+        console.log(state.canvasDetails.width_canva + " else " + state.canvasDetails.height_canva)
+      }
+      else {
+        state.canvasDetails.ratio = action.payload2 / 500;
+        console.log("ratio" + state.canvasDetails.ratio)
+        state.canvasDetails.width_canva = action.payload1 / state.canvasDetails.ratio;
+        console.log("  state.canvasDetails.width_canva" + state.canvasDetails.width_canva)
+        state.canvasDetails.height_canva = action.payload2 / state.canvasDetails.ratio;
+        console.log(" state.canvasDetails.height_canva" + state.canvasDetails.height_canva)
+        console.log(state.canvasDetails.width_canva + " else " + state.canvasDetails.height_canva)
+
+      }
       break;
 
 
@@ -176,6 +209,8 @@ export default produce((state, action) => {
       state.canvasDetails.background_img_name = action.payload;
       break;
     case 'BACKGROUND_CANVAS':
+
+      ///לא גמור!!
       // const tmp_color = state.canvasDetails.background_color;
       // const found = state.canvasDetails.brandColors.some(el => el.color === tmp_color);
       // if (!found) {
@@ -190,20 +225,12 @@ export default produce((state, action) => {
       state.canvasDetails.background_color = action.payload;
 
 
-
       // state.canvasDetails.brandColors.map(item => {
       //   if ((item.id == -1)) {
       //     item.color = action.payload;
       //     item.type = 'title';
       //   }
       // })
-
-
-
-
-
-
-
 
 
       // state.canvasDetails.background_color = action.payload;

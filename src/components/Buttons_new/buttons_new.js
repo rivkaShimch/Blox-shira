@@ -38,7 +38,7 @@ class Buttons_new extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.canvasDetails.firstItem !== this.props.canvasDetails.firstItem) {
-            debugger
+
             let tempItem = this.props.canvasDetails.firstItem
 
             if (tempItem === null) {

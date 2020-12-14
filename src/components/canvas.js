@@ -133,7 +133,7 @@ const ButtonsObj = ({ button, button_change, shapeProps, isSelected, onSelect, o
         shadowBlur={button.shadowBlur}
         //  drawBorder={true}
         onClick={onSelect}
-        onTap={onSelect}
+        // onTap={onSelect}
         //onMouseEnter={onSelect}
         ref={ButtonRef}
         {...shapeProps}
@@ -217,7 +217,7 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
         strokeWidth={shape.strokeWidth}
         fill={shape.fill}
         onClick={onSelect}
-        onTap={onSelect}
+        // onTap={onSelect}
         //onMouseEnter={onSelect}
         ref={shapeRef}
         {...shapeProps}
@@ -581,7 +581,7 @@ const Canvas = (props) => {
     <>
       {/* <div style={{ marginTop: "28vh", width: "650px", height: "400px", border: '3px dashed #D6CBE3' }} ></div> */}
       {/* לשנות את הרוחב והאורך של הקנבה לפי מה שנשלח מהקומפוננטה media and section */}
-      <div style={{ marginTop: "28vh", width: props.canvasDetails.width_canva, height: props.canvasDetails.height_canva, border: '3px dashed #D6CBE3' }} >
+      <div style={{ width: props.canvasDetails.width_canva * props.canvasDetails.sliderInput + 10, height: props.canvasDetails.height_canva * props.canvasDetails.sliderInput + 7, border: '3px dashed #D6CBE3' }} >
         {console.log("enter to canvas " + props.canvasDetails.width_canva)}
         <div ref={inputRef} onMouseEnter={() => {
           setPosition_div_x(inputRef.current.getBoundingClientRect().x);
@@ -627,9 +627,10 @@ const Canvas = (props) => {
           <Stage
             id="my_stage"
             ref={stageRef}
-
-            width={props.canvasDetails.width_canva}
-            height={props.canvasDetails.height_canva}
+            scaleX={props.canvasDetails.sliderInput}
+            scaleY={props.canvasDetails.sliderInput}
+            width={props.canvasDetails.width_canva * props.canvasDetails.sliderInput}
+            height={props.canvasDetails.height_canva * props.canvasDetails.sliderInput}
             onMouseDown={checkDeselect}
             onTouchStart={checkDeselect}
           >

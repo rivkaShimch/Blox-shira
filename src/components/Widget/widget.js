@@ -131,17 +131,17 @@ class Widget extends Component {
     }
 
     openImageEditor = (event) => {
-        debugger
+
         this.props.dispatch(setDisplayEditor("image"))
         // שימוש בFileReader לצורך הצגה מקומית של התמונה, היות ולוקח כמה שניות עד שחוזר url מהשרת.
         // const reader1 = new FileReader();
         const file = new FormData();
         file.append("file", event)
-        debugger
+
 
         // reader1.onloadend = () => {
         // }
-        debugger
+
         this.props.dispatch(uploadImageTofileServer(file))
 
     }

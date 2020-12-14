@@ -83,3 +83,12 @@ body{
       width: fit-content;
       background-color: red;
     }
+    .sl{
+      position: fixed;
+      margin-left: 25%;
+      /* left: 0; */
+      bottom: 2%;
+      width: 100%;
+      /* color: white; */
+      align-items: center;
+    }

@@ -1,21 +1,41 @@
 
-export function setCanvasWidth_(width) {
+
+
+export function setCanvasSizes_(width, height) {
 
     return {
-        type: 'WIDTH_CANVAS',
-        payload: width
+        type: 'WIDTH&HEIGHT_CANVAS',
+        payload1: width,
+        payload2: height
 
     };
 }
-
-export function setCanvasHeight_(height) {
+export function setSliderInputInScale(input) {
 
     return {
-        type: 'HEIGHT_CANVAS',
-        payload: height
+        type: 'SET_INPUT_SLIDER_IN_SCALE',
+        payload: input,
+
 
     };
 }
+// export function setCanvasWidth_(width) {
+
+//     return {
+//         type: 'HEIGHT_CANVAS',
+//         payload: width
+
+//     };
+// }
+
+// export function setCanvasHeight_(height) {
+
+//     return {
+//         type: 'HEIGHT_CANVAS',
+//         payload: height
+
+//     };
+// }
 export function setTempElementImg(img) {
 
     return {

@@ -58,7 +58,8 @@ import {
     addTemplateImage,
     setName,
     setCanvasWidth_,
-    setCanvasHeight_
+    setCanvasHeight_,
+    setSliderInputInScale
 } from '../../redux/actions/canvasActions'
 const drawerWidth = '15%';
 const useStyles = theme => ({
@@ -261,14 +262,25 @@ class Wrap extends React.Component {
         };
         this.onKeyTemplateName = this.onKeyTemplateName.bind(this)
         this.onChangeCanvaSizeSlider = this.onChangeCanvaSizeSlider.bind(this)
+        // this.zoomFunc = this.zoomFunc.bind(this)
     }
+    // zoomFunc = (e) => {
+    //     const temp = e.target.value / 100;
+    //     console.log("enter to zoomFunc " + e.target.value + " " + temp)
+
+
+    // }
     onChangeCanvaSizeSlider = (e) => {
-        console.log("enter to onChangeCanvaSizeSlider " + e.target.value)
+        const temp = e.target.value / 100;
+        console.log("enter to onChangeCanvaSizeSlider " + e.target.value + " " + temp)
+        this.props.dispatch(setSliderInputInScale(temp))
 
-        this.props.dispatch(setCanvasWidth_(e.target.value))
-        this.props.dispatch(setCanvasHeight_(e.target.value))
+        // this.props.dispatch(setCanvasWidth_(temp))
+        // this.props.dispatch(setCanvasHeight_(temp))
+
 
     }
+
 
     onKeyTemplateName = (e) => {
         this.props.dispatch(setName(e.target.value))
@@ -402,23 +414,32 @@ class Wrap extends React.Component {
 
                 {
                     this.props.displayComponents.display_main_option === 'canva' ?
-                        <div className="d-flex flex-row justify-content-start col-11" style={{ marginLeft: "-40px" }}>
+                        <div className="d-flex flex-row  justify-content-start col-11" style={{ marginLeft: "-40px" }}>
                             <div className="d-flex flex-column col-3" id="edit_choice" >
                                 <Edit_choice />
                             </div>
-                            <div className="d-flex flex-column col-8 align-items-center">
-                                <div className="d-flex flex-row" style={{ width: this.state.canva_width }}>
+                            <div className="d-flex flex-column col-6  justify-content-center  align-items-center">
+                                <div className="d-flex flex-row align-content-space-between align-items-center" style={{ width: this.props.canvasDetails.width_canva, height: this.props.canvasDetails.height_canva }}>
                                     <Canvas />
                                 </div>
-                                <div className="d-flex flex-row " style={{ width: "70%" }}>
-                                    <input type="range" min="10" max="980" className="col-12 slider mt-3"
-                                        // value={this.state.canva_width}
-                                        onChange={this.onChangeCanvaSizeSlider}
-                                    />
-                                </div>
-
                             </div>
+
+                            <div className="d-flex flex-row flex-end sl" style={{ width: "70%" }}>
+                                <input type="range" min="100" max="300" className="col-8 slider ml-6"
+                                    // {this.prop.canvasDetails.initial_canvas_width} 
+                                    onChange={this.onChangeCanvaSizeSlider}
+                                />
+                            </div>
+
+                            {/* <div className="d-flex flex-row " style={{ width: "70%" }}>
+                                    <input type="range" min="100" max="150" className="col-12 slider mt-3"
+
+                                        onChange={this.zoomFunc}
+                                    />
+                                </div> */}
+
                         </div>
+
                         : <span></span>
                 }
                 {
@@ -721,7 +742,7 @@ class Wrap extends React.Component {
 
         const titles = this.props.canvasDetails.titles.slice();
         titles.map(title => {
-            debugger
+
             const found = arrBrandColors.some(el => el === title.fill);
             if (!found)
                 arrBrandColors = arrBrandColors.concat(title.fill);
@@ -733,7 +754,7 @@ class Wrap extends React.Component {
             arrBrandColors = arrBrandColors.concat(backgroundColor);
         const shapes = this.props.canvasDetails.shapes.slice();
         shapes.map(shape => {
-            debugger
+
             const found = arrBrandColors.some(el => el === shape.fill);
             if (!found)
                 arrBrandColors = arrBrandColors.concat(shape.fill);

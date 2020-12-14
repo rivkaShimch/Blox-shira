@@ -30,7 +30,7 @@ import Popover from '@material-ui/core/Popover';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, withRouter, Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import './wrap.css';
 import profil from './assets/profil.png';
 
@@ -49,8 +49,10 @@ import TemplateCards from '../Templates-Page/templates-page';
 import Background_Editor from '../Background_Editor/background_editor';
 // import '../Button_Editor/node_modules/semantic-ui-css/semantic.min.css'
 import { connect } from 'react-redux';
+import { logOut } from '../../services/firebase'
 
 import {
+    setDisplayEditor,
     setDisplayMainOption,
 
 } from '../../redux/actions/componentsActions'
@@ -61,7 +63,10 @@ import {
     setCanvasHeight_,
     setSliderInputInScale
 } from '../../redux/actions/canvasActions'
+import { Divider } from 'semantic-ui-react';
 const drawerWidth = '15%';
+const downloadsFolder = require('downloads-folder');
+
 const useStyles = theme => ({
     root: {
         display: 'flex',
@@ -308,6 +313,9 @@ class Wrap extends React.Component {
                         <Tabs indicatorColor="white" value={this.state.valueTab} onChange={this.handleChange} style={{ width: '86%' }} centered={true}>
                             <div label={<div> WorkSpace {this.state.openCollapse ? <ExpandLess edge="end" /> : <ExpandMore edge="end" />}</div>} style={{ justifyContent: 'space-between', backgroundColor: "#EDEEF0", border: "none" }} />
                         </Tabs>
+                        <div
+                            onClick={logOut}
+                        >Logout</div>
                         <img src={profil} alt={"profil"} width="45px" />
 
                         <img src={this.state.thumbtackImg} alt={"thumbtack"} onClick={this.toggleThumbtack} />
@@ -392,19 +400,28 @@ class Wrap extends React.Component {
 
                     </List>
                 </Drawer>
+
+
+
+                {/* try to change to switch
+                 <Router>
+                    <Switch>
+                        <Route path="/:username/templates" component={TemplateCards} />
+
+                    </Switch>
+                </Router> */}
                 {
+
                     this.props.displayComponents.display_main_option === '' ?
-                        <div className="d-flex flex-row justify-content-start col-7" style={{ marginLeft: "-40px" }}>
+                        <div className="d-flex flex-row justify-content-start col-7" style={{ marginLeft: "-40px", minHeight: "600px" }}>
 
                             <div class="d-flex flex-column col-5" id="edit_choice" >
                                 <Edit_choice />
                             </div>
                             <div id="demo_canva" className="d-flex flex-column">
-                                {/* <div class="col-5"> */}
                                 <img class="style_dmoCanva mr-5 d-flex flex-column" src={require('./assets/tellYourStory.jpg')} style={{ marginTop: "28vh", marginLeft: "7vw", width: "650px", height: "400px", border: "3px dashed #D6CBE3" }}
 
                                 />
-                                {/* </div> */}
 
                             </div>
 
@@ -444,7 +461,7 @@ class Wrap extends React.Component {
                 }
                 {
                     this.props.displayComponents.display_main_option === 'cards' ?
-                        <div className="d-flex flex-row justify-content-between " style={{ padding: "20px" }} >
+                        <div className="d-flex flex-row justify-content-between " style={{ padding: "10px" }} >
                             <TemplateCards />
                         </div>
                         : <span></span>
@@ -706,7 +723,7 @@ class Wrap extends React.Component {
             this.setState({
                 bringDataFromDB: true
             })
-            axios.get('http://localhost:9000/templates/')
+            axios.post('https://blox.leader.codes/api/getTemplates/')
                 .then(res => {
                     // console.log("data  " + res.data[0].template_name)
                     let data = res.data
@@ -722,7 +739,9 @@ class Wrap extends React.Component {
                 })
         }
         this.props.dispatch(setDisplayMainOption('cards'))
-        // console.log("in onClickSetting " + this.props.displayComponents.display_main_option)
+        this.props.dispatch(setDisplayEditor(''))
+        console.log("in onClickSetting " + this.props.displayComponents.display_main_option)
+        this.props.history.push('/' + this.props.user.username + "/templates")
     };
 
     downloadURI = (uri, name) => {
@@ -785,7 +804,7 @@ class Wrap extends React.Component {
 
         // console.log(newTemplate);
         // save on mongodb
-        axios.post('http://localhost:9000/templates/add', newTemplate)
+        axios.post('https://blox.leader.codes/api/add-template/', newTemplate)
             .then(res => console.log(res.data));
         //download the img to "download"
         this.downloadURI(dataURL.toDataURL(), newTemplate.template_name);
@@ -806,7 +825,8 @@ function mapStateToProps(state) {
     // console.log("state   " + state.displayComponents.displayComponents)
     return {
         displayComponents: state.displayComponents.displayComponents,
-        canvasDetails: state.canvasDetails.canvasDetails
+        canvasDetails: state.canvasDetails.canvasDetails,
+        user: state.user.user
     };
 }
-export default connect(mapStateToProps)((withStyles(useStyles))(Wrap))
+export default connect(mapStateToProps)((withStyles(useStyles))((withRouter(Wrap))))

@@ -72,6 +72,18 @@ class Widget extends Component {
     componentDidUpdate(prevProps, prevState) {
         //add image after the image upload from the server
         if (prevProps.canvasDetails.temp_element_img !== this.props.canvasDetails.temp_element_img) {
+            let arr_length = (this.props.canvasDetails.element_img).length
+
+            const newImage = {
+                // src: 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png',
+                src: this.props.canvasDetails.temp_element_img,
+                id: arr_length,
+                x: 100,
+                y: 100,
+                width: 100,
+                height: 100
+            }
+            this.props.dispatch(addElementsCanvas(newImage))
         }
     }
 
@@ -107,28 +119,28 @@ class Widget extends Component {
 
     }
 
-    openImageEditor = (event) => {
-        this.props.dispatch(setDisplayEditor("image"))
-        // שימוש בFileReader לצורך הצגה מקומית של התמונה, היות ולוקח כמה שניות עד שחוזר url מהשרת.
-        const reader1 = new FileReader();
-        const file = event;
-        reader1.onloadend = () => {
-            this.props.dispatch(setTempElementImg(reader1.result));
+    // openImageEditor = (event) => {
+    //     this.props.dispatch(setDisplayEditor("image"))
+    //     // שימוש בFileReader לצורך הצגה מקומית של התמונה, היות ולוקח כמה שניות עד שחוזר url מהשרת.
+    //     const reader1 = new FileReader();
+    //     const file = event;
+    //     reader1.onloadend = () => {
+    //         this.props.dispatch(setTempElementImg(reader1.result));
 
-            let arr_length = (this.props.canvasDetails.element_img).length
+    //         let arr_length = (this.props.canvasDetails.element_img).length
 
-            const newImage = {
-                // src: 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png',
-                src: this.props.canvasDetails.temp_element_img,
-                id: arr_length,
-                x: 100,
-                y: 100,
-                width: 100,
-                height: 100
-            }
-            this.props.dispatch(addElementsCanvas(newImage))
-        }
-    }
+    //         const newImage = {
+    //             // src: 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png',
+    //             src: this.props.canvasDetails.temp_element_img,
+    //             id: arr_length,
+    //             x: 100,
+    //             y: 100,
+    //             width: 100,
+    //             height: 100
+    //         }
+    //         this.props.dispatch(addElementsCanvas(newImage))
+    //     }
+    // }
 
     openImageEditor = (event) => {
 
@@ -161,6 +173,7 @@ class Widget extends Component {
     }
     render() {
         return (
+
             <div className="col-12 d-flex flex-column justify-content-start white_circleborder_background ">
 
 

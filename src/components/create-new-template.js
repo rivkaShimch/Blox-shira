@@ -30,6 +30,7 @@ export default class CreateUser extends Component {
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
+            type: '',
             category: '',
             title: '',
             title_size: '',
@@ -144,7 +145,7 @@ export default class CreateUser extends Component {
     }
     onClickPreviewTemplate() {
         const newTemplate = {
-            type: this.state.category,
+            category: this.state.category,
             background_img_name: this.state.background_img_name,
             background_img_path: this.state.background_img_path,
             title: this.state.title,
@@ -212,7 +213,25 @@ export default class CreateUser extends Component {
             element_position_x: this.state.element_position_x,
             element_position_y: this.state.element_position_y,
             element_width: this.state.element_width,
-            element_height: this.state.element_height
+            element_height: this.state.element_height,
+
+
+
+            shape_position_x: this.state.shape_position_x,
+            shape_position_y: this.state.shape_position_y,
+            shape_fill: this.state.shape_fill,
+            shape_stroke: this.state.shape_stroke,
+            shape_strokeWidth: this.state.shape_strokeWidth,
+            shape_cornerRadius: this.state.shape_cornerRadius,
+            shape_shadowBlur: this.state.shape_shadowBlur,
+            shape_points: this.state.shape_points,
+            shape_tension: this.state.shape_tension,
+
+            brandColors: this.state.brandColors,
+            brand_backgrond_Colors: this.state.brand_backgrond_Colors,
+
+
+
         };
         console.log(newTemplate);
         // save on mongodb
@@ -247,7 +266,7 @@ export default class CreateUser extends Component {
                 <div className="d-flex justify-content-around flex-column">
                     <h3>Add New Template</h3>
                     <form onSubmit={this.onSubmit}>
-                        <div className="f orm-group">
+                        <div className="form-group">
                             <label>Category: </label>
                             <select id="type_option" onChange={this.onChangeCategory}>
                                 <option value="poster">Poster (42/59.4 sm)</option>
@@ -258,12 +277,12 @@ export default class CreateUser extends Component {
                                 <option value="credit">Card (14.8/10.5 sm)</option>
                             </select>
                         </div>
-                        <div className="f orm-group">
+                        <div className="form-group">
                             <label>Background Img: </label>
                             <input type="file" className="btn" id="background_img_input" onChange={this.onChangeBackgroundImg} name="files[]" />
                         </div>
 
-                        <div className="f orm-group">
+                        <div className="form-group">
                             <label>Content of Title: </label>
                             <input type="text"
                                 className="form-control"
@@ -271,7 +290,7 @@ export default class CreateUser extends Component {
                                 onChange={this.onChangeTitle}
                             />
                         </div>
-                        <div className="f orm-group">
+                        <div className="form-group">
                             <label>Title Size: </label>
                             <select id="title_size_option" onChange={this.onChangeTitleSize}>
                                 <option value="12">12</option>
@@ -287,11 +306,11 @@ export default class CreateUser extends Component {
                                 <option value="120">120</option>
                             </select>
                         </div>
-                        <div className="f orm-group">
+                        <div className="form-group">
                             <label>Title Color: </label>
                             <input type="color" id="text_color_input" onChange={this.onChangeTitleColor} name="favcolor" />
                         </div>
-                        <div className="f orm-group">
+                        <div className="form-group">
                             <label>Title Font: </label>
                             <select id="title_type_option" onChange={this.onChangeTitleType}>
                                 <option value="Sofia">Sofia</option>
@@ -300,7 +319,7 @@ export default class CreateUser extends Component {
                                 <option value="Lucida Console">Lucida Console</option>
                             </select>
                         </div>
-                        <div className="f orm-group">
+                        <div className="form-group">
                             <label>Title Position: </label>
                             <div className="d-flex flex-row">
                                 <label className="col-2">X-axis</label>
@@ -317,13 +336,13 @@ export default class CreateUser extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="f orm-group">
+                        <div className="form-group">
                             <label>Element Image: </label>
                             <input type="file" className="btn" id="element_img" onChange={this.onChangeElementImg} name="files[]" />
 
                         </div>
 
-                        <div className="f orm-group">
+                        <div className="form-group">
                             <label>Element Position: </label>
                             <div className="d-flex flex-row">
                                 <label className="col-2">X-axis</label>

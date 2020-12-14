@@ -567,7 +567,7 @@ class Wrap extends React.Component {
         delete link.click;
     }
     OnClickSave = () => {
-        console.log("in OnClickSave")
+        // console.log("in OnClickSave")
 
         let dataURL = (this.props.canvasDetails.dataURL)
         const newTemplate = {

@@ -12,7 +12,10 @@ import {
     setShapesCanvas,
     setShapeShadowBlur,
     setName,
+    setShapeBrandColor,
 } from '../../redux/actions/canvasActions'
+import BrandingGuide from '../BrandingGuide/BrandingGuide';
+
 import circle from '../img/circle.PNG';
 import square from '../img/sqr.PNG';
 import tringle from '../img/trngl.PNG';
@@ -60,6 +63,7 @@ class Shape_Editor extends Component {
         this.onTriangularClick = this.onTriangularClick.bind(this)
         this.onChangeShadowSizeSlider = this.onChangeShadowSizeSlider.bind(this)
         this.onChangeShadowSizeInput = this.onChangeShadowSizeInput.bind(this)
+        this.addToBrandColorArr = this.addToBrandColorArr.bind(this)
     }
     onChangeShapeColor(e) {
         this.props.dispatch(setShapeColor((e.target.value), this.props.canvasDetails.shapes_i))
@@ -176,6 +180,10 @@ class Shape_Editor extends Component {
     onKeyTemplateName(e) {
         this.props.dispatch(setName(e.target.value))
     }
+    addToBrandColorArr(e) {
+
+        this.props.dispatch(setShapeBrandColor((e.target.value), this.props.canvasDetails.shapes_i))
+    }
 
     render() {
 
@@ -208,7 +216,7 @@ class Shape_Editor extends Component {
                     <div className="d-flex flex-column justify-content-between">
                         <div className="d-flex flex-row sideTitles">Shape Fill</div>
                         <input style={{ backgroundColor: "#3A405E", border: "none" }} type="color" className="d-flex flex-row form-control" id="input_color2" name="favcolor2"
-                            onChange={this.onChangeShapeColor} value={this.props.canvasDetails.shape_color} />
+                            onPointerLeave={this.addToBrandColorArr} onChange={this.onChangeShapeColor} value={this.props.canvasDetails.shape_color} />
                     </div>
                     <div className="d-flex flex-column justify-content-between sideTitles">
                         <div className="d-flex flex-row sideTitles" style={{ color: this.props.color }}>Stroke Width</div>
@@ -238,6 +246,7 @@ class Shape_Editor extends Component {
                             </div>
                         </div>
                     </div>
+                    <BrandingGuide />
 
 
 

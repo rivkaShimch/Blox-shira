@@ -125,7 +125,7 @@ export const getImageFromServer = ({ dispatch, getState }) => next => action => 
 
                 console.log("success")
                 console.log(data1)
-                debugger
+
                 console.log(data1);
                 dispatch(setTempElementImg(data1))
             },

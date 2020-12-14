@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 // import "../Button_Editor/node_modules/bootstrap/dist/css/bootstrap.min.css"
 import lines from '../img/lines.png';
@@ -142,20 +143,21 @@ class Widget extends Component {
     // }
 
     openImageEditor = (event) => {
-        debugger
+
         this.props.dispatch(setDisplayEditor("image"))
         // שימוש בFileReader לצורך הצגה מקומית של התמונה, היות ולוקח כמה שניות עד שחוזר url מהשרת.
         // const reader1 = new FileReader();
         const file = new FormData();
         file.append("file", event)
-        debugger
+
 
         // reader1.onloadend = () => {
         // }
-        debugger
+
         this.props.dispatch(uploadImageTofileServer(file))
 
     }
+
 
 
     openShapeEditor() {
@@ -171,7 +173,8 @@ class Widget extends Component {
     }
     render() {
         return (
-            <div className="col-12 d-flex flex-column justify-content-start white_circleborder_background scrollbar" style={{ minHeight: "358px" }}>
+
+            <div className="col-12 d-flex flex-column justify-content-start white_circleborder_background ">
 
 
                 <p className="d-flex ml-3 mt-4"><b style={{ color: "#1C1D21", fontFamily: "Lato-Bold", fontSize: "18px" }}>Widget</b></p>
@@ -219,10 +222,7 @@ class Widget extends Component {
                     <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "13px" }} src={drawpolygonsolid} alt="icon" /></div>
                     <div className="d-flex flex-col justify-content-between icon_text"> Shape </div>
                 </div>
-                <div className="d-flex flex-row  widget_button " >
-                    <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={onOff} alt="icon" /></div>
-                    <div className="d-flex flex-col justify-content-between icon_text"> Button </div>
-                </div>
+
                 <div className="d-flex flex-row  widget_button " >
                     <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={onOff} alt="icon" /></div>
                     <div className="d-flex flex-col justify-content-between icon_text"> Button </div>
@@ -284,7 +284,7 @@ class Widget extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log("state   " + state.displayComponents.displayComponents)
+    // console.log("state   " + state.displayComponents.displayComponents)
     return {
         displayComponents: state.displayComponents.displayComponents,
         canvasDetails: state.canvasDetails.canvasDetails

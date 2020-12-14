@@ -41,29 +41,20 @@ router.get('/find', (req, res) => {
 
 
 router.post(('/uploadImage/:uId'), async (req, res) => {
-    console.log("&&&&&&&&&&&&&&&&&&&&")
-    console.log("wwwwwwwwwwwwwwwwwwww", req.files)
     if (!req.files) {
         let url = 'https://files.leader.codes/uploads/uLKS7DPkWsdywmn1LaRv1gI3RYL2/img/1606297106751__banner_ad.jpg'
         res.send(url)
         return
     }
-    console.log(req.params.uId)
-    console.log(req.files.file)
     let url = await uploadedFile(req.files.file, req.params.uId, req.headers["authorization"]);
     // let url = 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png'
-    console.log(url);
     res.send(url);
 })
 
 
 uploadedFile = (fileToUpload, uId, headers) => {
-    console.log("headers", headers);
     return new Promise(async (resolve, reject) => {
-        console.log(fileToUpload);
-        console.log("uploadedFile");
         const uri = `https://files.leader.codes/api/${uId}/upload`;
-        console.log(uri);
         const options = {
             method: "POST",
             url: uri,
@@ -130,8 +121,9 @@ router.post('/add', upload.single('image'), (req, res) => {
             })
 
         )
+
         .then((res) => {
-            fs.copyFile('C:/Users/User/Downloads/' + template_name + '.png', 'C:/Users/User/Documents/GitHub/Blox-shira/backend/api/uploads/' + template_name + '.png',
+            fs.copyFile('C:/Users/אתרא/Downloads/' + template_name + '.png', 'C:/Users/אתרא/Desktop/Atara-develop/backend/api/uploads/' + template_name + '.png',
                 (err) => { if (err) throw err; });
 
             console.log(res)

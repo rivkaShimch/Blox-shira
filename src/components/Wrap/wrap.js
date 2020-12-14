@@ -58,7 +58,10 @@ import {
 } from '../../redux/actions/componentsActions'
 import {
     addTemplateImage,
-    setName
+    setName,
+    setCanvasWidth_,
+    setCanvasHeight_,
+    setSliderInputInScale
 } from '../../redux/actions/canvasActions'
 import { Divider } from 'semantic-ui-react';
 const drawerWidth = '15%';
@@ -239,6 +242,7 @@ class Wrap extends React.Component {
     constructor(prop) {
         super(prop);
         this.state = {
+            canva_width: '',
             openDrawer: false,
             valueTab: 0,
             openCollapse: false,
@@ -262,11 +266,30 @@ class Wrap extends React.Component {
             bringDataFromDB: false,
         };
         this.onKeyTemplateName = this.onKeyTemplateName.bind(this)
+        this.onChangeCanvaSizeSlider = this.onChangeCanvaSizeSlider.bind(this)
+        // this.zoomFunc = this.zoomFunc.bind(this)
+    }
+    // zoomFunc = (e) => {
+    //     const temp = e.target.value / 100;
+    //     console.log("enter to zoomFunc " + e.target.value + " " + temp)
+
+
+    // }
+    onChangeCanvaSizeSlider = (e) => {
+        const temp = e.target.value / 100;
+        console.log("enter to onChangeCanvaSizeSlider " + e.target.value + " " + temp)
+        this.props.dispatch(setSliderInputInScale(temp))
+
+        // this.props.dispatch(setCanvasWidth_(temp))
+        // this.props.dispatch(setCanvasHeight_(temp))
+
+
     }
 
-    onKeyTemplateName(e) {
+
+    onKeyTemplateName = (e) => {
         this.props.dispatch(setName(e.target.value))
-        console.log("onKeyTemplateName " + this.props.canvasDetails.name)
+        // console.log("onKeyTemplateName " + this.props.canvasDetails.name)
     }
     render() {
         const { classes } = this.props;
@@ -408,12 +431,32 @@ class Wrap extends React.Component {
 
                 {
                     this.props.displayComponents.display_main_option === 'canva' ?
-                        <div className="d-flex flex-row justify-content-start col-7" style={{ marginLeft: "-40px" }}>
-                            <div class="d-flex flex-column col-5" id="edit_choice" >
+                        <div className="d-flex flex-row  justify-content-start col-11" style={{ marginLeft: "-40px" }}>
+                            <div className="d-flex flex-column col-3" id="edit_choice" >
                                 <Edit_choice />
                             </div>
-                            <Canvas class="d-flex flex-column style_dmoCanva mr-5" />
+                            <div className="d-flex flex-column col-6  justify-content-center  align-items-center">
+                                <div className="d-flex flex-row align-content-space-between align-items-center" style={{ width: this.props.canvasDetails.width_canva, height: this.props.canvasDetails.height_canva }}>
+                                    <Canvas />
+                                </div>
+                            </div>
+
+                            <div className="d-flex flex-row flex-end sl" style={{ width: "70%" }}>
+                                <input type="range" min="100" max="300" className="col-8 slider ml-6"
+                                    // {this.prop.canvasDetails.initial_canvas_width} 
+                                    onChange={this.onChangeCanvaSizeSlider}
+                                />
+                            </div>
+
+                            {/* <div className="d-flex flex-row " style={{ width: "70%" }}>
+                                    <input type="range" min="100" max="150" className="col-12 slider mt-3"
+
+                                        onChange={this.zoomFunc}
+                                    />
+                                </div> */}
+
                         </div>
+
                         : <span></span>
                 }
                 {
@@ -453,7 +496,7 @@ class Wrap extends React.Component {
                             <path d="M13.6,5.344,5.915.047A.265.265,0,0,0,5.5.265V10.859a.265.265,0,0,0,.415.218L13.6,5.78a.265.265,0,0,0,0-.436Z"
                                 transform="translate(-5.5 0)" /></svg>}
                         style={{ color: this.state.color1, textTransform: "inherit", height: "40px", paddingLeft: "20px", fontSize: "15px" }}
-                        onClick={this.f}>Page Setting</Button>
+                        onClick={this.f}>Page Art</Button>
                         : <span></span>}
                     {this.props.displayComponents.display_editor === "title" ? <Title_Editor color={this.state.color} /> : <span></span>}
                     {this.props.displayComponents.display_editor === "button" ? <Button_Editor color={this.state.color} /> : <span></span>}
@@ -675,21 +718,21 @@ class Wrap extends React.Component {
 
     };
     onClickSetting = () => {
-        debugger
+
         if (!this.state.bringDataFromDB) {
             this.setState({
                 bringDataFromDB: true
             })
             axios.post('https://blox.leader.codes/api/getTemplates/')
                 .then(res => {
-                    console.log("data  " + res.data[0].template_name)
+                    // console.log("data  " + res.data[0].template_name)
                     let data = res.data
-                    debugger
+
 
                     data.map((template) => (
                         this.props.dispatch(addTemplateImage(template.template_name))
                     ))
-                    console.log("my array " + this.props.canvasDetails.imageTemplates)
+                    // console.log("my array " + this.props.canvasDetails.imageTemplates)
                 })
                 .catch(err => {
                     console.log("in catch");
@@ -711,10 +754,41 @@ class Wrap extends React.Component {
         delete link.click;
     }
     OnClickSave = () => {
+        let arrBrandColors = [];
+        let arrBrandColors1 = [];
+        let x = 0;
+        let color;
+
+        const titles = this.props.canvasDetails.titles.slice();
+        titles.map(title => {
+
+            const found = arrBrandColors.some(el => el === title.fill);
+            if (!found)
+                arrBrandColors = arrBrandColors.concat(title.fill);
+
+        })
+        const backgroundColor = this.props.canvasDetails.background_color;
+        const found = arrBrandColors.some(el => el === backgroundColor);
+        if (!found)
+            arrBrandColors = arrBrandColors.concat(backgroundColor);
+        const shapes = this.props.canvasDetails.shapes.slice();
+        shapes.map(shape => {
+
+            const found = arrBrandColors.some(el => el === shape.fill);
+            if (!found)
+                arrBrandColors = arrBrandColors.concat(shape.fill);
+        })
+
+
+
+
+
+        console.log("arrBrandColors" + arrBrandColors)
+        console.log("arrBrandColors1" + arrBrandColors1)
         console.log("in OnClickSave")
-        debugger
+
         let dataURL = (this.props.canvasDetails.dataURL)
-        debugger
+
         const newTemplate = {
             template_name: this.props.canvasDetails.name,
             background_color: this.props.canvasDetails.background_color,
@@ -725,8 +799,10 @@ class Wrap extends React.Component {
             element_width: this.props.canvasDetails.element_width,
             element_height: this.props.canvasDetails.element_height,
             shapes: this.props.canvasDetails.shapes,
+            brandColors: this.state.arrBrandColors,
         };
-        console.log(newTemplate);
+
+        // console.log(newTemplate);
         // save on mongodb
         axios.post('https://blox.leader.codes/api/add-template/', newTemplate)
             .then(res => console.log(res.data));
@@ -746,7 +822,7 @@ class Wrap extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log("state   " + state.displayComponents.displayComponents)
+    // console.log("state   " + state.displayComponents.displayComponents)
     return {
         displayComponents: state.displayComponents.displayComponents,
         canvasDetails: state.canvasDetails.canvasDetails,

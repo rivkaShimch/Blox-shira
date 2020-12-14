@@ -93,7 +93,7 @@ export default class Empty_page extends Component {
         // ctx.textBaseline = 'middle';
     }
     addImage_button = () => {
-        console.log("addImage_ button")
+        // console.log("addImage_ button")
         // document.getElementById('add_image_title').style.display = "block"
         // document.getElementById('files').style.display = "block"
         // let canvas_add_image = this.myRef.current

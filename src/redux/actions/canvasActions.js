@@ -1,3 +1,41 @@
+
+
+
+export function setCanvasSizes_(width, height) {
+
+    return {
+        type: 'WIDTH&HEIGHT_CANVAS',
+        payload1: width,
+        payload2: height
+
+    };
+}
+export function setSliderInputInScale(input) {
+
+    return {
+        type: 'SET_INPUT_SLIDER_IN_SCALE',
+        payload: input,
+
+
+    };
+}
+// export function setCanvasWidth_(width) {
+
+//     return {
+//         type: 'HEIGHT_CANVAS',
+//         payload: width
+
+//     };
+// }
+
+// export function setCanvasHeight_(height) {
+
+//     return {
+//         type: 'HEIGHT_CANVAS',
+//         payload: height
+
+//     };
+// }
 export function setTempElementImg(img) {
 
     return {
@@ -79,6 +117,13 @@ export function setTitlesCanvasServer(title) {
         payload: title
     };
 }
+export function setShapesCanvasServer(shape) {
+
+    return {
+        type: 'SET_SHAPES_CANVAS',
+        payload: shape
+    };
+}
 export function setTitlesCanvas(title) {
 
     return {
@@ -102,6 +147,14 @@ export function setUpdateTitlesCanvas(title, i) {
         counter: i
     };
 }
+export function setBrandColorsCanvas(arr) {
+
+    return {
+        type: 'SET_BRAND_COLORS',
+        payload: arr
+    };
+}
+
 export function setButtonsICanvas(i) {
 
     return {
@@ -130,13 +183,13 @@ export function setButtonsCanvasServer(button) {
         payload: button
     };
 }
-export function setShapesCanvasServer(shape) {
+// export function setShapesCanvasServer(shape) {
 
-    return {
-        type: 'SET_SHAPES_CANVAS',
-        payload: shape
-    };
-}
+//     return {
+//         type: 'SET_SHAPES_CANVAS',
+//         payload: shape
+//     };
+// }
 export function setButtonsCanvas(button) {
 
     return {
@@ -243,6 +296,33 @@ export function setTitleColor(title_color, i) {
 
     };
 }
+
+export function setTitleBrandColor(title_color, i) {
+    return {
+        type: 'TITLE_BRANDCOLOR_CANVAS',
+        payload: title_color,
+        id: i
+
+    };
+}
+export function setShapeBrandColor(shape_color, i) {
+    return {
+        type: 'SHAPE_BRANDCOLOR_CANVAS',
+        payload: shape_color,
+        id: i
+
+    };
+}
+
+export function setBackgroundBrandColor(color) {
+    return {
+        type: 'BACKGROUND_BRANDCOLOR_CANVAS',
+        payload: color,
+
+
+    };
+}
+
 export function setTitleType(title_type) {
 
     return {

@@ -13,7 +13,8 @@ const initialState = {
         display_setting_page: false,
         display_editor: '',
         display_main_option: ''
-    }
+    },
+    loginStatus: ''
 
 };
 
@@ -40,6 +41,9 @@ export default produce((state, action) => {
             break;
         case 'DISPLAY_MAIN_OPTION':
             state.displayComponents.display_main_option = action.payload;
+            break;
+        case 'SET_LOGIN_STATUS':
+            state.loginStatus = action.payload;
             break;
         default:
             return state;

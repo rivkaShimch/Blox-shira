@@ -7,6 +7,8 @@ import templates_page from './templates-page.css';
 // import "../Button_Editor/node_modules/bootstrap/dist/css/bootstrap.min.css";
 import { connect } from 'react-redux';
 import searchIcon from '../img/searchSolid.svg';
+import { withRouter } from 'react-router-dom';
+
 
 import {
     setName,
@@ -42,14 +44,17 @@ class TemplateCards extends Component {
     onClickNewProject() {
         this.props.dispatch(setTitlesCanvasServer([]))
         this.props.dispatch(setElementsCanvasServer([]))
+        this.props.dispatch(setShapesCanvasServer([]))
         this.props.dispatch(setBackgroundColor('white'))
         this.props.dispatch(setDisplayMainOption('canva'))
     }
 
     onClickTemplateCard = (name) => {
         console.log("in onClickTemplateCard " + name)
-        axios.get('http://localhost:9000/templates/find', { params: { template_name: name } })
+        debugger
+        axios.post('https://blox.leader.codes/api/find/' + name)
             .then(res => {
+                debugger
                 console.log(res.data)
                 let template_data = res.data[0]
                 //update all the variable of the canvas
@@ -68,11 +73,12 @@ class TemplateCards extends Component {
                 this.props.dispatch(setShapesCanvasServer(template_data.shapes))
                 this.props.dispatch(setDisplayMainOption('canva'))
             });
+        this.props.history.push('/' + this.props.user.username + "/edit-canvas")
+
     }
     render() {
-        // let temp_name = ''
         return (
-            <div className="d-flex flex-column justify-content-start white_circleborder_background mb-4  " style={{ marginTop: "4rem", marginRight: "4rem", width: "73vw", height: "95vh" }}>
+            <div className="d-flex flex-column justify-content-start white_circleborder_background mb-4  " style={{ marginTop: "4rem", width: "74vw", height: "90vh" }}>
                 <div className="d-flex flex-row justify-content-center" style={{ backgroundColor: "#F5F5FA66", marginTop: "4vh", width: "100%", padding: "1%" }}>
 
 
@@ -105,7 +111,7 @@ class TemplateCards extends Component {
                         {/* <input className="form-control" type="text" placeholder="Search" aria-label="Search" style={{ width: "20vw" }} /> */}
                     </div>
                 </div>
-                <div className="d-flex flex-row wrapOverflow ml-4" style={{ minHeight: "400px" }}>
+                <div className="d-flex flex-row wrapOverflow ml-4" style={{ minHeight: "100px", marginRight: "5px" }}>
                     <Card.Group itemsPerRow={4} >
                         <Card className="card_style" raised
                             onClick={this.onClickNewProject}
@@ -148,22 +154,12 @@ class TemplateCards extends Component {
 
 }
 
-
-
-
-
-
-// onClickTemplate = () => {
-
-// }
-
-// let name_c = "Template 0"
-
-
 function mapStateToProps(state) {
     return {
         canvasDetails: state.canvasDetails.canvasDetails,
         displayComponents: state.displayComponents.displayComponents,
+        user: state.user.user
+
     };
 }
-export default connect(mapStateToProps)(TemplateCards)
+export default connect(mapStateToProps)(withRouter(TemplateCards))

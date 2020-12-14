@@ -1,3 +1,9 @@
+export function setLoginStatus(status) {
+    return {
+        type: 'SET_LOGIN_STATUS',
+        payload: status
+    };
+}
 export function setDisplayTitleEditor(title) {
     return {
         type: 'DISPLAY_TITLE_EDITOR',

@@ -10,7 +10,8 @@ import { auth_state } from './actions/userAction'
 import {
     getImageFromServer,
     onAuthStateChanged,
-    checkPermission
+    checkPermission,
+    sendTemplateImageToServer
 } from './middleware/crud';
 
 const state = {
@@ -37,7 +38,7 @@ const reducer = combineReducers({ canvasDetails, displayComponents, user, loginS
 
 const store = createStore(
     reducer,
-    composeWithDevTools(applyMiddleware(getImageFromServer, onAuthStateChanged, checkPermission))
+    composeWithDevTools(applyMiddleware(getImageFromServer, sendTemplateImageToServer, onAuthStateChanged, checkPermission))
 )
 window.store = store;
 store.dispatch(auth_state())

@@ -262,32 +262,44 @@ export default produce((state, action) => {
     case 'TITLE_COLOR_CANVAS':
 
       const tmp_id = state.canvasDetails.titles[action.id].id;
-      state.canvasDetails.brandColors.map(item => {
-        if ((item.id == tmp_id)) {
-          item.color = action.payload;
-          item.type = 'title';
-        }
-      })
+      if (state.canvasDetails.brandColors === undefined) {
+        state.canvasDetails.brandColors = []
+        state.canvasDetails.brandColors = state.canvasDetails.brandColors.concat({ type: 'title', id: state.canvasDetails.titles[action.id].id, color: state.canvasDetails.titles[action.id].fill })
+      }
+      else {
+        state.canvasDetails.brandColors.map(item => {
+          if ((item.id == tmp_id)) {
+            item.color = action.payload;
+            item.type = 'title';
+          }
+        })
+      }
       state.canvasDetails.titles[action.id].fill = action.payload;
       break;
 
     case 'TITLE_BRANDCOLOR_CANVAS':
-
-      const tmp_color1 = state.canvasDetails.titles[action.id].fill;
-      const found1 = state.canvasDetails.brandColors.some(el => el.color === tmp_color1);
-      if (!found1) {
+      if (state.canvasDetails.brandColors === undefined) {
+        state.canvasDetails.brandColors = []
         state.canvasDetails.brandColors = state.canvasDetails.brandColors.concat({ type: 'title', id: state.canvasDetails.titles[action.id].id, color: state.canvasDetails.titles[action.id].fill })
+      }
+      else {
+        const tmp_color1 = state.canvasDetails.titles[action.id].fill;
+        const found1 = state.canvasDetails.brandColors.some(el => el.color === tmp_color1);
+        if (!found1) {
+          state.canvasDetails.brandColors = state.canvasDetails.brandColors.concat({ type: 'title', id: state.canvasDetails.titles[action.id].id, color: state.canvasDetails.titles[action.id].fill })
+        }
       }
       state.canvasDetails.titles[action.id].fill = action.payload;
       break;
     case 'SHAPE_BRANDCOLOR_CANVAS':
-
-      const tmp_color2 = state.canvasDetails.shapes[action.id].fill;
-      const found2 = state.canvasDetails.brandColors.some(el => el.color === tmp_color2);
-      if (!found2) {
-        state.canvasDetails.brandColors = state.canvasDetails.brandColors.concat({ type: 'shape', id: state.canvasDetails.shapes[action.id].id, color: state.canvasDetails.shapes[action.id].fill })
+      if (state.canvasDetails.shapes[action.id]) {
+        const tmp_color2 = state.canvasDetails.shapes[action.id].fill;
+        const found2 = state.canvasDetails.brandColors.some(el => el.color === tmp_color2);
+        if (!found2) {
+          state.canvasDetails.brandColors = state.canvasDetails.brandColors.concat({ type: 'shape', id: state.canvasDetails.shapes[action.id].id, color: state.canvasDetails.shapes[action.id].fill })
+        }
+        state.canvasDetails.shapes[action.id].fill = action.payload;
       }
-      state.canvasDetails.shapes[action.id].fill = action.payload;
       break;
     case 'BACKGROUND_BRANDCOLOR_CANVAS':
 
@@ -373,9 +385,6 @@ export default produce((state, action) => {
       break;
     case 'UPLOAD_IMAGE':
       break;
-
-
-
     case 'BUTTONS_I_CANVAS':
       state.canvasDetails.buttons_i = action.payload;
       break;
@@ -479,6 +488,9 @@ export default produce((state, action) => {
       shapes_[action.counter] = action.payload;
       // console.log("newattrs " + action.payload)
       state.canvasDetails.shapes = (shapes_);
+      break;
+
+    case 'TEMPLATE_IMAGE_TO_SERVER':
       break;
     default:
       return state;

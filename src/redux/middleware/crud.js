@@ -2,12 +2,10 @@ import { setTempElementImg } from '../actions/canvasActions'
 import { setUser, setCheckPermission } from '../actions/userAction'
 import $ from 'jquery'
 import { auth } from '../../services/firebase';
-import { act } from 'react-dom/test-utils';
-import { useHistory } from 'react-router-dom'
+import axios from 'axios';
+
 let username = ''
-const history = ''
 export const checkPermission = ({ dispatch, getState }) => next => action => {
-    debugger
     if (action.type === 'CHECK_PERMISSION') {
         console.log("user2: ", username);
         let TokenToString = action.payload.accessToken.toString();
@@ -17,10 +15,8 @@ export const checkPermission = ({ dispatch, getState }) => next => action => {
         };
         // username = getState().user.user.username
         if (username === "null" || username === null) {
-            debugger
             username = getState().user.user.username
         }
-        debugger
         $.ajax({
             url: "https://blox.leader.codes/api/checkPremission/" + username,
             headers: {
@@ -47,11 +43,10 @@ export const checkPermission = ({ dispatch, getState }) => next => action => {
                 if (username1 !== null && username1 !== undefined) {
                     tempUserName = username1.replace(' ', '%20')
                 }
-                debugger
-                //'https://blox.leader.codes/' + tempUserName + '/'
-                if (username1 !== null && (window.location.href != 'http://localhost:3000/' + tempUserName)) {
-                    window.location.href = '/' + username1
-                }
+                //'http://localhost:3000/' + tempUserName
+                // if (username1 !== null && (window.location.href != 'https://blox.leader.codes/' + tempUserName + '/')) {
+                //     window.location.href = '/' + username1
+                // }
             },
         });
 
@@ -92,18 +87,17 @@ export const onAuthStateChanged = ({ dispatch, getState }) => next => action => 
                     });
             }
             else {
-                //"https://blox.leader.codes/" 
-                if (window.location.href !== "http://localhost:3000/") {
-                    console.log("location")
-                    window.location.href = '/'
-                }
+                //"http://localhost:3000/" 
+                // if (window.location.href !== "https://blox.leader.codes/") {
+                //     console.log("location")
+                //     window.location.href = '/'
+                // }
             }
         });
     }
 
     return next(action);
 }
-
 
 export const getImageFromServer = ({ dispatch, getState }) => next => action => {
     if (action.type === 'UPLOAD_IMAGE') {
@@ -122,14 +116,81 @@ export const getImageFromServer = ({ dispatch, getState }) => next => action => 
             "data": action.fd,
             "async": false,
             success: function (data1) {
+                console.log("success")
+                console.log(data1);
+                setTimeout(function () { console.log("after setTimeOut"); dispatch(setTempElementImg(data1)) }, 10000);
+            },
+            error: function (err) {
+                console.log(err)
+            }
+        });
+        // dispatch(setTempElementImg("http://konvajs.github.io/assets/yoda.jpg"))
 
+    }
+    // remeber!!!!!!!!!!!
+    return next(action);
+};
+
+export const sendTemplateImageToServer = ({ dispatch, getState }) => next => action => {
+    if (action.type === 'TEMPLATE_IMAGE_TO_SERVER') {
+        debugger
+        $.ajax({
+            "url": 'https://blox.leader.codes/api/add-template-image',
+            "method": "POST",
+            "processData": false,
+            "mimeType": "multipart/form-data",
+            "contentType": false,
+            "headers": {
+                //בauthorization יש לשים jwt אחר!!!!!!!      
+                "Authorization": getState().user.user.jwt
+
+            },
+            "data": action.payload,
+            "async": false,
+            success: function (data1) {
+                debugger
                 console.log("success")
                 console.log(data1)
 
-                console.log(data1);
-                dispatch(setTempElementImg(data1))
+                debugger
+                const newTemplate = {
+                    template_name: getState().canvasDetails.canvasDetails.name,
+                    background_color: getState().canvasDetails.canvasDetails.background_color,
+                    titles: getState().canvasDetails.canvasDetails.titles,
+                    element_img: getState().canvasDetails.canvasDetails.element_img,
+                    shapes: getState().canvasDetails.canvasDetails.shapes,
+                    // brandColors: arrBrandColors,
+                };
+
+                console.log(newTemplate);
+                axios.post('https://blox.leader.codes/api/add-template/', newTemplate)
+                    .then(res => console.log(res.data))
+                    .catch(err => console.log(err));
+                // $.ajax({
+                //     "url": 'https://blox.leader.codes/api/add-template/',
+                //     "method": "POST",
+                //     "processData": false,
+                //     "mimeType": "multipart/form-data",
+                //     "contentType": false,
+                //     "headers": {
+                //         //בauthorization יש לשים jwt אחר!!!!!!!      
+                //         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJiTlM0RUdTUUdUT3VBZWZsWWdKQ1VMS2RnMTIyIiwiZW1haWwiOiJyaXZrYWZmQGdtYWlsLmNvbSIsImlwIjoiNS4xMDIuMjQ2LjIwMiIsImlhdCI6MTYwNzMzNzAxNn0.bLKjgoxTtM_UybtlAARgUViXTMwpl4WttYMUvZAsIGU"
+
+                //     },
+                //     "data": newTemplate,
+                //     "async": false,
+                //     success: function (data1) {
+                //         console.log("success")
+                //         console.log(data1);
+                //     },
+                //     error: function (err) {
+                //         console.log(err)
+                //     }
+                // });
+                // dispatch(setTempElementImg(data1))
             },
             error: function (err) {
+                debugger
                 console.log(err)
             }
         });
@@ -138,14 +199,3 @@ export const getImageFromServer = ({ dispatch, getState }) => next => action => 
     // remeber!!!!!!!!!!!
     return next(action);
 };
-
-
-// export const setUser = ({ dispatch, getState }) => next => action => {
-//     if (action.type === 'SET_USER') {
-
-//         debugger
-
-//     }
-//     // remeber!!!!!!!!!!!
-//     return next(action);
-// };

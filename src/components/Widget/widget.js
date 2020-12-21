@@ -30,6 +30,7 @@ import {
 
 
 } from '../../redux/actions/canvasActions'
+import { set } from 'mongoose';
 class Widget extends Component {
     constructor(props) {
         super(props);
@@ -58,7 +59,7 @@ class Widget extends Component {
                 height: 30,
                 text: 'TITLE 0' + this.props.canvasDetails.counter_titles,
                 align: 'left',
-                fill: 'black',
+                fill: '#000000',
                 fontSize: 24,
                 display: true,
                 preText: [],
@@ -73,9 +74,8 @@ class Widget extends Component {
         //add image after the image upload from the server
         if (prevProps.canvasDetails.temp_element_img !== this.props.canvasDetails.temp_element_img) {
             let arr_length = (this.props.canvasDetails.element_img).length
-
             const newImage = {
-                // src: 'https://files.leader.codes/uploads/undefined/img/1605085195090__profil.png',
+                // src: 'https://files.leader.codes/uploads/bNS4EGSQGTOuAeflYgJCULKdg122/img/1608199945451__evf.png',
                 src: this.props.canvasDetails.temp_element_img,
                 id: arr_length,
                 x: 100,
@@ -83,6 +83,9 @@ class Widget extends Component {
                 width: 100,
                 height: 100
             }
+            setTimeout(function () {
+                console.log("after secound setTimeOut")
+            }, 10000)
             this.props.dispatch(addElementsCanvas(newImage))
         }
     }
@@ -98,7 +101,6 @@ class Widget extends Component {
                 width: 100,
                 height: 30,
                 fill: 'rgb(212, 200, 200)',
-
                 strokeWidth: '0',
                 stroke: 'none',
                 display: true,
@@ -143,22 +145,13 @@ class Widget extends Component {
     // }
 
     openImageEditor = (event) => {
-
         this.props.dispatch(setDisplayEditor("image"))
         // שימוש בFileReader לצורך הצגה מקומית של התמונה, היות ולוקח כמה שניות עד שחוזר url מהשרת.
         // const reader1 = new FileReader();
         const file = new FormData();
         file.append("file", event)
-
-
-        // reader1.onloadend = () => {
-        // }
-
         this.props.dispatch(uploadImageTofileServer(file))
-
     }
-
-
 
     openShapeEditor() {
         if (this.props.displayComponents.display_main_option !== '') {

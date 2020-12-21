@@ -8,6 +8,7 @@ import templates_page from './templates-page.css'
 import { connect } from 'react-redux';
 import searchIcon from '../img/searchSolid.svg';
 import { withRouter } from 'react-router-dom';
+// import pathToTemplate from '../../../../upload_templates';
 
 
 import {
@@ -50,7 +51,12 @@ class TemplateCards extends Component {
         this.props.dispatch(setBackgroundColor('white'))
         this.props.dispatch(setDisplayMainOption('canva'))
     }
-
+    onDeleteTemplate = (name) => {
+        axios.post('https://blox.leader.codes/api/delete-template/' + name)
+            .then(() => {
+                window.location.href = '/templates'
+            })
+    }
     onClickTemplateCard = (name) => {
         console.log("in onClickTemplateCard " + name)
         debugger
@@ -133,16 +139,21 @@ class TemplateCards extends Component {
                         {
                             this.props.canvasDetails.imageTemplates.map((name_of_template) => (
                                 <Card className="card_style" raised
-                                    onClick={() => this.onClickTemplateCard(name_of_template)}>
-                                    <Image src={require('C:/Users/אתרא/Desktop/Atara-develop/backend/api/uploads/' + name_of_template + '.png')} wrapped ui={false} />
+                                >
+                                    <a className="d-flex">
+                                        <Icon name='trash alternate' color="black" onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) this.onDeleteTemplate(name_of_template) }} ></Icon>
+                                    </a>
+                                    <br />
+                                    <Image src={'https://blox.leader.codes/api/upload_templates/' + name_of_template + '.png'} wrapped ui={false} onClick={() => this.onClickTemplateCard(name_of_template)} />
                                     <Card.Content extra>
-                                        <Card.Header className="d-flex justify-content-center">
+                                        <Card.Header className="d-flex justify-content-center" onClick={() => this.onClickTemplateCard(name_of_template)}>
                                             {name_of_template}
                                         </Card.Header>
                                         <a className="d-flex justify-content-center">
                                             <Icon name='heart' />
                          180 pepole like
                                   </a>
+
                                     </Card.Content>
                                 </Card>))
                         }

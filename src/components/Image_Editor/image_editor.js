@@ -16,8 +16,6 @@ import arrow_down from '../img/arrow_down.png';
 class Image_Editor extends Component {
     constructor(prop) {
         super(prop);
-
-
         this.state = {
             checked: false,
             background: '#fff',
@@ -30,21 +28,25 @@ class Image_Editor extends Component {
             WidthTitleValue: '',
             finalWidthTitleValue: '',
             finalBorderValue: '',
+            bold_img_align: 1,
+            image: null,
+        }
+    }
+    componentDidMount() {
+        if (this.props.canvasDetails.element_img.length > 0)
+            this.setState({ image: this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i].src })
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.canvasDetails.element_img !== this.props.canvasDetails.element_img || prevProps.displayComponents.displayEditor !== this.props.displayComponents.displayEditor) {
+            this.setState({
+                image: this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i].src
+            })
+        }
 
-
-            bold_img_align: 1
-        };
     }
     render() {
         return (
-
-
-
-
-
             <div className="col-12 d-flex flex-column justify-content-start">
-
-
                 <div className="d-flex flex-column justify-content-between" style={{ marginLeft: "20px", marginRight: "20px" }}>
                     <div className="d-flex flex-column justify-content-start">
                         <div className="d-flex flex-row justify-content-between">
@@ -58,7 +60,7 @@ class Image_Editor extends Component {
                     {/* {console.log("the img " + this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i])} */}
                     <div className="d-flex flex-row justify-content-center">
                         <img style={{ height: "90px", width: "100px" }}
-                            // src={this.props.canvasDetails.element_img[this.props.canvasDetails.element_img_i].src}
+                            src={this.state.image}
                             alt="image" />
                     </div>
 
@@ -143,7 +145,8 @@ class Image_Editor extends Component {
 }
 function mapStateToProps(state) {
     return {
-        canvasDetails: state.canvasDetails.canvasDetails
+        canvasDetails: state.canvasDetails.canvasDetails,
+        displayComponents: state.displayComponents.displayComponents
     };
 }
 export default connect(mapStateToProps)(Image_Editor)

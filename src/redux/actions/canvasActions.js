@@ -567,5 +567,10 @@ export function setShapeStroke(shape_stroke, i) {
     };
 }
 
-
+export function templateImageToServer(fd) {
+    return {
+        type: 'TEMPLATE_IMAGE_TO_SERVER',
+        payload: fd
+    };
+}
 

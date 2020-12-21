@@ -61,7 +61,8 @@ import {
     setName,
     setCanvasWidth_,
     setCanvasHeight_,
-    setSliderInputInScale
+    setSliderInputInScale,
+    templateImageToServer
 } from '../../redux/actions/canvasActions'
 import { Divider } from 'semantic-ui-react';
 const drawerWidth = '15%';
@@ -727,8 +728,6 @@ class Wrap extends React.Component {
                 .then(res => {
                     // console.log("data  " + res.data[0].template_name)
                     let data = res.data
-
-
                     data.map((template) => (
                         this.props.dispatch(addTemplateImage(template.template_name))
                     ))
@@ -753,7 +752,26 @@ class Wrap extends React.Component {
         document.body.removeChild(link);
         delete link.click;
     }
+
+    dataURLtoFile = (dataurl, filename) => {
+
+        var arr = dataurl.split(','),
+            mime = arr[0].match(/:(.*?);/)[1],
+            bstr = atob(arr[1]),
+            n = bstr.length,
+            u8arr = new Uint8Array(n);
+
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new File([u8arr], filename, { type: mime });
+    }
+
     OnClickSave = () => {
+        if (this.props.canvasDetails.name === '') {
+            alert("Please set a name for the project")
+            return
+        }
         let arrBrandColors = [];
         let arrBrandColors1 = [];
         let x = 0;
@@ -778,36 +796,38 @@ class Wrap extends React.Component {
             if (!found)
                 arrBrandColors = arrBrandColors.concat(shape.fill);
         })
-
-
-
-
-
         console.log("arrBrandColors" + arrBrandColors)
         console.log("arrBrandColors1" + arrBrandColors1)
         console.log("in OnClickSave")
 
         let dataURL = (this.props.canvasDetails.dataURL)
 
-        const newTemplate = {
-            template_name: this.props.canvasDetails.name,
-            background_color: this.props.canvasDetails.background_color,
-            titles: this.props.canvasDetails.titles,
-            element_img: this.props.canvasDetails.element_img,
-            element_position_x: this.props.canvasDetails.element_position_x,
-            element_position_y: this.props.canvasDetails.element_position_y,
-            element_width: this.props.canvasDetails.element_width,
-            element_height: this.props.canvasDetails.element_height,
-            shapes: this.props.canvasDetails.shapes,
-            brandColors: this.state.arrBrandColors,
-        };
+        // const newTemplate = {
+        //     template_name: this.props.canvasDetails.name,
+        //     background_color: this.props.canvasDetails.background_color,
+        //     titles: this.props.canvasDetails.titles,
+        //     element_img: this.props.canvasDetails.element_img,
+        //     element_position_x: this.props.canvasDetails.element_position_x,
+        //     element_position_y: this.props.canvasDetails.element_position_y,
+        //     element_width: this.props.canvasDetails.element_width,
+        //     element_height: this.props.canvasDetails.element_height,
+        //     shapes: this.props.canvasDetails.shapes,
+        //     // brandColors: arrBrandColors,
+        // };
 
         // console.log(newTemplate);
         // save on mongodb
-        axios.post('https://blox.leader.codes/api/add-template/', newTemplate)
-            .then(res => console.log(res.data));
+        // axios.post('https://blox.leader.codes/api/add-template/', newTemplate)
+        //     .then(res => console.log(res.data))
+        //     .catch(err => console.log(err));
         //download the img to "download"
-        this.downloadURI(dataURL.toDataURL(), newTemplate.template_name);
+        debugger
+        let my_file = this.dataURLtoFile(dataURL.toDataURL(), this.props.canvasDetails.name);
+
+        let fd = new FormData()
+        fd.append("file", my_file)
+        console.log("my fileee " + my_file)
+        this.props.dispatch(templateImageToServer(fd))
     };
     handleClose = () => {
         this.setState({ openSpeedDial: false });

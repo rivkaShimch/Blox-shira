@@ -24,12 +24,11 @@ class BrandingGuide extends Component {
             arrbackground: [],
         }
         this.onChangeColor1 = this.onChangeColor1.bind(this)
+        if (this.props.canvasDetails.brandColors === undefined)
+            setTitleBrandColor([])
 
     };
     onChangeColor1(color) {
-
-
-
         if (this.props.displayComponents.display_editor === "title")
             this.props.dispatch(setTitleBrandColor((color), this.props.canvasDetails.titles_i))
         if (this.props.displayComponents.display_editor === "background")
@@ -44,17 +43,18 @@ class BrandingGuide extends Component {
         return (
 
             <div className="d-flex flex-wrap scrollbar white_circleborder_background ml-2" >
-                {this.props.canvasDetails.brandColors.map(item => {
-                    // if (item.id == -1)
-                    // this.state.arrbackground = this.state.arrbackground.concat(item)
-                    // if (item.id != -1)
-                    return <div
-                        style={{ borderRadius: "5px", boxShadow: "2px 2px 2px #888888", margin: "2px", marginTop: "1px", marginBottom: "1px", height: "30px", width: "30px", backgroundColor: item.color }}
-                        onClick={() => this.onChangeColor1(item.color)}
-                    ></div>
+                {this.props.canvasDetails.brandColors &&
+                    this.props.canvasDetails.brandColors.map(item => {
+                        // if (item.id == -1)
+                        // this.state.arrbackground = this.state.arrbackground.concat(item)
+                        // if (item.id != -1)
+                        return <div
+                            style={{ borderRadius: "5px", boxShadow: "2px 2px 2px #888888", margin: "2px", marginTop: "1px", marginBottom: "1px", height: "30px", width: "30px", backgroundColor: item.color }}
+                            onClick={() => this.onChangeColor1(item.color)}
+                        ></div>
 
 
-                })}
+                    })}
                 {/* <br /> */}
                 {/* <div>רקע</div> */}
                 {/* 

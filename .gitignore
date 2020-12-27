@@ -4,8 +4,10 @@
 /node_modules
 /.pnp
 .pnp.js
-/backend/node_modules
-/backend/api/uploads
+/backend/
+/controller
+/modal
+/routes
 
 # testing
 /coverage

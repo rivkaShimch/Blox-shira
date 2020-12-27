@@ -1,0 +1,56 @@
+#top_frame{
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    position: fixed;
+    width: 100%;
+    opacity: 1;
+    height: 40px;
+    z-index: 1;
+    box-shadow:0px 1px 6px #00000029;
+
+}
+#img_logo{
+    border-radius: 50%;
+    width: 20px;
+}
+#user_img{
+    border-radius: 50%;
+    width: 20px;
+    box-shadow: 0px 3px 6px #0000004D;
+    border-radius: 19px;
+    opacity: 1;
+}
+.thumbtack{
+    margin-top: 15%;
+    width: 16px;
+    height: 19px;
+}
+.rotateThumbtack{
+    transform: rotate(-45deg);
+}
+#leader_logo{
+    width: 3%;
+}
+
+#dropdown{
+    z-index: 2;
+    background-color: #fff;
+    overflow: hidden;
+    /* padding: 80px 0; */
+    position: relative;
+    /* width: 100%; */
+}
+.title{
+    text-align: center;
+    /* font: normal normal normal 20px/24px Lato; */
+    letter-spacing: 0.4px;
+    color: #646C86;
+    background: #F1F1F3 0% 0% no-repeat padding-box;
+    text-transform: capitalize;
+    opacity: 0.78;
+    position: center;
+}
+#menu2{
+    width: 5rem;
+    height: 1rem;
+
+}

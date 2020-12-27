@@ -19,7 +19,8 @@ import {
     setButtonShadowBlur,
     setButtonCorners,
     setButtonStrokeWidth,
-    setButtonStroke
+    setButtonTextColor,
+    setButtonsTextCanvas
 
 
 } from '../../redux/actions/canvasActions'
@@ -32,6 +33,7 @@ class Button_Editor extends Component {
     constructor(prop) {
         super(prop);
         this.state = {
+            flag_color: false,
             checked: false,
             shadowSize: '',
             finalShadowSize: '',
@@ -43,16 +45,20 @@ class Button_Editor extends Component {
         this.onChangeShadowSizeSlider = this.onChangeShadowSizeSlider.bind(this)
         this.onChangeShadowSizeInput = this.onChangeShadowSizeInput.bind(this)
         this.finalBorderValue = this.finalBorderValue.bind(this)
-        this.onChangeButtonStrokeColor = this.onChangeButtonStrokeColor.bind(this)
+        this.onChangeButtonTextColor = this.onChangeButtonTextColor.bind(this)
         this.onChangeStrokeWidthInput = this.onChangeStrokeWidthInput.bind(this)
         this.onChangeStrokeSlider = this.onChangeStrokeSlider.bind(this)
+        this.onChangeButtonInput = this.onChangeButtonInput.bind(this)
 
+    }
+    onChangeButtonInput(e) {
+        this.props.dispatch(setButtonsTextCanvas((e.target.value), this.props.canvasDetails.buttons_i))
     }
     onChangeButtonColor(e) {
         this.props.dispatch(setButtonColor((e.target.value), this.props.canvasDetails.buttons_i))
     }
-    onChangeButtonStrokeColor(e) {
-        this.props.dispatch(setButtonStroke((e.target.value), this.props.canvasDetails.buttons_i))
+    onChangeButtonTextColor(e) {
+        this.props.dispatch(setButtonTextColor((e.target.value), this.props.canvasDetails.buttons_i))
     }
     handleChange(checked) {
         this.setState({ checked });
@@ -84,7 +90,16 @@ class Button_Editor extends Component {
 
         return (
             <div className="d-flex flex-column justify-content-around" style={{ marginLeft: "20px", marginRight: "20px" }}>
+                <div className="d-flex flex-row justify-content-between">
+                    <div className="d-flex flex-column  sideTitles " style={{ color: this.props.color }}>Button Text</div>
+                    <div className="d-flex flex-row  ">  <Switch /></div>
+                </div>
 
+                <div className="d-flex flex-column justify-content-start  mb-1" style={{ color: this.props.color }}>
+                    <input className="w3-input  mb-2" id="button_input" style={{ color: "white", backgroundColor: "transparent" }}
+                        placeholder="click!" onKeyUp={this.onChangeButtonInput} onClick={() => document.getElementById('button_input').value = this.props.canvasDetails.buttons[this.props.canvasDetails.buttons_i].text}
+                        placeholder={this.props.canvasDetails.buttons[this.props.canvasDetails.buttons_i] === undefined ? '' : this.props.canvasDetails.buttons[this.props.canvasDetails.buttons_i].text} />
+                </div>
                 <div className="d-flex flex-row justify-content-between mt-4 mb-1">
                     <div className="d-flex flex-column sideTitles" style={{ color: this.props.color }}>Button Fill</div>
                     <input style={{ backgroundColor: "transparent", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
@@ -93,7 +108,7 @@ class Button_Editor extends Component {
                 <div className="d-flex flex-row justify-content-between mt-4 mb-1">
                     <div className="d-flex flex-column sideTitles" style={{ color: this.props.color }}>Stroke Color</div>
                     <input style={{ backgroundColor: "transparent", border: "none" }} type="color" className="d-flex flex-column form-control" id="input_color" name="favcolor"
-                        onChange={this.onChangeButtonStrokeColor} value={this.props.canvasDetails.buttons[this.props.canvasDetails.buttons_i] == undefined ? '' : this.props.canvasDetails.buttons[this.props.canvasDetails.buttons_i].stroke} />
+                        onChange={this.onChangeButtonTextColor} value={this.props.canvasDetails.buttons[this.props.canvasDetails.buttons_i] == undefined ? '' : this.props.canvasDetails.buttons[this.props.canvasDetails.buttons_i].textFill} />
                 </div>
                 <div className="d-flex flex-row justify-content-between">
                     <div className="d-flex flex-column justify-content-between sideTitles">
@@ -102,7 +117,7 @@ class Button_Editor extends Component {
                             <input type="range" min="1" max="50" className="col-8 slider mt-3"
                                 value={this.state.finalStrokeWidth}
                                 onChange={this.onChangeStrokeSlider} />
-                            <input style={{ color: "white" }} id="stroke_width_input" className="input_line col-3"
+                            <input style={{ color: this.props.color }} id="stroke_width_input" className="input_line col-3"
                                 onKeyUp={this.onChangeStrokeWidthInput} placeholder={this.finalStrokeWidth} />
                         </div>
                     </div>
@@ -124,8 +139,8 @@ class Button_Editor extends Component {
                     <div className="d-flex flex-column justify-content-between sideTitles">
                         <div className="d-flex flex-row sideTitles">Border Radius</div>
                         <div className="d-flex flex-row justify-content-between">
-                            <div className="radius_icon"></div>
-                            <div className="rec_icon"></div>
+                            <div className="radius_icon" style={{ borderColor: this.props.color }}></div>
+                            <div className="rec_icon" style={{ borderColor: this.props.color }}></div>
                             <input type="number" min="10" max="100" className="input_line col-3"
                                 style={{ color: this.props.color, backgroundColor: "white" }}
                                 onChange={this.finalBorderValue} placeholder={this.state.cornersRadius} />

@@ -14,21 +14,33 @@ import Wrap from './components/Wrap/wrap';
 import Login from './components/Login/login';
 import { connect } from 'react-redux';
 
+
+import './App.css';
+import Wrap2 from './components/Wrap/wrap2';
+import Configurator from './components/Configurator/Configurator';
+import Top_frame from './components/Top_frame/Top_frame';
+import Sidebar_left from './components/Sidebar_left/Sidebar_left';
+
+
 library.add(fab, fas)
 const App = function (props) {
   return (
     <Router>
-      <div className="container-fluid">
+      <div>
         <Switch>
           <Route exact path="/">
             <Login />
           </Route>
           <Route path="/:username">
-            <Wrap />
-            {/* {
-              props.loginStatus === 'success' ? <Wrap /> :
-                <Login />
-            } */}
+            {/* <Wrap /> */}
+            <div id="body" className="App">
+
+              <Configurator />
+              <Top_frame />
+              <Wrap2 />
+              <Sidebar_left />
+              <div id="wrap_center"></div>
+            </div>
           </Route>
         </Switch>
       </div>

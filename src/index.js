@@ -8,6 +8,8 @@ import "typeface-roboto";
 import 'bootstrap/dist/css/bootstrap.css'; // or include from a CDN
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 
+
+
 ReactDOM.render(
   // <React.StrictMode>
   <Provider store={store}>

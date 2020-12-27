@@ -48,6 +48,7 @@ export const checkPermission = ({ dispatch, getState }) => next => action => {
                 // if (username1 !== null && (window.location.href != 'https://blox.leader.codes/' + tempUserName + '/')) {
                 //     window.location.href = '/' + username1
                 // }
+
             },
         });
 

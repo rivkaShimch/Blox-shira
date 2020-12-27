@@ -69,8 +69,8 @@ const initialState = {
 
     shape_position_x: 20,
     shape_position_y: 20,
-    shape_fill: 'white',
-    shape_stroke: 'gray',
+    // shape_fill: 'blue',
+    // shape_stroke: 'gray',
     shape_strokeWidth: 1,
     shape_cornerRadius: 0,
     shape_shadowBlur: 0,
@@ -291,6 +291,7 @@ export default produce((state, action) => {
         }
       }
       state.canvasDetails.titles[action.id].fill = action.payload;
+
       break;
     case 'SHAPE_BRANDCOLOR_CANVAS':
       if (state.canvasDetails.shapes[action.id]) {
@@ -423,9 +424,7 @@ export default produce((state, action) => {
     case 'BUTTON_FILL':
       state.canvasDetails.buttons[action.id].fill = action.payload;
       break;
-    case 'BUTTON_STROKE_COLOR':
-      state.canvasDetails.buttons[action.id].stroke = action.payload;
-      break;
+
     case 'BUTTON_STROKE_WIDTH':
       state.canvasDetails.buttons[action.id].strokeWidth = action.payload;
       break;
@@ -448,6 +447,16 @@ export default produce((state, action) => {
       state.canvasDetails.buttons[action.id].button_position_y = action.payload;
       break;
 
+    case 'BUTTON_TEXT_COLOR':
+      state.canvasDetails.buttons[action.id].textFill = action.payload;
+      break;
+
+    case 'BUTTONS_TEXT_CANVAS':
+
+      // console.log("text id " + action.i)
+      state.canvasDetails.buttons[action.i].text = action.payload;
+
+      break;
     case 'SHAPES_CANVAS':
 
       state.canvasDetails.shapes = state.canvasDetails.shapes.concat(action.payload);
@@ -458,11 +467,11 @@ export default produce((state, action) => {
       break;
 
     case 'SHAPE_STROKE_WIDTH':
-      state.canvasDetails.shapes[action.id].strokeWidth = action.payload;
+      state.canvasDetails.shapes[action.id].opacity = action.payload;
       break;
-    case 'SHAPE_STROKE_COLOR':
-      state.canvasDetails.shapes[action.id].stroke = action.payload;
-      break;
+    // case 'SHAPE_STROKE_COLOR':
+    //   state.canvasDetails.shapes[action.id].stroke = action.payload;
+    //   break;
     case 'COUNTER_SHAPES':
       state.canvasDetails.counter_shapes = action.payload;
       break;

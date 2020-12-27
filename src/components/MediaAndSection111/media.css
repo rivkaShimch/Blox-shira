@@ -1,0 +1,10 @@
+#create_button{
+    width: 100%;
+    height: fit-content;
+    border-radius: 20px;
+    border: solid 1px blue;
+   text-align: center;
+    font-weight: 500;
+    background-color: lightblue;
+    margin-top: 10px;
+}

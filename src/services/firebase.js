@@ -52,11 +52,11 @@ export const signInWithGoogle = (props) => {
 export const signUpUser = (props, name, email, password) => {
     auth.createUserWithEmailAndPassword(email, password)
         .then((user) => {
-            debugger
+
             console.log("e/p ", user.user);
             user.user.username = name
             console.log("e/p username", user.user.username);
-            debugger
+
             props.dispatch(setLoginStatus('success'))
 
 
@@ -65,14 +65,14 @@ export const signUpUser = (props, name, email, password) => {
             var errorCode = error.code;
             var errorMessage = error.message;
             console.log(errorMessage);
-            debugger
+
             props.dispatch(setLoginStatus('error'))
 
         });
 }
 
 export const signInWithEmailAndPassword = (props, email, password) => {
-    debugger
+
     auth.signInWithEmailAndPassword(email, password)
 
         .then((user) => {
@@ -91,7 +91,7 @@ export const signInWithEmailAndPassword = (props, email, password) => {
 
 // ...
 export const logOut = () => {
-    debugger;
+
     auth.signOut().then(() => {
         console.log('logged out')
     }).catch((error) => {

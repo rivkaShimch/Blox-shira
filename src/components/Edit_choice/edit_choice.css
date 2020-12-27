@@ -6,6 +6,7 @@ background: #FFFFFF 0% 0% no-repeat padding-box;
 border-radius: 7px;
 border: none;
 
+
 }
 .up_button{
    
@@ -14,7 +15,8 @@ border: none;
     border-width: 1px;
     border-color: #A66DFF;
     align-content: center;
-    font-weight: 400; 
+    font-weight: 500; 
+    font-size: 16px;
 }
 .up_button:active{
     color:white;
@@ -102,6 +104,8 @@ align-items:center;
     width: fit-content;
     max-height: 150px;
     overflow-y: scroll;
+    position: relative;
+    margin-top: 20px;
   }
   
   .scrollbar::-webkit-scrollbar {
@@ -167,9 +171,9 @@ align-items:center;
       
        } 
         .tt{
-        height: 50px;
-        padding-top: 20px;
-        /* margin-bottom: 15px; */
+        /* height: 50px; */
+        padding-top: 2px;
+        margin-top: 15px;
         /* width: 100px; */
         background-color: white;
         display: flex;
@@ -186,7 +190,7 @@ align-items:center;
     .rr{
         /* width: 20px; */
         margin-left: 23px;
-        height: 50px;
+        height:fit-content;
         align-items: center;
         display: flex;
         position: relative;

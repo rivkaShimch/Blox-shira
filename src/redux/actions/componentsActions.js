@@ -42,3 +42,16 @@ export function setDisplayMainOption(opt) {
         payload: opt
     };
 }
+
+export function setDisplayEditChoice(opt) {
+    return {
+        type: 'DISPLAY_EDIT_CHOICE',
+        payload: opt
+    };
+}
+export function setDisplayConfigurator(opt) {
+    return {
+        type: 'DISPLAY_CONFIGURATOR',
+        payload: opt
+    };
+}

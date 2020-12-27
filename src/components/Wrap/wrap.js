@@ -23,6 +23,7 @@ import InvertDesktopWindows from '@material-ui/icons/DesktopWindows';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
 import Drawer from '@material-ui/core/Drawer';
+
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
@@ -54,6 +55,7 @@ import { logOut } from '../../services/firebase'
 import {
     setDisplayEditor,
     setDisplayMainOption,
+    setDisplayEditChoice,
 
 } from '../../redux/actions/componentsActions'
 import {
@@ -73,7 +75,6 @@ const useStyles = theme => ({
     root: {
         display: 'flex',
         position: 'relative',
-
     },
     configurator: {
         zIndex: theme.zIndex.drawer + 10,
@@ -183,10 +184,10 @@ const useStyles = theme => ({
     row: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
     },
     margin: {
-        margin: theme.spacing(1),
+        // margin: theme.spacing(1),
     },
     demo: {
         backgroundColor: theme.palette.background.paper,
@@ -278,9 +279,22 @@ class Wrap extends React.Component {
 
     // }
     onChangeCanvaSizeSlider = (e) => {
-        const temp = e.target.value / 100;
+        const temp = e.target.value;
         console.log("enter to onChangeCanvaSizeSlider " + e.target.value + " " + temp)
         this.props.dispatch(setSliderInputInScale(temp))
+
+        const temp_w = this.props.canvasDetails.width_canva * temp;
+        console.log(temp_w)
+
+        if (temp_w > 700) {
+            this.props.dispatch(setDisplayEditChoice("none"))
+            console.log("  this.props.dispatch(setDisplayEditChoice(false))")
+        }
+        if (temp_w <= 700) {
+            console.log("  this.props.dispatch(setDisplayEditChoice(true))")
+
+            this.props.dispatch(setDisplayEditChoice("block"))
+        }
 
         // this.props.dispatch(setCanvasWidth_(temp))
         // this.props.dispatch(setCanvasHeight_(temp))
@@ -444,7 +458,7 @@ class Wrap extends React.Component {
                             </div>
 
                             <div className="d-flex flex-row flex-end sl" style={{ width: "70%" }}>
-                                <input type="range" min="100" max="300" className="col-8 slider ml-6"
+                                <input type="range" min="1" max="3" value="1" step="0.01" className="col-8 slider ml-6"
                                     // {this.prop.canvasDetails.initial_canvas_width} 
                                     onChange={this.onChangeCanvaSizeSlider}
                                 />
@@ -725,7 +739,8 @@ class Wrap extends React.Component {
             this.setState({
                 bringDataFromDB: true
             })
-            axios.post('https://blox.leader.codes/api/getTemplates/')
+            //https://blox.leader.codes/api/getTemplates/'
+            axios.post('http://localhost:9000/templateImages')
                 .then(res => {
                     // console.log("data  " + res.data[0].template_name)
                     let data = res.data
@@ -824,6 +839,7 @@ class Wrap extends React.Component {
         debugger
         this.props.dispatch(addTemplateToServer(newTemplate))
         setTimeout(() => { this.saveImageInServer(); console.log("after timeout"); }, 3000)
+
 
     };
     handleClose = () => {

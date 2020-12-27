@@ -36,8 +36,11 @@
     opacity: 1;
 }
 body{
-   background-color: #d3d3d361;
+   /* background-color: #d3d3d361; */
+   background-color: red;
    font: Medium 18px/24px SF Pro Display;
+   background-size: cover;
+   position: relative;
 }
 .fast-accses {
     fill: #5f5757;
@@ -64,6 +67,8 @@ body{
       }
       main{
         width:100% !important;
+        height: 100% !important;
+        background-color: green;
       }
       #edit_choice{
         display: none !important;

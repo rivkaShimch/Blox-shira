@@ -116,7 +116,7 @@ class MediaAndSection111 extends Component {
         return (
             <div className="container-fluid d-flex flex-column justify-content-around" style={{ paddingLeft: "0px", paddingRight: "0px" }} >
 
-                <div className="d-flex flex-row justify-content-between navTitle tt ">
+                <div className="d-flex flex-row justify-content-between navTitle tt " >
                     {/* <Navbar className="topnav " >
 
                         <Nav className="mr-auto " >
@@ -126,8 +126,8 @@ class MediaAndSection111 extends Component {
                         </Nav>
 
                     </Navbar> */}
-                    <div className="col rr" onClick={this.mediaFunc}>Media</div>
-                    <div className="col rr" onClick={this.sectionFunc}>Section</div>
+                    <div className="col rr" onClick={this.mediaFunc}>types</div>
+                    <div className="col rr" onClick={this.sectionFunc}>your size</div>
                 </div>
 
                 <div className="d-flex flex-row justify-content-around ">
@@ -178,7 +178,7 @@ class MediaAndSection111 extends Component {
                             </div>
                         </div>
                         :
-                        <div id="section" className="d-flex flex-column scrollbar" >
+                        <div id="section" className="d-flex flex-row scrollbar" >
 
                             <div action="/action_page.php">
                                 <h4>your sizes {this.state.username}</h4>
@@ -204,10 +204,11 @@ class MediaAndSection111 extends Component {
                                     // onChange={this.myChangeHandler2}
                                     onChange={this.myChangeHeight}
                                 />
-                                <button
+                                <div id="create_button"
 
                                     onClick={() => this.chooseCategory1()}
-                                />
+                                > create
+                                    </div>
 
 
 

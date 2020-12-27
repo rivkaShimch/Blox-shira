@@ -60,11 +60,11 @@ class TemplateCards extends Component {
     }
     onClickTemplateCard = (name) => {
         console.log("in onClickTemplateCard " + name)
-        debugger
+
         axios.post('https://blox.leader.codes/api/find/' + name)
 
             .then(res => {
-                debugger
+
                 console.log(res.data)
                 let template_data = res.data[0]
                 //update all the variable of the canvas
@@ -91,7 +91,7 @@ class TemplateCards extends Component {
     }
     render() {
         return (
-            <div className="d-flex flex-column justify-content-start white_circleborder_background mb-4  " style={{ marginTop: "4rem", width: "74vw", height: "90vh" }}>
+            <div className="d-flex flex-column justify-content-start white_circleborder_background mb-4  " style={{ width: "74vw", height: "85vh" }}>
                 <div className="d-flex flex-row justify-content-center" style={{ backgroundColor: "#F5F5FA66", marginTop: "4vh", width: "100%", padding: "1%" }}>
 
 

@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Grid, Cell } from 'react-konva-grid'
+
 import { render } from 'react-dom';
 import { Stage, Layer, Image as KonvaImage, Text, Transformer, Rect, Line } from 'react-konva';
+
 import useImage from 'use-image';
 // import './canvas.css'
 import Portal from './portal.js'
@@ -108,71 +111,92 @@ const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onCha
   );
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 const ButtonsObj = ({ button, button_change, shapeProps, isSelected, onSelect, onChange }) => {
   // const [buttons_i] = useImage(button_change.id);
-  const ButtonRef = React.useRef();
+  const buttonRef = React.useRef();
   const trRefButton = React.useRef();
+  let boundBoxFunc
 
   React.useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
-      trRefButton.current.nodes([ButtonRef.current]);
+      trRefButton.current.nodes([buttonRef.current]);
       trRefButton.current.getLayer().batchDraw();
     }
   }, [isSelected]);
   return (
     <React.Fragment>
-      <Rect
-        x={30}
-        y={30}
-        id={button.buttons_i}
-        width={button.width}
-        height={button.height}
-        offsetX={button ? button.width / 2 : 0}
-        offsetY={button ? button.height / 2 : 0}
-        fill={button.fill}
-        stroke={button.stroke}
-        strokeWidth={button.strokeWidth}
-        // cornerRadius={20}
-
-        shadowBlur={button.shadowBlur}
-        //  drawBorder={true}
+      <Group
+        ref={buttonRef}
+        name="group"
+        x={20}
+        y={29}
+        width={120}
+        height={60}
+        fill="gray"
+        draggable
         onClick={onSelect}
         // onTap={onSelect}
         //onMouseEnter={onSelect}
-        ref={ButtonRef}
+
         {...shapeProps}
         draggable
-        onDragEnd={(e) => {
-          onChange({
-            ...shapeProps,
-            x: e.target.x(),
-            y: e.target.y(),
-          });
-        }}
-        // onDragStart={onDragStart}
+        dragboun
         onTransformEnd={(e) => {
-
-          const node = ButtonRef.current;
+          const node = buttonRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
-
           // we will reset it back
           node.scaleX();
           node.scaleY();
+
           onChange({
             ...shapeProps,
+            ...newBox,
             x: node.x(),
             y: node.y(),
             // set minimal value
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(node.height() * scaleY),
-            scaleX: e.target.scaleX(),
-            scaleY: e.target.scaleY()
+
           });
         }}
 
-      />
+      >
+        <Rect
+          name="rect"
+          fill={button.fill}
+          width={100}
+          height={50}
+          shadowColor="black"
+          shadowBlur={button.shadowBlur}
+          shadowOpacity={0.3}
+        />
+        <Text
+          name="text"
+          fontSize={16}
+          fontFamily="Calibri"
+          fill={button.textFill}
+          width={100}
+          padding={15}
+          align="center"
+          text={button.text}
+        />
+
+      </Group>
+
+
       {
         isSelected &&
         (
@@ -188,6 +212,7 @@ const ButtonsObj = ({ button, button_change, shapeProps, isSelected, onSelect, o
             }}
           />
         )}
+
     </React.Fragment>
   );
 };
@@ -216,8 +241,8 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
         shadowBlur={shape.shadowBlur}
         draggable
         closed
-        stroke={shape.stroke}
-        strokeWidth={shape.strokeWidth}
+
+        opacity={shape.strokeWidth}
         fill={shape.fill}
         onClick={onSelect}
         // onTap={onSelect}
@@ -225,25 +250,16 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
         ref={shapeRef}
         {...shapeProps}
         draggable
+        dragboun
 
-        // onDragStart={onDragStart}
+
         onTransformEnd={(e) => {
-
           const node = shapeRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
-
-          // we will reset it back
           node.scaleX();
           node.scaleY();
-          // let arr_p = node.points()
-          // arr_p.map((i) => {
-          // arr_p[2] *= scaleX
-          // arr_p[4] *= scaleX
-          // arr_p[5] *= scaleX
-          // arr_p[7] *= scaleX
-          // let newBox = boundBoxFunc
-          // })
+   
           onChange({
             ...shapeProps,
             // ...newBox,
@@ -251,10 +267,7 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
             y: node.y(),
             scaleX: e.target.scaleX(),
             scaleY: e.target.scaleY()
-            // set minimal value
-            // points: arr_p
-            // width: Math.max(5, node.width() * scaleX),
-            // height: Math.max(node.height() * scaleY),
+           
           });
         }}
 
@@ -278,14 +291,15 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
   );
 };
 
-const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu }) => {
+const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu, blabla }) => {
   const TextRef = React.useRef();
   const trRefText = React.useRef();
+  let boundBoxFunc
 
   React.useEffect(() => {
     if (isSelected) {
       // we need to attach transformer manually
-      trRefText.current.nodes([TextRef.current]);
+      // trRefText.current.nodes([TextRef.current]);
       trRefText.current.getLayer().batchDraw();
     }
   }, [isSelected]);
@@ -295,8 +309,10 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu
       <Text
         onClick={onSelect}
         onTap={onSelect}
-        //onMouseEnter={onSelect}
+        // onMouseEnter={onSelect}
         onContextMenu={handleContextMenu}
+
+        // onDragStart={blabla}
         ref={TextRef}
         {...shapeProps}
 
@@ -310,47 +326,53 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu
 
           });
         }}
+
         onTransformEnd={(e) => {
-          // transformer is changing scale of the node
-          // and NOT its width or height
-          // but in the store we have only width and height
-          // to match the data better we will reset scale on transform end
           const node = TextRef.current;
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
-          // we will reset it back
           node.scaleX();
           node.scaleY();
+
           onChange({
             ...shapeProps,
+            ...newBox,
             x: node.x(),
             y: node.y(),
             scaleX: e.target.scaleX(),
             scaleY: e.target.scaleY()
-            // set minimal value
-            // width: Math.max(5, node.width() * scaleX),
-            // height: Math.max(node.height() * scaleY),
+            
           });
         }}
+
       />
-      {isSelected && (
-        <Transformer
-          ref={trRefText}
-          boundBoxFunc={(oldBox, newBox) => {
-            // limit resize
-            if (newBox.width < 5 || newBox.height < 5) {
-              return oldBox;
-            }
-            return newBox;
-          }}
-        />
-      )}
+      {
+        isSelected &&
+        (
+          <Transformer
+
+            ref={trRefText}
+            boundBoxFunc={(oldBox, newBox) => {
+              // limit resize
+              if (newBox.width < 5 || newBox.height < 5) {
+                return oldBox;
+              }
+              return newBox;
+            }}
+          />
+        )}
+
+
     </React.Fragment>
   );
 };
 
 
 const Canvas = (props) => {
+
+
+
+
   const dragUrl = React.useRef();
   const stageRef = React.useRef(null);
   const [images, setImages] = React.useState([]);
@@ -368,12 +390,29 @@ const Canvas = (props) => {
   // const [background_color_stage, setBackground_color_stage] = React.useState(null)
   const [background_image, setBackground_image] = React.useState(null)
   const [selectedTextId, selectText] = React.useState(null);
+  const [tryu, setTry] = React.useState(0);
+
   const inputRef = React.useRef();
   props.dispatch(setDataUrl(stageRef.current))
 
   const [selectedContextMenu, setSelectedContextMenu] = React.useState(null)
+  // const [isDragging, setisDragging] = React.useState(null)
   const [position_div_x, setPosition_div_x] = React.useState(null)
   const [position_div_y, setPosition_div_y] = React.useState(null)
+  const [position_title_x, setPosition_title_x] = React.useState(null)
+
+  // const [isDragging, setisDragging] = React.useState(false)
+  // state = {
+  //   isDragging: false,
+  //   x: 50,
+  //   y: 50
+  // };
+
+
+
+
+
+
 
 
 
@@ -406,6 +445,7 @@ const Canvas = (props) => {
     setSelectedContextMenu(null);
   };
   const handleContextMenu = (e) => {
+
     e.evt.preventDefault(true); // NB!!!! Remember the ***TRUE***
     const mousePosition = e.target.getStage().getPointerPosition();
 
@@ -415,7 +455,13 @@ const Canvas = (props) => {
     }
     );
   };
+  const blabla = (e) => {
+    console.log("blablabla----------blablabla")
+    e.evt.preventDefault(true); // NB!!!! Remember the ***TRUE***
+    const rty = e.target.getClassName();
+    console.log("blablablablablabla" + rty)
 
+  };
   // const BackgroundImage = () => {
   //   const [image] = useImage(require('../background_images/galim_b.jpg'));
   //   return <Image
@@ -451,10 +497,6 @@ const Canvas = (props) => {
     };
     setImages(items);
   };
-
-
-
-
   const handleDragStart_button = (e) => {
     const id = e.target.id();
     const items = buttons.slice();
@@ -479,7 +521,6 @@ const Canvas = (props) => {
     };
     setButtons(items);
   };
-
   const handleDragStart_shape = (e) => {
     const id = e.target.id();
     const items = shapes.slice();
@@ -504,45 +545,6 @@ const Canvas = (props) => {
     };
     setShapes(items);
   };
-
-
-
-
-  // const _handleClick = (event) => {
-  //   event.preventDefault();
-
-  //   this.setState({ visible: true });
-
-  //   const clickX = event.clientX;
-  //   const clickY = event.clientY;
-  //   const screenW = window.innerWidth;
-  //   const screenH = window.innerHeight;
-  //   const rootW = this.root.offsetWidth;
-  //   const rootH = this.root.offsetHeight;
-
-  //   const right = (screenW - clickX) > rootW;
-  //   const left = !right;
-  //   const top = (screenH - clickY) > rootH;
-  //   const bottom = !top;
-
-  //   if (right) {
-  //     this.root.style.left = `${clickX + 5}px`;
-  //   }
-
-  //   //   if (left) {
-  //   //     this.root.style.left = `${clickX - rootW - 5}px`;
-  //   //   }
-
-  //   //   if (top) {
-  //   //     this.root.style.top = `${clickY + 5}px`;
-  //   //   }
-
-  //   //   if (bottom) {
-  //   //     this.root.style.top = `${clickY - rootH - 5}px`;
-  //   //   }
-  //   // }
-
-
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
@@ -557,6 +559,7 @@ const Canvas = (props) => {
   const checkDeselectBackground = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target.text === undefined
+
     if (clickedOnEmpty) {
       selectImage(null);
       selectText(null);
@@ -568,52 +571,14 @@ const Canvas = (props) => {
     props.dispatch(setDisplayEditor('background'))
   };
 
+
   return (
     <>
-      {/* <div style={{ marginTop: "28vh", width: "650px", height: "400px", border: '3px dashed #D6CBE3' }} ></div> */}
-      {/* לשנות את הרוחב והאורך של הקנבה לפי מה שנשלח מהקומפוננטה media and section */}
       <div style={{ width: props.canvasDetails.width_canva * props.canvasDetails.sliderInput + 10, height: props.canvasDetails.height_canva * props.canvasDetails.sliderInput + 7, border: '3px dashed #D6CBE3' }} >
         <div ref={inputRef} onMouseEnter={() => {
           setPosition_div_x(inputRef.current.getBoundingClientRect().x);
           setPosition_div_y(inputRef.current.getBoundingClientRect().y);
         }}>
-
-          {/*
-
-          onDrop={e => {
-            // register event position
-            stageRef.current.setPointersPositions(e);
-            // add image
-            setImages(
-              images.concat([
-                {
-                  ...stageRef.current.getPointerPosition(),
-                  src: dragUrl.current
-                }
-              ])
-            );
-          }}
-          onDragOver={e => e.preventDefault()}
-        > <ContextMenu outerRef={outerRef} />
-          <table ref={outerRef}>yyyyy
-            <tbody ref={outerRef}>
-              <tr id="row1">
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>Smbc</td>
-                <td>20</td>
-              </tr>
-              <tr id="row2">
-                <td>
-                  <input type="checkbox" />
-                </td>
-                <td>Xkcd</td>
-                <td>30</td>
-              </tr>
-            </tbody>
-          </table>
-          <ContextMenu outerRef={outerRef} /> */}
           <Stage
             id="my_stage"
             ref={stageRef}
@@ -624,6 +589,7 @@ const Canvas = (props) => {
             onMouseDown={checkDeselect}
             onTouchStart={checkDeselect}
           >
+
             <Layer>
 
               <Rect
@@ -635,6 +601,14 @@ const Canvas = (props) => {
                 height={props.canvasDetails.height_canva}
                 fill={props.canvasDetails.background_color === '' ? 'white' : props.canvasDetails.background_color}
               />
+
+
+
+
+
+
+
+
               {props.canvasDetails.titles.map((text, i) => {
                 if (props.canvasDetails.titles[i].display !== false) {
                   return (
@@ -643,13 +617,9 @@ const Canvas = (props) => {
                       shapeProps={text}
                       isSelected={text.id === selectedTextId}
                       handleContextMenu={handleContextMenu}
-
+                      // onDragStart={blabla}
                       onSelect={() => {
                         selectText(text.id);
-                        selectImage(null);
-                        setSelectedContextMenu(null);
-                        selectButton(null);
-                        selectShape(null);
                         props.dispatch(setTitlesICanvas(text.id - (props.canvasDetails.removed_titles).length))
                         props.dispatch(setTitlesTextCanvas(text.text, text.id - (props.canvasDetails.removed_titles).length))
                         props.dispatch(setDisplayEditor('title'))
@@ -697,7 +667,10 @@ const Canvas = (props) => {
                       shapeProps={button}
                       isSelected={button.id === selectedButtonId}
                       onSelect={() => {
-
+                        selectText(null);
+                        setSelectedContextMenu(null);
+                        selectShape(null);
+                        selectImage(null);
                         selectButton(button.id);
                         props.dispatch(setButtonsICanvas(button.id))
                         props.dispatch(setDisplayEditor('button'))
@@ -752,12 +725,11 @@ const Canvas = (props) => {
                 </Portal>
               )}
             </Layer>
+
           </Stage>
         </div>
       </div>
     </>
-
-
   );
 };
 
@@ -769,3 +741,7 @@ function mapStateToProps(state) {
   };
 }
 export default connect(mapStateToProps)(Canvas)
+
+
+
+

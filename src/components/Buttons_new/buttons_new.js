@@ -17,7 +17,8 @@ import {
     setElementsCanvasServer,
     setBackgroundColor,
     setUpdateTitlesCanvas,
-    getFirstItem
+    getFirstItem,
+    setCounterTitles
 } from '../../redux/actions/canvasActions'
 
 
@@ -51,7 +52,7 @@ class Buttons_new extends Component {
     }
 
     onClickNewFunc() {
-
+        this.props.dispatch(setCounterTitles(0))
         this.props.dispatch(setTitlesCanvasServer([]))
         this.props.dispatch(setButtonsCanvasServer([]))
         this.props.dispatch(setShapesCanvasServer([]))

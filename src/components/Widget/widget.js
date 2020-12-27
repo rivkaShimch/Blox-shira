@@ -27,10 +27,11 @@ import {
     setCounterTitles,
     uploadImageTofileServer,
     setCounterButtons,
-
+    addTempImagesToCanvas
 
 } from '../../redux/actions/canvasActions'
 import { set } from 'mongoose';
+import { EventBusy } from '@material-ui/icons';
 class Widget extends Component {
     constructor(props) {
         super(props);
@@ -76,7 +77,8 @@ class Widget extends Component {
             let arr_length = (this.props.canvasDetails.element_img).length
             const newImage = {
                 // src: 'https://files.leader.codes/uploads/bNS4EGSQGTOuAeflYgJCULKdg122/img/1608199945451__evf.png',
-                src: this.props.canvasDetails.temp_element_img,
+                src: this.props.canvasDetails.temp_element_img[1],
+                src1: this.props.canvasDetails.temp_element_img[0],
                 id: arr_length,
                 x: 100,
                 y: 100,
@@ -146,11 +148,13 @@ class Widget extends Component {
 
     openImageEditor = (event) => {
         this.props.dispatch(setDisplayEditor("image"))
+        // this.props.dispatch(addTempImagesToCanvas(event))
         // שימוש בFileReader לצורך הצגה מקומית של התמונה, היות ולוקח כמה שניות עד שחוזר url מהשרת.
         // const reader1 = new FileReader();
         const file = new FormData();
         file.append("file", event)
-        this.props.dispatch(uploadImageTofileServer(file))
+        var url = URL.createObjectURL(event);
+        this.props.dispatch(uploadImageTofileServer(file, url))
     }
 
     openShapeEditor() {

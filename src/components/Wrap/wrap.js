@@ -62,11 +62,12 @@ import {
     setCanvasWidth_,
     setCanvasHeight_,
     setSliderInputInScale,
-    templateImageToServer
+    templateImageToServer,
+    addTemplateToServer,
+    changeImagesToSaveOnServer
 } from '../../redux/actions/canvasActions'
 import { Divider } from 'semantic-ui-react';
 const drawerWidth = '15%';
-const downloadsFolder = require('downloads-folder');
 
 const useStyles = theme => ({
     root: {
@@ -767,7 +768,19 @@ class Wrap extends React.Component {
         return new File([u8arr], filename, { type: mime });
     }
 
-    OnClickSave = () => {
+    saveImageInServer = () => {
+        return new Promise(resolve => {
+            let dataURL = (this.props.canvasDetails.dataURL)
+            // let pdf = new jsPDF('p', 'mm', 'a4');
+            let my_file = this.dataURLtoFile(dataURL.toDataURL(), this.props.canvasDetails.name);
+            let fd = new FormData()
+            fd.append("file", my_file)
+            console.log("my fileee " + my_file)
+            this.props.dispatch(templateImageToServer(fd))
+        });
+    }
+
+    OnClickSave = async () => {
         if (this.props.canvasDetails.name === '') {
             alert("Please set a name for the project")
             return
@@ -776,7 +789,6 @@ class Wrap extends React.Component {
         let arrBrandColors1 = [];
         let x = 0;
         let color;
-
         const titles = this.props.canvasDetails.titles.slice();
         titles.map(title => {
 
@@ -800,34 +812,19 @@ class Wrap extends React.Component {
         console.log("arrBrandColors1" + arrBrandColors1)
         console.log("in OnClickSave")
 
-        let dataURL = (this.props.canvasDetails.dataURL)
+        const newTemplate = {
+            template_name: this.props.canvasDetails.name,
+            background_color: this.props.canvasDetails.background_color,
+            titles: this.props.canvasDetails.titles,
+            element_img: this.props.canvasDetails.element_img,
+            shapes: this.props.canvasDetails.shapes,
+            // brandColors: arrBrandColors,
+        };
 
-        // const newTemplate = {
-        //     template_name: this.props.canvasDetails.name,
-        //     background_color: this.props.canvasDetails.background_color,
-        //     titles: this.props.canvasDetails.titles,
-        //     element_img: this.props.canvasDetails.element_img,
-        //     element_position_x: this.props.canvasDetails.element_position_x,
-        //     element_position_y: this.props.canvasDetails.element_position_y,
-        //     element_width: this.props.canvasDetails.element_width,
-        //     element_height: this.props.canvasDetails.element_height,
-        //     shapes: this.props.canvasDetails.shapes,
-        //     // brandColors: arrBrandColors,
-        // };
-
-        // console.log(newTemplate);
-        // save on mongodb
-        // axios.post('https://blox.leader.codes/api/add-template/', newTemplate)
-        //     .then(res => console.log(res.data))
-        //     .catch(err => console.log(err));
-        //download the img to "download"
         debugger
-        let my_file = this.dataURLtoFile(dataURL.toDataURL(), this.props.canvasDetails.name);
+        this.props.dispatch(addTemplateToServer(newTemplate))
+        setTimeout(() => { this.saveImageInServer(); console.log("after timeout"); }, 3000)
 
-        let fd = new FormData()
-        fd.append("file", my_file)
-        console.log("my fileee " + my_file)
-        this.props.dispatch(templateImageToServer(fd))
     };
     handleClose = () => {
         this.setState({ openSpeedDial: false });

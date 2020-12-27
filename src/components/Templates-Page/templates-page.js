@@ -46,6 +46,7 @@ class TemplateCards extends Component {
 
     onClickNewProject() {
         this.props.dispatch(setTitlesCanvasServer([]))
+        this.props.dispatch(setTitlesICanvas(0))
         this.props.dispatch(setElementsCanvasServer([]))
         this.props.dispatch(setShapesCanvasServer([]))
         this.props.dispatch(setBackgroundColor('white'))
@@ -81,8 +82,9 @@ class TemplateCards extends Component {
                 this.props.dispatch(setElementHeight(template_data.element_height))
                 this.props.dispatch(setShapesCanvasServer(template_data.shapes))
                 this.props.dispatch(setBrandColorsCanvas(template_data.brandColors))
-
                 this.props.dispatch(setDisplayMainOption('canva'))
+
+
             });
         this.props.history.push('/' + this.props.user.username + "/edit-canvas")
 

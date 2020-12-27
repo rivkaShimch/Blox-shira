@@ -3,6 +3,7 @@ import { setUser, setCheckPermission } from '../actions/userAction'
 import $ from 'jquery'
 import { auth } from '../../services/firebase';
 import axios from 'axios';
+import promise from 'promise'
 
 let username = ''
 export const checkPermission = ({ dispatch, getState }) => next => action => {
@@ -118,28 +119,27 @@ export const getImageFromServer = ({ dispatch, getState }) => next => action => 
             success: function (data1) {
                 console.log("success")
                 console.log(data1);
-                setTimeout(function () { console.log("after setTimeOut"); dispatch(setTempElementImg(data1)) }, 10000);
+                setTimeout(function () { console.log("after setTimeOut"); dispatch(setTempElementImg(data1, action.local_img)) }, 2000);
             },
             error: function (err) {
                 console.log(err)
             }
         });
-        // dispatch(setTempElementImg("http://konvajs.github.io/assets/yoda.jpg"))
 
     }
     // remeber!!!!!!!!!!!
     return next(action);
 };
 
-export const sendTemplateImageToServer = ({ dispatch, getState }) => next => action => {
+export const sendTemplateToServer = ({ dispatch, getState }) => next => action => {
     if (action.type === 'TEMPLATE_IMAGE_TO_SERVER') {
-        debugger
         $.ajax({
             "url": 'https://blox.leader.codes/api/add-template-image',
             "method": "POST",
             "processData": false,
             "mimeType": "multipart/form-data",
             "contentType": false,
+            cache: false,
             "headers": {
                 //בauthorization יש לשים jwt אחר!!!!!!!      
                 "Authorization": getState().user.user.jwt
@@ -148,54 +148,40 @@ export const sendTemplateImageToServer = ({ dispatch, getState }) => next => act
             "data": action.payload,
             "async": false,
             success: function (data1) {
-                debugger
                 console.log("success")
                 console.log(data1)
-
-                debugger
-                const newTemplate = {
-                    template_name: getState().canvasDetails.canvasDetails.name,
-                    background_color: getState().canvasDetails.canvasDetails.background_color,
-                    titles: getState().canvasDetails.canvasDetails.titles,
-                    element_img: getState().canvasDetails.canvasDetails.element_img,
-                    shapes: getState().canvasDetails.canvasDetails.shapes,
-                    // brandColors: arrBrandColors,
-                };
-
-                console.log(newTemplate);
-                axios.post('https://blox.leader.codes/api/add-template/', newTemplate)
-                    .then(res => console.log(res.data))
-                    .catch(err => console.log(err));
-                // $.ajax({
-                //     "url": 'https://blox.leader.codes/api/add-template/',
-                //     "method": "POST",
-                //     "processData": false,
-                //     "mimeType": "multipart/form-data",
-                //     "contentType": false,
-                //     "headers": {
-                //         //בauthorization יש לשים jwt אחר!!!!!!!      
-                //         "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiJiTlM0RUdTUUdUT3VBZWZsWWdKQ1VMS2RnMTIyIiwiZW1haWwiOiJyaXZrYWZmQGdtYWlsLmNvbSIsImlwIjoiNS4xMDIuMjQ2LjIwMiIsImlhdCI6MTYwNzMzNzAxNn0.bLKjgoxTtM_UybtlAARgUViXTMwpl4WttYMUvZAsIGU"
-
-                //     },
-                //     "data": newTemplate,
-                //     "async": false,
-                //     success: function (data1) {
-                //         console.log("success")
-                //         console.log(data1);
-                //     },
-                //     error: function (err) {
-                //         console.log(err)
-                //     }
-                // });
-                // dispatch(setTempElementImg(data1))
             },
             error: function (err) {
-                debugger
                 console.log(err)
             }
         });
 
+
     }
-    // remeber!!!!!!!!!!!
+    if (action.type === 'ADD_TEMPLATE_TO_SERVER') {
+        debugger
+        console.log(action.payload);
+        axios.post('https://blox.leader.codes/api/add-template/', action.payload)
+            .then(res => console.log(res.data))
+            .then(
+                (res) => {
+                    alert('Add Template Successfuly')
+                    console.log("success" + res)
+                })
+            .catch(err => console.log(err));
+        // $.ajax({
+        //     type: "POST",
+        //     url: 'https://blox.leader.codes/api/add-template',
+        //     data: action.payload,
+        //     success: function (msg) {
+        //         alert('Add Template Successfuly');
+        //         console.log("success")
+        //         console.log(msg);
+        //     },
+        //     error: function (err) {
+        //         console.log(err)
+        //     }
+
+    }
     return next(action);
 };

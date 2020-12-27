@@ -36,7 +36,7 @@ const initialState = {
     canvas_width: 630,
     canvas_height: 394,
     background_color: 'white',
-    temp_element_img: '',
+    temp_element_img: [],
     temp_fd: '',
     // background_img_path: '',
 
@@ -131,7 +131,8 @@ export default produce((state, action) => {
       state.canvasDetails.temp_fd = action.payload;
       break;
     case 'TEMP_ELEMENT_IMG':
-      state.canvasDetails.temp_element_img = action.payload;
+      state.canvasDetails.temp_element_img[0] = action.payload;
+      state.canvasDetails.temp_element_img[1] = action.local_img
       break;
     case 'IMAGE_TEMPLATE':
       state.canvasDetails.imageTemplates = state.canvasDetails.imageTemplates.slice();
@@ -304,6 +305,8 @@ export default produce((state, action) => {
     case 'BACKGROUND_BRANDCOLOR_CANVAS':
 
       const tmp_color = state.canvasDetails.background_color;
+      if (state.canvasDetails.brandColors === undefined)
+        state.canvasDetails.brandColors = []
       state.canvasDetails.brandColors.map(item => { if (item.id === -1) item.color = action.payload; })
       const found = state.canvasDetails.brandColors.some(el => el.color === tmp_color);
       if (!found) {
@@ -332,7 +335,6 @@ export default produce((state, action) => {
     case 'TITLE_POSITION_Y_CANVAS'://///////
       state.canvasDetails.title_position_y = action.payload;
       break;
-
     case 'ELEMENT_IMG_CANVAS':
       state.canvasDetails.element_img = action.payload;
       break;
@@ -491,6 +493,8 @@ export default produce((state, action) => {
       break;
 
     case 'TEMPLATE_IMAGE_TO_SERVER':
+      break;
+    case 'ADD_TEMPLATE_TO_SERVER':
       break;
     default:
       return state;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { render } from 'react-dom';
-import { Stage, Layer, Image, Text, Transformer, Rect, Line } from 'react-konva';
+import { Stage, Layer, Image as KonvaImage, Text, Transformer, Rect, Line } from 'react-konva';
 import useImage from 'use-image';
 // import './canvas.css'
 import Portal from './portal.js'
@@ -39,16 +39,32 @@ import {
 const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onChange }) => {
   const [img_id] = useImage(image_change.id);
   const imageRef = React.useRef();
-  const trRef = React.useRef();
-  const [img] = useImage(image.src);
+  const trRefImage = React.useRef();
+  const [img, setImg] = useState(null)
+
+  React.useEffect(() => {
+    const newImage = new window.Image()
+    newImage.src = image.src;
+    newImage.onload = () => {
+      // setState will redraw layer
+      // because "image" property is changed
+      setImg(newImage)
+    }
+
+    if (isSelected) {
+      // we need to attach transformer manually
+      trRefImage.current.nodes([imageRef.current]);
+      trRefImage.current.getLayer().batchDraw();
+    }
+
+  }, [img, isSelected])
   return (
     <React.Fragment>
-      <Image
+      <KonvaImage
         image={img}
         x={image.x}
         y={image.y}
         id={img_id}
-        // I will use offset to set origin to the center of the image
         offsetX={img ? img.width / 2 : 0}
         offsetY={img ? img.height / 2 : 0}
         onClick={onSelect}
@@ -64,31 +80,22 @@ const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onCha
             y: e.target.y(),
           });
         }}
-        // onDragStart={onDragStart}
         onTransformEnd={(e) => {
           const node = imageRef.current;
-          const scaleX = node.scaleX();
-          const scaleY = node.scaleY();
-
-          // we will reset it back
-          node.scaleX(1);
-          node.scaleY(1);
+          node.scaleX();
+          node.scaleY();
           onChange({
             ...shapeProps,
             x: node.x(),
             y: node.y(),
-            // set minimal value
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(node.height() * scaleY),
+            scaleX: e.target.scaleX(),
+            scaleY: e.target.scaleY()
           });
-
         }}
-      // onDragStart={handleDragStart}
-      // onDragEnd={handleDragEnd}
       />
       {isSelected && (
         <Transformer
-          ref={trRef}
+          ref={trRefImage}
           boundBoxFunc={(oldBox, newBox) => {
             // limit resize
             if (newBox.width < 5 || newBox.height < 5) {
@@ -96,8 +103,7 @@ const URLImage = ({ image, image_change, shapeProps, isSelected, onSelect, onCha
             }
             return newBox;
           }}
-        />
-      )}
+        />)}
     </React.Fragment>
   );
 };
@@ -109,7 +115,6 @@ const ButtonsObj = ({ button, button_change, shapeProps, isSelected, onSelect, o
 
   React.useEffect(() => {
     if (isSelected) {
-      console.log("נכנס לפונקציה is select")
       // we need to attach transformer manually
       trRefButton.current.nodes([ButtonRef.current]);
       trRefButton.current.getLayer().batchDraw();
@@ -153,8 +158,8 @@ const ButtonsObj = ({ button, button_change, shapeProps, isSelected, onSelect, o
           const scaleY = node.scaleY();
 
           // we will reset it back
-          node.scaleX(1);
-          node.scaleY(1);
+          node.scaleX();
+          node.scaleY();
           onChange({
             ...shapeProps,
             x: node.x(),
@@ -162,6 +167,8 @@ const ButtonsObj = ({ button, button_change, shapeProps, isSelected, onSelect, o
             // set minimal value
             width: Math.max(5, node.width() * scaleX),
             height: Math.max(node.height() * scaleY),
+            scaleX: e.target.scaleX(),
+            scaleY: e.target.scaleY()
           });
         }}
 
@@ -193,13 +200,9 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
 
   React.useEffect(() => {
     if (isSelected) {
-      console.log("נכנס לפונקציה is select")
       // we need to attach transformer manually
       trRefShape.current.nodes([shapeRef.current]);
       trRefShape.current.getLayer().batchDraw();
-
-
-
     }
   }, [isSelected]);
   return (
@@ -231,21 +234,23 @@ const ShapeObj = ({ shape, shape_change, shapeProps, isSelected, onSelect, onCha
           const scaleY = node.scaleY();
 
           // we will reset it back
-          node.scaleX(1);
-          node.scaleY(1);
-          let arr_p = node.points()
+          node.scaleX();
+          node.scaleY();
+          // let arr_p = node.points()
           // arr_p.map((i) => {
-          arr_p[2] *= scaleX
-          arr_p[4] *= scaleX
-          arr_p[5] *= scaleX
-          arr_p[7] *= scaleX
-          let newBox = boundBoxFunc
+          // arr_p[2] *= scaleX
+          // arr_p[4] *= scaleX
+          // arr_p[5] *= scaleX
+          // arr_p[7] *= scaleX
+          // let newBox = boundBoxFunc
           // })
           onChange({
             ...shapeProps,
-            ...newBox,
+            // ...newBox,
             x: node.x(),
             y: node.y(),
+            scaleX: e.target.scaleX(),
+            scaleY: e.target.scaleY()
             // set minimal value
             // points: arr_p
             // width: Math.max(5, node.width() * scaleX),
@@ -302,6 +307,7 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu
             ...shapeProps,
             x: e.target.x(),
             y: e.target.y(),
+
           });
         }}
         onTransformEnd={(e) => {
@@ -313,15 +319,17 @@ const TextObj = ({ shapeProps, isSelected, onSelect, onChange, handleContextMenu
           const scaleX = node.scaleX();
           const scaleY = node.scaleY();
           // we will reset it back
-          node.scaleX(1);
-          node.scaleY(1);
+          node.scaleX();
+          node.scaleY();
           onChange({
             ...shapeProps,
             x: node.x(),
             y: node.y(),
+            scaleX: e.target.scaleX(),
+            scaleY: e.target.scaleY()
             // set minimal value
-            width: Math.max(5, node.width() * scaleX),
-            height: Math.max(node.height() * scaleY),
+            // width: Math.max(5, node.width() * scaleX),
+            // height: Math.max(node.height() * scaleY),
           });
         }}
       />
@@ -348,7 +356,7 @@ const Canvas = (props) => {
   const [images, setImages] = React.useState([]);
   const [buttons, setButtons] = React.useState([]);
   const [shapes, setShapes] = React.useState([]);
-  const [selectedId, selectImage] = React.useState(null);
+  const [selectedImageId, selectImage] = React.useState(null);
 
   const [selectedButtonId, selectButton] = React.useState(null);
   const [selectedShapeId, selectShape] = React.useState(null);
@@ -376,7 +384,6 @@ const Canvas = (props) => {
       props.dispatch(setDisplayEditor(''))
     }
     else if (option === 'Duplicate') {
-      console.log("duplicate " + selectedTextId)
       let dupTitle = {
         id: props.canvasDetails.counter_titles,
         x: props.canvasDetails.titles[props.canvasDetails.titles_i].x + 10,
@@ -388,6 +395,8 @@ const Canvas = (props) => {
         fill: props.canvasDetails.titles[props.canvasDetails.titles_i].fill,
         fontSize: props.canvasDetails.titles[props.canvasDetails.titles_i].fontSize,
         display: props.canvasDetails.titles[props.canvasDetails.titles_i].display,
+        scaleX: props.canvasDetails.titles[props.canvasDetails.titles_i].scaleX,
+        scaleY: props.canvasDetails.titles[props.canvasDetails.titles_i].scaleY,
         preText: [],
         followText: []
       }
@@ -420,10 +429,7 @@ const Canvas = (props) => {
   // };
   const handleDragStart = (e) => {
     const id = e.target.id();
-    console.log("id " + id)
     const items = images.slice();
-
-    // console.log(items)
     const item = items.find(i => i.id === id);
     const index = items.indexOf(item);
     // remove from the list:
@@ -433,8 +439,6 @@ const Canvas = (props) => {
     setImages(items);
   };
   const handleDragEnd = (e) => {
-    console.log("handleDragend")
-
     const id = e.target.id();
     const items = images.slice();
     const item = items.find(i => i.id === id);
@@ -453,10 +457,7 @@ const Canvas = (props) => {
 
   const handleDragStart_button = (e) => {
     const id = e.target.id();
-    console.log("id " + id)
     const items = buttons.slice();
-
-    // console.log(items)
     const item = items.find(i => i.id === id);
     const index = items.indexOf(item);
     // remove from the list:
@@ -466,8 +467,6 @@ const Canvas = (props) => {
     setButtons(items);
   };
   const handleDragEnd_button = (e) => {
-    console.log("handleDragend")
-
     const id = e.target.id();
     const items = buttons.slice();
     const item = items.find(i => i.id === id);
@@ -483,10 +482,7 @@ const Canvas = (props) => {
 
   const handleDragStart_shape = (e) => {
     const id = e.target.id();
-    console.log("id " + id)
     const items = shapes.slice();
-
-    // console.log(items)
     const item = items.find(i => i.id === id);
     const index = items.indexOf(item);
     // remove from the list:
@@ -496,8 +492,6 @@ const Canvas = (props) => {
     setShapes(items);
   };
   const handleDragEnd_shape = (e) => {
-    console.log("handleDragend")
-
     const id = e.target.id();
     const items = shapes.slice();
     const item = items.find(i => i.id === id);
@@ -532,7 +526,6 @@ const Canvas = (props) => {
   //   const bottom = !top;
 
   //   if (right) {
-  //     console.log("blblblblllllblblblblblblblbl")
   //     this.root.style.left = `${clickX + 5}px`;
   //   }
 
@@ -553,7 +546,6 @@ const Canvas = (props) => {
   const checkDeselect = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target === e.target.getStage();
-    console.log("stage is " + clickedOnEmpty)
     if (clickedOnEmpty) {
       selectImage(null);
       selectText(null);
@@ -565,7 +557,6 @@ const Canvas = (props) => {
   const checkDeselectBackground = (e) => {
     // deselect when clicked on empty area
     const clickedOnEmpty = e.target.text === undefined
-    console.log("checkDeselectBackground is " + clickedOnEmpty)
     if (clickedOnEmpty) {
       selectImage(null);
       selectText(null);
@@ -582,7 +573,6 @@ const Canvas = (props) => {
       {/* <div style={{ marginTop: "28vh", width: "650px", height: "400px", border: '3px dashed #D6CBE3' }} ></div> */}
       {/* לשנות את הרוחב והאורך של הקנבה לפי מה שנשלח מהקומפוננטה media and section */}
       <div style={{ width: props.canvasDetails.width_canva * props.canvasDetails.sliderInput + 10, height: props.canvasDetails.height_canva * props.canvasDetails.sliderInput + 7, border: '3px dashed #D6CBE3' }} >
-        {console.log("enter to canvas " + props.canvasDetails.width_canva)}
         <div ref={inputRef} onMouseEnter={() => {
           setPosition_div_x(inputRef.current.getBoundingClientRect().x);
           setPosition_div_y(inputRef.current.getBoundingClientRect().y);
@@ -665,7 +655,6 @@ const Canvas = (props) => {
                         props.dispatch(setDisplayEditor('title'))
                       }}
                       onChange={(newAttrs) => {
-
                         props.dispatch(addPreHistory({ text: text.id }))
                         props.dispatch(setUpdateTitlesCanvas(newAttrs, text.id))
                         props.dispatch(updateTextPreHistory(text.id, text))
@@ -677,13 +666,13 @@ const Canvas = (props) => {
 
               })}
               {props.canvasDetails.element_img.map((image, i) => {
-
                 return (
                   <URLImage
                     key={i}
                     shapeProps={image}
-                    isSelected={image.id === selectedId}
+                    isSelected={image.id === selectedImageId}
                     onSelect={() => {
+                      debugger
                       selectText(null);
                       setSelectedContextMenu(null);
                       selectButton(null);
@@ -773,7 +762,6 @@ const Canvas = (props) => {
 };
 
 function mapStateToProps(state) {
-  console.log("state canvas  " + state.canvasDetails.canvasDetails)
   return {
     canvasDetails: state.canvasDetails.canvasDetails,
     displayComponents: state.displayComponents.displayComponents

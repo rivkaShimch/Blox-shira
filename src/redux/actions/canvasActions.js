@@ -36,11 +36,13 @@ export function setSliderInputInScale(input) {
 
 //     };
 // }
-export function setTempElementImg(img) {
+
+export function setTempElementImg(img, local) {
 
     return {
         type: 'TEMP_ELEMENT_IMG',
-        payload: img
+        payload: img,
+        local_img: local
 
     };
 }
@@ -65,6 +67,7 @@ export function setName(name) {
         payload: name
     };
 }
+
 export function setElementsICanvas(i) {
 
     return {
@@ -523,11 +526,12 @@ export function getFirstItem() {
         type: 'GET_FIRST_ITEM'
     };
 }
-export function uploadImageTofileServer(fd) {
+export function uploadImageTofileServer(fd, local_img) {
 
     return {
         type: 'UPLOAD_IMAGE',
-        fd: fd
+        fd: fd,
+        local_img: local_img
     };
 }
 export function setCounterButtons(counter) {
@@ -571,6 +575,13 @@ export function templateImageToServer(fd) {
     return {
         type: 'TEMPLATE_IMAGE_TO_SERVER',
         payload: fd
+    };
+}
+
+export function addTemplateToServer(newTemplate) {
+    return {
+        type: 'ADD_TEMPLATE_TO_SERVER',
+        payload: newTemplate
     };
 }
 

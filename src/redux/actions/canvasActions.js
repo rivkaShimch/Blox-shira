@@ -389,10 +389,10 @@ export function setButtonCorners(button_cornerRadius, i) {
 
     };
 }
-export function setButtonStroke(button_stroke, i) {
+export function setButtonTextColor(button_text_fill, i) {
     return {
-        type: 'BUTTON_STROKE_COLOR',
-        payload: button_stroke,
+        type: 'BUTTON_TEXT_COLOR',
+        payload: button_text_fill,
         id: i
 
     };
@@ -567,5 +567,14 @@ export function setShapeStroke(shape_stroke, i) {
     };
 }
 
+
+export function setButtonsTextCanvas(button, i) {
+
+    return {
+        type: 'BUTTONS_TEXT_CANVAS',
+        payload: button,
+        i: i
+    };
+}
 
 

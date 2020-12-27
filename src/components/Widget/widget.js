@@ -27,6 +27,8 @@ import {
     setCounterTitles,
     uploadImageTofileServer,
     setCounterButtons,
+    setCounterShapes,
+    setShapesCanvas,
 
 
 } from '../../redux/actions/canvasActions'
@@ -35,6 +37,8 @@ class Widget extends Component {
         super(props);
         this.myRef = React.createRef();
         this.state = {
+            temp_width_size: (this.props.canvasDetails.width_canva * this.props.canvasDetails.sliderInput),
+            temp_heigh_size: (this.props.canvasDetails.height_canva * this.props.canvasDetails.sliderInput) / 2,
             img: ''
         };
         this.openTitleEditor = this.openTitleEditor.bind(this)
@@ -48,14 +52,15 @@ class Widget extends Component {
 
         if (this.props.displayComponents.display_main_option !== '') {
             this.props.dispatch(setDisplayEditor("title"))
-
+            console.log("ttttttttttttttttttttttttttttttt" + this.state.temp_heigh_size + "     " + this.state.temp_width_size)
             // let arr_length = (this.props.canvasDetails.titles).length + (this.props.canvasDetails.removed_titles).length
             const newTitle = {
+
                 id: this.props.canvasDetails.counter_titles,
-                x: this.props.canvasDetails.title_position_x + this.props.canvasDetails.counter_titles * 5,
-                y: this.props.canvasDetails.title_position_y + this.props.canvasDetails.counter_titles * 5,
+                x: this.state.temp_width_size / 5,
+                y: this.state.temp_heigh_size,
                 width: 100,
-                height: 30,
+                height: 10,
                 text: 'TITLE 0' + this.props.canvasDetails.counter_titles,
                 align: 'left',
                 fill: 'black',
@@ -93,8 +98,9 @@ class Widget extends Component {
             let arr_length_btn = (this.props.canvasDetails.buttons).length
             const newButton = {
                 id: arr_length_btn,
-                x: 10,
-                y: 20,
+                text: "click here!",
+                x: 0,
+                y: 0,
                 width: 100,
                 height: 30,
                 fill: 'rgb(212, 200, 200)',
@@ -109,6 +115,26 @@ class Widget extends Component {
             this.props.dispatch(setCounterButtons(tempCount))
             this.props.dispatch(setButtonsCanvas(newButton))
         }
+
+        // let arr_length_shp = (this.props.canvasDetails.shapes).length
+        // const newShape = {
+        //     id: arr_length_shp,
+        //     x: 40,
+        //     y: 40,
+
+        //     points: [0, 0, 120, 0, 120, 40, 0, 40],
+        //     tension: 0,
+        //     display: true,
+        //     opacity: 1,
+        //     fill: "#31d4c3",
+        //     // stroke: "black",
+        //     //   fillLinearGradientStartPoint={{ x: -50, y: -50 }},
+        //     //   fillLinearGradientEndPoint={{ x: 50, y: 50 }},
+        //     //   fillLinearGradientColorStops={[0, 'red', 1, 'yellow']},
+        // }
+        // let tempCount = this.props.canvasDetails.counter_shapes + 1
+        // this.props.dispatch(setCounterShapes(tempCount))
+        // this.props.dispatch(setShapesCanvas(newShape))
 
     }
     openShapeEditor() {
@@ -185,14 +211,16 @@ class Widget extends Component {
                         <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "13px" }} src={Text} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Title </div>
                     </div>
-                    <div className="d-flex flex-row  widget_button ">
+                    <div className="d-flex flex-row  widget_button " onClick={this.openTitleEditor}>
+                        <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "13px" }} src={imageButton} alt="icon" /></div>
+                        <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
+                    </div>
+                    {/* <div className="d-flex flex-row  widget_button ">
                         <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style" style={{ width: "50px" }}>
                             <img style={{ height: "17px", width: "17px" }} src={imageButton} alt="icon" /></div>
                         <div className="d-flex flex-col justify-content-between icon_text"> Image </div>
                         <input type="file" class="form-control-file" id="element_img" onChange={(e) => this.openImageEditor(e.target.files[0])} style={{ opacity: 0, zIndex: 2 }} />
-
-
-                    </div>
+                    </div> */}
                     {/* <div className="d-flex flex-row  widget_button ">
 
                         <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={imageButton} alt="icon" /></div>
@@ -224,8 +252,8 @@ class Widget extends Component {
                 </div>
 
                 <div className="d-flex flex-row  widget_button " >
-                    <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "21px" }} src={onOff} alt="icon" /></div>
-                    <div className="d-flex flex-col justify-content-between icon_text"> Button </div>
+                    <div className="d-flex flex-column justify-content-center ml-4 mr-3 icon_style"> <img style={{ height: "15px", width: "13px" }} src={drawpolygonsolid} alt="icon" /></div>
+                    <div className="d-flex flex-col justify-content-between icon_text"> Logo </div>
                 </div>
 
             </div>

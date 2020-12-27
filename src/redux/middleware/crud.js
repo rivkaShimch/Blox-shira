@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 let username = ''
 const history = ''
 export const checkPermission = ({ dispatch, getState }) => next => action => {
-    debugger
+
     if (action.type === 'CHECK_PERMISSION') {
         console.log("user2: ", username);
         let TokenToString = action.payload.accessToken.toString();
@@ -17,10 +17,10 @@ export const checkPermission = ({ dispatch, getState }) => next => action => {
         };
         // username = getState().user.user.username
         if (username === "null" || username === null) {
-            debugger
+
             username = getState().user.user.username
         }
-        debugger
+
         $.ajax({
             url: "https://blox.leader.codes/api/checkPremission/" + username,
             headers: {
@@ -47,7 +47,7 @@ export const checkPermission = ({ dispatch, getState }) => next => action => {
                 if (username1 !== null && username1 !== undefined) {
                     tempUserName = username1.replace(' ', '%20')
                 }
-                debugger
+
                 //'https://blox.leader.codes/' + tempUserName + '/'
                 if (username1 !== null && (window.location.href != 'http://localhost:3000/' + tempUserName)) {
                     window.location.href = '/' + username1
@@ -143,7 +143,7 @@ export const getImageFromServer = ({ dispatch, getState }) => next => action => 
 // export const setUser = ({ dispatch, getState }) => next => action => {
 //     if (action.type === 'SET_USER') {
 
-//         debugger
+//     
 
 //     }
 //     // remeber!!!!!!!!!!!

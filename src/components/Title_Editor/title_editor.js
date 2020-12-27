@@ -35,10 +35,11 @@ import TextField from '@material-ui/core/TextField';
 
 
 class Title_Editor extends Component {
-    constructor(prop) {
-        super(prop);
+    constructor(props) {
+        super(props);
 
         this.state = {
+            flag_color: false,
             checked: false,
             background: '#fff',
             value: '',
@@ -87,11 +88,14 @@ class Title_Editor extends Component {
         this.setState({ background: color.hex });
     };
     onChangeTitleColor(e) {
+        this.state.flag_color = true;
         this.props.dispatch(setTitleColor((e.target.value), this.props.canvasDetails.titles_i))
     }
     addToBrandColorArr(e) {
-        console.log("enter to")
-        this.props.dispatch(setTitleBrandColor((e.target.value), this.props.canvasDetails.titles_i))
+        if (this.state.flag_color === true) {
+
+            this.props.dispatch(setTitleBrandColor((e.target.value), this.props.canvasDetails.titles_i))
+        }
     }
     onChangeTitleInput(e) {
         this.props.dispatch(setTitlesTextCanvas((e.target.value), this.props.canvasDetails.titles_i))
@@ -130,7 +134,7 @@ class Title_Editor extends Component {
             <div className="d-flex flex-column justify-content-around" style={{ marginLeft: "20px", marginRight: "20px" }}>
                 <div className="d-flex flex-column justify-content-start">
                     <div className="d-flex flex-row justify-content-between">
-                        <div className="sideLittleTitles" style={{ color: this.props.color }}>Title Setting</div>
+                        <div className="sideLittleTitles" style={{ color: this.props.color2 }}>Title Setting</div>
                     </div>
                 </div>
 

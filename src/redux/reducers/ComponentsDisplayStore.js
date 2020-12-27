@@ -5,6 +5,8 @@ import produce from 'immer'
 
 const initialState = {
     displayComponents: {
+        display_edit_choice: true,
+        display_configurator: "block",
         display_image_editor: false,
         display_title_editor: false,
         display_shape_editor: false,
@@ -21,6 +23,10 @@ const initialState = {
 export default produce((state, action) => {
     switch (action.type) {
 
+
+        case 'DISPLAY_EDIT_CHOICE':
+            state.displayComponents.display_edit_choice = action.payload;
+            break;
         case 'DISPLAY_IMAGE_EDITOR':
             state.displayComponents.display_image_editor = action.payload;
             break;
@@ -44,6 +50,10 @@ export default produce((state, action) => {
             break;
         case 'SET_LOGIN_STATUS':
             state.loginStatus = action.payload;
+            break;
+
+        case 'DISPLAY_CONFIGURATOR':
+            state.displayComponents.display_configurator = action.payload;
             break;
         default:
             return state;

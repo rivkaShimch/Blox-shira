@@ -61,7 +61,7 @@ class Login extends Component {
     componentDidUpdate(prevProps, pervState) {
         if (prevProps.user != this.props.user || prevProps.loginStatus != this.props.loginStatus) {
             if (this.props.loginStatus === 'success') {
-                debugger
+
                 this.props.history.push('/' + this.props.user.username)
             }
         }
